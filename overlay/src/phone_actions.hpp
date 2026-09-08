@@ -6,10 +6,10 @@
 
 namespace phone {
 // Wire IDs shared with PhoneControls.java. Keep existing IDs stable.
-inline constexpr std::array<std::string_view, 14> actions = {
+inline constexpr std::array<std::string_view, 15> actions = {
 	"cycle", "recruit", "undo", "endturn", "zoomin", "zoomout",
 	"objectives", "save", "recall", "unitlist", "leader", "describeunit",
-	"preferences", "quit"
+	"preferences", "quit", "moveaction"
 };
 
 constexpr bool valid_action(int action)

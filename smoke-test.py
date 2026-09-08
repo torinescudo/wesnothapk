@@ -83,7 +83,12 @@ try:
     tap(find(ui(), text='More'))
     wait_for(lambda: find(ui(), text='Objectives'), 15)
     screen('04-touch-menu')
-    adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
+    tap(find(ui(), text='Objectives', enabled=True))
+    wait_for(lambda: find(ui(), text='Next unit') is not None
+             and find(ui(), text='Next unit', enabled=True) is None, 20)
+    screen('04b-native-objectives')
+    adb('shell', 'input', 'keyevent', 'KEYCODE_ENTER')
+    wait_for(lambda: find(ui(), text='Next unit', enabled=True), 20)
     tap(wait_for(lambda: find(ui(), text='Hide'), 15))
     wait_for(lambda: find(ui(), text='Controls'), 15)
     screen('05-collapsed-controls')

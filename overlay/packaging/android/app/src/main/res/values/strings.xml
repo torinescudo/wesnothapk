@@ -13,6 +13,7 @@
     <string name="phone_controls">Controls</string>
     <string name="phone_hide">Hide</string>
     <string name="phone_next">Next unit</string>
+    <string name="phone_move_action">Move / attack</string>
     <string name="phone_recruit">Recruit</string>
     <string name="phone_undo">Undo</string>
     <string name="phone_end_turn">End turn</string>
@@ -31,5 +32,5 @@
     <string name="phone_end_confirm">Finish your turn? Units with moves remaining will wait until your next turn.</string>
     <string name="phone_quit_confirm">Return to the main menu? Save your game first to keep your latest progress.</string>
     <string name="phone_help">Touch controls</string>
-    <string name="phone_help_text">Tap a unit to select it. Tap a destination to preview its route; tap it again to move. Tap an enemy to choose an attack. Drag to explore the map; use Zoom + and Zoom − for a closer view. Long press a hex for its context menu.\n\nNext unit finds another unit. Recruit opens recruitment when available. Undo reverses moves when the game allows it. End turn asks before finishing.\n\nHide collapses this bar to give the map more space. More contains objectives, saves, unit information, and preferences.</string>
+    <string name="phone_help_text">Tap your unit, then tap a destination to preview the route. Press Move / attack to move there. To attack, tap a reachable enemy and press Move / attack; you can review weapons and odds before committing.\n\nTap your selected unit again to deselect it, then drag to explore the map. Use Zoom + and Zoom − for a closer view. Long press a hex for its context menu.\n\nNext unit finds another unit. Recruit opens recruitment when available. Undo reverses moves when the game allows it. End turn asks before finishing.\n\nHide collapses this bar to give the map more space. More contains objectives, saves, unit information, and preferences.</string>
 </resources>

@@ -5,7 +5,7 @@ builds upstream revision `682b77a27215f673397bfd2c6f65b854a01a6df8`
 with the source changes in `overlay/`. It is a development build, not an official
 Wesnoth release.
 
-The phone interface adds large collapsible controls for next unit, recruitment,
+The phone interface adds large collapsible controls for move/attack confirmation, next unit, recruitment,
 undo, zoom, and confirmed end turn. More provides saves, objectives and unit
 information. Existing campaigns, multiplayer, add-ons, music, and game rules
 come from the full upstream source.

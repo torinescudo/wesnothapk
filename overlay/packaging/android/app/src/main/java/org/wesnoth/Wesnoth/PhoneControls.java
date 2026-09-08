@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.Build;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +23,14 @@ final class PhoneControls {
     static final String[] ACTIONS = {
         "cycle", "recruit", "undo", "endturn", "zoomin", "zoomout",
         "objectives", "save", "recall", "unitlist", "leader", "describeunit",
-        "preferences", "quit"
+        "preferences", "quit", "moveaction"
     };
     private static final int[] LABELS = {
         R.string.phone_next, R.string.phone_recruit, R.string.phone_undo,
         R.string.phone_end_turn, R.string.phone_zoom_in, R.string.phone_zoom_out,
         R.string.phone_objectives, R.string.phone_save, R.string.phone_recall,
         R.string.phone_units, R.string.phone_leader, R.string.phone_unit_info,
-        R.string.phone_preferences, R.string.phone_quit
+        R.string.phone_preferences, R.string.phone_quit, R.string.phone_move_action
     };
 
     private final WesnothActivity activity;
@@ -37,6 +38,7 @@ final class PhoneControls {
     private final LinearLayout bar;
     private final LinearLayout actions;
     private final Button toggle;
+    private final Button more;
     private final Button[] buttons = new Button[ACTIONS.length];
     private final SharedPreferences settings;
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -83,15 +85,15 @@ final class PhoneControls {
         scroll.addView(actions);
         bar.addView(scroll, new LinearLayout.LayoutParams(0,
             ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        for (int id : new int[] {0, 1, 2, 4, 5}) {
+        for (int id : new int[] {14, 0, 1, 2, 4, 5}) {
             final int action = id;
             buttons[id] = button(LABELS[id]);
             buttons[id].setOnClickListener(view -> send(action));
             actions.addView(buttons[id]);
         }
-        Button more = button(R.string.phone_more);
+        more = button(R.string.phone_more);
         more.setOnClickListener(view -> showMore());
-        actions.addView(more);
+        bar.addView(more);
         buttons[3] = button(LABELS[3]);
         buttons[3].setTextColor(Color.rgb(255, 216, 128));
         buttons[3].setOnClickListener(view -> confirm(3));
@@ -149,7 +151,7 @@ final class PhoneControls {
 
     void pause() {
         running = false;
-        handler.removeCallbacks(poll);
+        handler.removeCallbacksAndMessages(null);
         if (dialog != null) {
             dialog.dismiss();
             dialog = null;
@@ -163,6 +165,7 @@ final class PhoneControls {
             expanded ? R.string.phone_hide : R.string.phone_controls));
         ((View) actions.getParent()).setVisibility(expanded ? View.VISIBLE : View.GONE);
         buttons[3].setVisibility(expanded ? View.VISIBLE : View.GONE);
+        more.setVisibility(expanded ? View.VISIBLE : View.GONE);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bar.getLayoutParams();
         params.width = expanded ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT;
         params.addRule(RelativeLayout.ALIGN_PARENT_END);
@@ -181,9 +184,21 @@ final class PhoneControls {
     }
 
     private void send(int action) {
-        if (!WesnothActivity.nativeQueuePhoneAction(action)) {
-            Toast.makeText(activity, R.string.phone_unavailable, Toast.LENGTH_SHORT).show();
-        }
+        final long deadline = SystemClock.uptimeMillis() + 1000;
+        handler.post(new Runnable() {
+            @Override public void run() {
+                if (!running) return;
+                // Android 6 pauses SDL when a native dialog takes focus. Wait
+                // for focus and a fresh game snapshot after dismissing it.
+                if (activity.hasWindowFocus()
+                    && WesnothActivity.nativeQueuePhoneAction(action)) return;
+                if (SystemClock.uptimeMillis() < deadline) {
+                    handler.postDelayed(this, 50);
+                } else {
+                    Toast.makeText(activity, R.string.phone_unavailable, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void confirm(int action) {
@@ -199,7 +214,7 @@ final class PhoneControls {
         LinearLayout list = new LinearLayout(activity);
         list.setOrientation(LinearLayout.VERTICAL);
         int mask = WesnothActivity.nativeGetPhoneActions();
-        for (int id = 6; id < ACTIONS.length; ++id) {
+        for (int id = 6; id < 14; ++id) {
             final int action = id;
             Button entry = button(LABELS[id]);
             entry.setEnabled(mask >= 0 && (mask & (1 << id)) != 0);
