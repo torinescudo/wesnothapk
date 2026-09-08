@@ -201,6 +201,7 @@ public class InitActivity extends Activity {
 
 	// Note: wrap in runOnUiThread(()-> {...}) if called from another thread
 	private void showLaunchScreen() {
+		findViewById(R.id.settings_btn).setEnabled(true);
 		findViewById(R.id.download_progress).setVisibility(View.INVISIBLE);
 		findViewById(R.id.download_msg).setVisibility(View.INVISIBLE);
 		TextView lblTap = findViewById(R.id.tap_label);
@@ -211,6 +212,7 @@ public class InitActivity extends Activity {
 
 	// Note: wrap in runOnUiThread(()-> {...}) if called from another thread
 	private void showProgressScreen() {
+		findViewById(R.id.settings_btn).setEnabled(false);
 		TextView lblTap = findViewById(R.id.tap_label);
 		lblTap.clearAnimation();
 		lblTap.setVisibility(View.INVISIBLE);
@@ -266,7 +268,7 @@ public class InitActivity extends Activity {
 		findViewById(R.id.screen).setOnClickListener(null);
 		showProgressScreen();
 		TextView progressText = findViewById(R.id.download_msg);
-		progressText.setText("Connecting...");
+		progressText.setText(R.string.phone_preparing);
 
 		Executors.newSingleThreadExecutor().execute(() -> {
 			try {
@@ -574,7 +576,7 @@ public class InitActivity extends Activity {
 		String unpackMsg = max > 0
 			? String.format("Unpacking %s assets... (%s/%s)", type, progress+1, max)
 			: String.format("Unpacking %s assets... (%s)", type, progress+1);
-		updateProgress(unpackMsg, progress);
+		updateProgress(unpackMsg, max > 0 ? progress : -1);
 	}
 
 	private long downloadFile(String url, File destpath, long modified, String typeOrMsg, boolean isCustomMsg) {

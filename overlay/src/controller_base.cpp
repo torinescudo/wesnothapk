@@ -289,7 +289,7 @@ void controller_base::process()
 		if(!gui2::is_in_dialog() && have_keyboard_focus()) {
 			if(auto* executor = get_hotkey_command_executor()) {
 				for(unsigned i = 0; i < phone::actions.size(); ++i) {
-					if(executor->can_execute_command(hotkey::ui_command(phone::actions[i]))) {
+					if(executor->can_execute_action(phone::actions[i])) {
 						mask |= 1 << i;
 					}
 				}

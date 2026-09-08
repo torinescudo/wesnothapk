@@ -42,6 +42,11 @@ jobs:
         with:
           path: source/packaging/android/prefix
           key: ${{ steps.deps.outputs.cache-primary-key }}
+      - uses: actions/cache@v5
+        with:
+          path: source/packaging/android/build-native
+          key: phone-arm64-native-v1-${{ hashFiles('prepare-source.py', 'overlay/src/**') }}
+          restore-keys: phone-arm64-native-v1-
       - name: Build native game and validate Android code
         working-directory: source/packaging/android
         run: bash ./gradlew buildCppSource :app:testDebugUnitTest :app:lintDebug -PphoneAbis=arm64-v8a --console=plain

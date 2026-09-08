@@ -4,6 +4,7 @@
     <string name="phone_install_retry">Check that your phone has enough free storage, then retry. Your saved games are kept separately.</string>
     <string name="phone_retry">Retry</string>
     <string name="phone_game_data">Game content</string>
+    <string name="phone_preparing">Preparing your game…</string>
     <string name="phone_play">Play Wesnoth</string>
     <string name="phone_tutorial">Learn to play</string>
     <string name="phone_welcome">A world of strategy, ready for touch</string>
