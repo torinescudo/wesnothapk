@@ -95,7 +95,13 @@ def validate(allow_missing_art=False):
         digest = hashlib.sha256(data.encode()).hexdigest()
         assert digest not in maps, ('duplicate map', chapter['id'])
         maps.add(digest)
-        grid = [[s.strip() for s in row.split(',')] for row in data.strip().splitlines()]
+        serialized = [[s.strip() for s in row.split(',')] for row in data.strip().splitlines()]
+        # Native gamemap::read removes a one-cell off-board border. Verify the
+        # start markers against that coordinate convention before pathfinding.
+        for marker, position in [('1 ', chapter['start']), ('2 ', chapter['enemy'])]:
+            x, y = position
+            assert serialized[y][x].startswith(marker), (chapter['id'], 'map border offset', position)
+        grid = [row[1:-1] for row in serialized[1:-1]]
         assert len({len(row) for row in grid}) == 1
         for row in grid:
             for terrain in row:
@@ -108,6 +114,8 @@ def validate(allow_missing_art=False):
         reached = reachable(grid, chapter['start'])
         for destination in [chapter['enemy'],chapter['destination'],chapter['prison'],*chapter['points']]:
             assert tuple(destination) in reached, (chapter['id'],'unreachable',destination)
+        for x, y in [chapter['destination'],chapter['prison'],*chapter['points']]:
+            assert grid[y-1][x-1] in ('Rr', 'Uu'), (chapter['id'], 'objective is not on its land route', x, y)
         objective_counts[chapter['goal']] += 1
     units = parse(PACK/'units/units.cfg').get_all(tag='unit_type')
     assert len(units) == 22

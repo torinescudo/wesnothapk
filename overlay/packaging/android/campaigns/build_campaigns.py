@@ -259,7 +259,13 @@ def make_map(key, index, biome, goal):
     for p in [exithex, prison, *points]:
         set_tile(p, road)
     set_tile((prison[0], prison[1]+1), road)
-    return '\n'.join(', '.join(row) for row in tiles) + '\n', start, enemy, exithex, prison, points
+    # .map files include the off-board border. WML (1,1) is file cell [1][1],
+    # not [0][0] (gamemap::read applies border_size()). Keep authored coordinates
+    # in the playable interior and surround it with one decorative terrain ring.
+    bordered = [[row[0].split()[-1], *row, row[-1].split()[-1]] for row in tiles]
+    bordered.insert(0, [cell.split()[-1] for cell in bordered[0]])
+    bordered.append([cell.split()[-1] for cell in bordered[-1]])
+    return '\n'.join(', '.join(row) for row in bordered) + '\n', start, enemy, exithex, prison, points
 
 
 GOALS = {

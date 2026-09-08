@@ -120,6 +120,12 @@ local ok, failure = pcall(function()
     end }}
     local function move(id,x,y)
         wesnoth.wml_actions.move_unit {{ id=id, to_x=x, to_y=y, fire_event=true }}
+        local moved = wesnoth.units.get(id)
+        if moved then
+            assert(moved.x == x and moved.y == y, "objective hex was impassable or occupied: " .. x .. "," .. y)
+        else
+            assert(id == protected_id and ready, "moved unit disappeared")
+        end
     end
     if goal == "beacons" then
         local points = {points}
@@ -219,7 +225,7 @@ try:
     for campaign in manifest['campaigns']:
         expected = {s['id'] for s in manifest['scenarios'] if s['campaign'] == campaign['id']}
         launch(campaign['id'], skip_story=True)
-        deadline = time.monotonic() + 90*len(expected)
+        deadline = time.monotonic() + 90
         while time.monotonic() < deadline:
             text = logs()
             check_logs(text)
@@ -227,6 +233,7 @@ try:
             new_passes = observed-passed
             passed.update(observed)
             if new_passes:
+                deadline = time.monotonic()+90
                 print('PASS objectives', ', '.join(sorted(new_passes)), flush=True)
                 finish_scenario()
             if expected <= passed:
