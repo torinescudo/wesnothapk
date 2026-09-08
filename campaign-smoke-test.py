@@ -63,6 +63,26 @@ def logs():
     return adb('logcat','-d','-v','brief')
 
 
+def finish_scenario():
+    # Wesnoth leaves a victorious map open for inspection. Enter only dismisses
+    # dialogs; use the actual phone end-turn action to leave this linger phase.
+    deadline = time.monotonic()+30
+    while time.monotonic() < deadline:
+        nodes = ui()
+        end = next((n for n in nodes if n.get('text') in ('End turn','Terminar turno')
+                    and n.get('enabled') == 'true'), None)
+        if end is not None:
+            tap(end)
+            confirmation = next((n for n in ui() if n.get('resource-id') == 'android:id/button1'), None)
+            if confirmation is not None:
+                tap(confirmation)
+                time.sleep(2)
+                return
+        adb('shell','input','keyevent','KEYCODE_ENTER')
+        time.sleep(1)
+    raise AssertionError('Could not leave victorious map using the phone controls')
+
+
 def lua_hook(chapter):
     campaign, sid, goal = chapter['campaign'],chapter['id'],chapter['goal']
     x,y = chapter['destination']
@@ -203,8 +223,16 @@ try:
         while time.monotonic() < deadline:
             text = logs()
             check_logs(text)
-            passed.update(re.findall(r'CBM_PASS:(CBM_\w+_\d{2})',text))
+            observed = set(re.findall(r'CBM_PASS:(CBM_\w+_\d{2})',text))
+            new_passes = observed-passed
+            passed.update(observed)
+            if new_passes:
+                print('PASS objectives', ', '.join(sorted(new_passes)), flush=True)
+                finish_scenario()
             if expected <= passed:
+                for _ in range(4):
+                    adb('shell','input','keyevent','KEYCODE_ENTER')
+                    time.sleep(1)
                 break
             adb('shell','input','keyevent','KEYCODE_ENTER')
             time.sleep(1)
