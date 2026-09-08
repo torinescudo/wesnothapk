@@ -26,7 +26,11 @@ def ui():
     xml = adb('shell', 'cat', '/sdcard/phone-ui.xml', check=False)
     (OUTPUT / 'latest-ui.xml').write_text(xml)
     try:
-        return list(ET.fromstring(xml).iter('node'))
+        nodes = list(ET.fromstring(xml).iter('node'))
+        if any(n.get('resource-id') == 'android:id/immersive_cling_title' for n in nodes):
+            tap(next(n for n in nodes if n.get('resource-id') == 'android:id/ok'))
+            return []
+        return nodes
     except ET.ParseError:
         return []
 

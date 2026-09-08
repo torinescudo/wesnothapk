@@ -2,6 +2,7 @@ name: Android emulator gameplay checks
 on:
   push:
     branches: [main]
+    paths: ['overlay/**', 'prepare-source.py']
   workflow_dispatch:
 permissions:
   contents: read
