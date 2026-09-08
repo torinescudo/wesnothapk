@@ -171,6 +171,7 @@ try:
     assert all(any(c['title'] in text for text in titles) for c in manifest['campaigns'])
     screen('spanish-campaign-selector-scrolled')
     for campaign in manifest['campaigns']:
+        print('Opening', campaign['id'], flush=True)
         launch(campaign['id'])
         deadline = time.monotonic()+140
         while time.monotonic() < deadline:
@@ -184,6 +185,7 @@ try:
             raise AssertionError('Campaign did not become playable: '+campaign['id'])
         screen('opening-'+campaign['key'])
         check_logs(logs())
+        print('PASS opening', campaign['id'], flush=True)
     # Add automation only to the emulator's expanded campaign files.
     adb('shell','am','force-stop',PACKAGE)
     for chapter in manifest['scenarios']:

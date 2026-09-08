@@ -66,12 +66,24 @@ def wait_for(predicate, timeout):
 
 try:
     adb('install', '-r', sys.argv[1])
+    # The delayed Android immersive-mode hint can consume the first tap after
+    # a fresh install. It is system UI, not one of the game's controls.
+    adb('shell', 'settings', 'put', 'secure', 'immersive_mode_confirmations', 'confirmed')
     adb('shell', 'svc', 'wifi', 'disable')
     adb('shell', 'svc', 'data', 'disable')
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
     tutorial = wait_for(lambda: find(ui(), resource='phone_tutorial'), 40)
     screen('01-launcher')
-    tap(tutorial)
+    for attempt in range(4):
+        tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15))
+        time.sleep(2)
+        if 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'):
+            break
+        if find(ui(), resource='download_msg') is not None:
+            break
+    else:
+        raise AssertionError('Tutorial button did not start data preparation')
+    print('Launcher started bundled-data preparation', flush=True)
     # Installation, native startup, and initial scenario loading are real here.
     wait_for(lambda: 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'), 600)
     screen('02-tutorial-loaded')
@@ -84,6 +96,7 @@ try:
     if find(ui(), text='Next unit', enabled=True) is None:
         raise AssertionError('Tutorial did not reach an interactive player turn')
     screen('03-interactive-game')
+    print('Native tutorial reached an interactive turn', flush=True)
     tap(find(ui(), text='More'))
     wait_for(lambda: find(ui(), text='Objectives'), 15)
     screen('04-touch-menu')
