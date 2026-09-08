@@ -49,7 +49,7 @@ def main():
     with ASSET.open('rb') as stream:
         digest = hashlib.file_digest(stream,'sha256').hexdigest()
     ASSET.with_suffix('.zip.sha256').write_text(digest+'  gamedata.zip\n',encoding='ascii')
-    print(f'Updated complete game data: {ASSET.stat().st_size():,} bytes; SHA-256 {digest}')
+    print(f'Updated complete game data: {ASSET.stat().st_size:,} bytes; SHA-256 {digest}')
 
 
 if __name__ == '__main__':
