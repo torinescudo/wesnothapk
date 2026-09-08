@@ -90,8 +90,12 @@ public class WesnothActivity extends SDLActivity
 	 */
 	@Override
 	protected String[] getArguments() {
-		String resStr = "-r " + getFullscreenResolution(this);
-		return new String[] { resStr };
+		if (getIntent().getBooleanExtra("phone_tutorial", false)) {
+			return new String[] { "-r", getFullscreenResolution(this),
+				"--campaign=Heir_To_The_Throne_Classic", "--campaign-difficulty=1",
+				"--campaign-scenario=tutorial", "--campaign-skip-story" };
+		}
+		return new String[] { "-r", getFullscreenResolution(this) };
 	}
 
 	/**

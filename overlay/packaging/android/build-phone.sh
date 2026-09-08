@@ -17,5 +17,9 @@ export DOWNLOADDIR="${DOWNLOADDIR:-$PWD/download}"
 export BUILDDIR="${BUILDDIR:-$PWD/build}"
 export BUILDDIR_PREFIX="${BUILDDIR_PREFIX:-$PWD/build-native}"
 abis="${ARCHS// /,}"
-bash ./gradlew buildCppDepends buildCppSource :app:assembleDebug -PphoneAbis="$abis"
+bash ./gradlew buildCppDepends buildCppSource :app:testDebugUnitTest :app:lintDebug -PphoneAbis="$abis"
 python3 package-phone-data.py
+mkdir -p app/src/main/assets
+cp dist/wesnoth-phone-data.zip app/src/main/assets/gamedata.zip
+cp dist/wesnoth-phone-data.zip.sha256 app/src/main/assets/gamedata.zip.sha256
+bash ./gradlew :app:assembleDebug -PphoneAbis="$abis"

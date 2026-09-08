@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Wesnoth Phone</string>
+    <string name="phone_install_failed">Game setup could not finish</string>
+    <string name="phone_install_retry">Check that your phone has enough free storage, then retry. Your saved games are kept separately.</string>
+    <string name="phone_retry">Retry</string>
+    <string name="phone_game_data">Game content</string>
+    <string name="phone_play">Play Wesnoth</string>
+    <string name="phone_tutorial">Learn to play</string>
+    <string name="phone_welcome">A world of strategy, ready for touch</string>
+    <string name="phone_first_launch">The first launch prepares the included campaigns and music. No extra download is needed.</string>
+    <string name="phone_settings">Game data and save settings</string>
     <string name="phone_controls">Controls</string>
     <string name="phone_hide">Hide</string>
     <string name="phone_next">Next unit</string>

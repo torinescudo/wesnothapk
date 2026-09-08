@@ -70,6 +70,7 @@ public class InitActivity extends Activity {
 
 	private File dataDir;
 	private Properties status = new Properties();
+	private boolean launchTutorial;
 
 	private String toSizeString(long bytes) {
 		return String.format("%4.2f MB", (bytes * 1.0f) / (1e6));
@@ -203,8 +204,9 @@ public class InitActivity extends Activity {
 		findViewById(R.id.download_progress).setVisibility(View.INVISIBLE);
 		findViewById(R.id.download_msg).setVisibility(View.INVISIBLE);
 		TextView lblTap = findViewById(R.id.tap_label);
-		lblTap.setText("Tap to Start");
-		lblTap.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade));
+		lblTap.setText(R.string.phone_play);
+		lblTap.setVisibility(View.VISIBLE);
+		findViewById(R.id.phone_tutorial).setVisibility(View.VISIBLE);
 	}
 
 	// Note: wrap in runOnUiThread(()-> {...}) if called from another thread
@@ -212,6 +214,7 @@ public class InitActivity extends Activity {
 		TextView lblTap = findViewById(R.id.tap_label);
 		lblTap.clearAnimation();
 		lblTap.setVisibility(View.INVISIBLE);
+		findViewById(R.id.phone_tutorial).setVisibility(View.GONE);
 		findViewById(R.id.download_msg).setVisibility(View.VISIBLE);
 		findViewById(R.id.download_progress).setVisibility(View.VISIBLE);
 	}
@@ -248,7 +251,14 @@ public class InitActivity extends Activity {
 	private void initialize() {
 		runOnUiThread(()-> {
 			showLaunchScreen();
-			findViewById(R.id.screen).setOnClickListener(e -> initializeAssets());
+			findViewById(R.id.tap_label).setOnClickListener(e -> {
+				launchTutorial = false;
+				initializeAssets();
+			});
+			findViewById(R.id.phone_tutorial).setOnClickListener(e -> {
+				launchTutorial = true;
+				initializeAssets();
+			});
 		});
 	}
 
@@ -259,6 +269,23 @@ public class InitActivity extends Activity {
 		progressText.setText("Connecting...");
 
 		Executors.newSingleThreadExecutor().execute(() -> {
+			try {
+				if (installBundledData()) {
+					extractNetworkCertificate();
+					storeStatus(status);
+					runOnUiThread(() -> launchWesnoth());
+					return;
+				}
+			} catch (IOException failure) {
+				Log.e("InitActivity", "Bundled data installation failed", failure);
+				runOnUiThread(() -> new AlertDialog.Builder(this)
+					.setTitle(R.string.phone_install_failed)
+					.setMessage(R.string.phone_install_retry)
+					.setPositiveButton(R.string.phone_retry, (d, which) -> initialize())
+					.setNegativeButton(android.R.string.cancel, (d, which) -> finish())
+					.show());
+				return;
+			}
 			//TODO Update mechanism when patch is available.
 			if (!Boolean.parseBoolean(status.getProperty("manual_install", "false"))) {
 				HashMap<String, String> excluded = new HashMap<String, String>();
@@ -361,6 +388,7 @@ public class InitActivity extends Activity {
 		progressText.setText("Launching Wesnoth...");
 		Log.d("InitActivity", "Launch wesnoth");
 		Intent launchIntent = new Intent(this, WesnothActivity.class);
+		launchIntent.putExtra("phone_tutorial", launchTutorial);
 		launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(launchIntent);
 		finish();
@@ -422,6 +450,8 @@ public class InitActivity extends Activity {
 				status.setProperty("manual_install", "true");
 				// if we have a custom status.properties bundled inside, merge it with `status`.
 				status.putAll(initStatusFile(new File(dataDir, "status.properties")));
+				status.setProperty("manual_install", "true");
+				status.remove("bundled_data");
 				storeStatus(status);
 				msg = "Installed!";
 			} else {
@@ -616,6 +646,40 @@ public class InitActivity extends Activity {
 		return 0;
 	}
 
+	/** A completed installation is keyed by the checksum of the bundled archive. */
+	private boolean installBundledData() throws IOException {
+		if (Boolean.parseBoolean(status.getProperty("manual_install", "false"))
+			&& !status.containsKey("bundled_data")) return false;
+		String checksum;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+			getAssets().open("gamedata.zip.sha256"), StandardCharsets.UTF_8))) {
+			String line = reader.readLine();
+			if (line == null || !line.matches("[0-9a-f]{64}\\s+.+")) {
+				throw new IOException("Invalid bundled data identity");
+			}
+			checksum = line.substring(0, 64);
+		} catch (FileNotFoundException absent) {
+			return false; // Supports small development APKs with manual data import.
+		}
+		if (checksum.equals(status.getProperty("bundled_data"))
+			&& new File(dataDir, "data/_main.cfg").isFile()
+			&& new File(dataDir, "fonts").isDirectory()) return true;
+
+		try (InputStream archive = getAssets().open("gamedata.zip")) {
+			// Only game data is replaced. Saves and preferences are sibling directories.
+			GameDataFiles.deleteTree(dataDir);
+			if (!dataDir.mkdirs()) throw new IOException("Cannot create game-data directory");
+			status.clear();
+			if (!unpackArchive(archive, dataDir, getString(R.string.phone_game_data))) {
+				throw new IOException("Cannot unpack bundled game data");
+			}
+			status.setProperty("bundled_data", checksum);
+			status.setProperty("manual_install", "false");
+			storeStatus(status);
+			return true;
+		}
+	}
+
 	private boolean unpackArchive(Uri uri, File destdir, String type) {
 		Log.d("Unpack", "Start");
 
@@ -626,7 +690,10 @@ public class InitActivity extends Activity {
 			Log.e("Unpack", "File not found exception", fe);
 			return false;
 		}
+		return zipstream != null && unpackArchive(zipstream, destdir, type);
+	}
 
+	private boolean unpackArchive(InputStream zipstream, File destdir, String type) {
 		try (ZipInputStream zf = new ZipInputStream(zipstream)) {
 			AtomicInteger progress = new AtomicInteger(1);
 
@@ -634,7 +701,10 @@ public class InitActivity extends Activity {
 
 			ZipEntry ze;
 			while ((ze = zf.getNextEntry()) != null) {
-				runOnUiThread(() -> updateUnpackProgress(progress.get(), 0, type));
+				if (progress.get() % 100 == 1) {
+					final int completed = progress.get();
+					runOnUiThread(() -> updateUnpackProgress(completed, 0, type));
+				}
 
 				File destination = GameDataFiles.resolve(destdir, ze.getName());
 				File directory = ze.isDirectory() ? destination : destination.getParentFile();
@@ -647,7 +717,6 @@ public class InitActivity extends Activity {
 					}
 				}
 
-				Log.d("Unpack", "Unpacking " + type + ": " + progress.get());
 				progress.incrementAndGet();
 			}
 			

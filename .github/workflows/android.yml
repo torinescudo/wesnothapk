@@ -44,9 +44,17 @@ jobs:
           key: ${{ steps.deps.outputs.cache-primary-key }}
       - name: Build native game and validate Android code
         working-directory: source/packaging/android
-        run: bash ./gradlew buildCppSource :app:testDebugUnitTest :app:lintDebug :app:assembleDebug -PphoneAbis=arm64-v8a --console=plain
+        run: bash ./gradlew buildCppSource :app:testDebugUnitTest :app:lintDebug -PphoneAbis=arm64-v8a --console=plain
       - name: Package all game data and translations
         run: python3 source/packaging/android/package-phone-data.py
+      - name: Assemble self-contained APK
+        working-directory: source/packaging/android
+        run: |
+          mkdir -p app/src/main/assets
+          cp dist/wesnoth-phone-data.zip app/src/main/assets/gamedata.zip
+          cp dist/wesnoth-phone-data.zip.sha256 app/src/main/assets/gamedata.zip.sha256
+          bash ./gradlew :app:assembleDebug -PphoneAbis=arm64-v8a --console=plain
+          sha256sum app/build/outputs/apk/debug/app-arm64-v8a-debug.apk > dist/apk.sha256
       - uses: actions/upload-artifact@v7
         with:
           name: wesnoth-phone-arm64
@@ -54,8 +62,7 @@ jobs:
           compression-level: 0
           path: |
             source/packaging/android/app/build/outputs/apk/debug/app-arm64-v8a-debug.apk
-            source/packaging/android/dist/wesnoth-phone-data.zip
-            source/packaging/android/dist/wesnoth-phone-data.zip.sha256
+            source/packaging/android/dist/apk.sha256
           if-no-files-found: error
       - uses: actions/upload-artifact@v7
         if: always()
