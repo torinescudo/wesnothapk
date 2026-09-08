@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+}
+
+def phoneAbis = providers.gradleProperty('phoneAbis')
+    .orElse('x86_64,armeabi-v7a,arm64-v8a,x86').get().split(',').collect { it.trim() }
+if (phoneAbis.any { !(it in ['x86_64', 'armeabi-v7a', 'arm64-v8a', 'x86']) }) {
+    throw new GradleException('Unsupported ABI in -PphoneAbis')
+}
+
+// Java compilation is useful on Windows, but an APK needs the actual game.
+def verifyPhoneNativeLibraries = tasks.register('verifyPhoneNativeLibraries') {
+    mustRunAfter rootProject.tasks.named('buildCppSource')
+    doLast {
+        phoneAbis.each { abi ->
+            ['libmain.so', 'libSDL3.so', 'libc++_shared.so'].each { library ->
+                def nativeFile = file("src/main/jniLibs/${abi}/${library}")
+                if (!nativeFile.isFile() || nativeFile.length() == 0) {
+                    throw new GradleException("Missing ${nativeFile}. Run buildCppDepends and buildCppSource on Linux; see PHONE_PORT.md.")
+                }
+            }
+        }
+    }
+}
+tasks.configureEach {
+    if (name.startsWith('merge') && name.endsWith('NativeLibs')) {
+        dependsOn verifyPhoneNativeLibraries
+    }
+}
+
+android {
+    namespace 'org.wesnoth.Wesnoth'
+    compileSdk 35
+    ndkVersion '26.3.11579264'
+
+    defaultConfig {
+        applicationId "org.wesnoth.phone"
+        minSdk 23
+        targetSdk 35
+        versionCode 1192700 // version 1.xx.yy, patch zz
+        versionName "1.19.27+dev"
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+    
+    signingConfigs {
+        release {
+            storeFile = file("wesnoth.keystore")
+            storePassword System.getenv("SIGNING_STORE_PASSWORD")
+            keyAlias System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            ndk {
+                debugSymbolLevel 'NONE'
+            }
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include(*phoneAbis)
+            universalApk false
+        }
+    }
+    
+    // Use custom APK versionCode for each ABI
+    def abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2, 'x86': 3, 'x86_64': 4]
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def abiCode = abiCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0)
+            output.versionCodeOverride = defaultConfig.versionCode * 1000 + abiCode
+        }
+    }
+
+    dependencies {
+        implementation "androidx.core:core:1.16.0"
+        implementation "androidx.documentfile:documentfile:1.1.0"
+        testImplementation 'junit:junit:4.13.2'
+    }
+}

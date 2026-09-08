@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Wesnoth Phone</string>
+    <string name="phone_controls">Controls</string>
+    <string name="phone_hide">Hide</string>
+    <string name="phone_next">Next unit</string>
+    <string name="phone_recruit">Recruit</string>
+    <string name="phone_undo">Undo</string>
+    <string name="phone_end_turn">End turn</string>
+    <string name="phone_zoom_in">Zoom +</string>
+    <string name="phone_zoom_out">Zoom −</string>
+    <string name="phone_more">More</string>
+    <string name="phone_objectives">Objectives</string>
+    <string name="phone_save">Save game</string>
+    <string name="phone_recall">Recall</string>
+    <string name="phone_units">Unit list</string>
+    <string name="phone_leader">Find leader</string>
+    <string name="phone_unit_info">Unit details</string>
+    <string name="phone_preferences">Preferences</string>
+    <string name="phone_quit">Quit to menu</string>
+    <string name="phone_unavailable">This action is not available right now.</string>
+    <string name="phone_end_confirm">Finish your turn? Units with moves remaining will wait until your next turn.</string>
+    <string name="phone_quit_confirm">Return to the main menu? Save your game first to keep your latest progress.</string>
+    <string name="phone_help">Touch controls</string>
+    <string name="phone_help_text">Tap a unit to select it. Tap a destination to preview its route; tap it again to move. Tap an enemy to choose an attack. Drag to explore the map; use Zoom + and Zoom − for a closer view. Long press a hex for its context menu.\n\nNext unit finds another unit. Recruit opens recruitment when available. Undo reverses moves when the game allows it. End turn asks before finishing.\n\nHide collapses this bar to give the map more space. More contains objectives, saves, unit information, and preferences.</string>
+</resources>

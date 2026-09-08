@@ -1,0 +1,64 @@
+name: Build Wesnoth Phone APK
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: wesnoth-phone-build
+  cancel-in-progress: false
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    container: wesnoth/wesnoth:android
+    timeout-minutes: 180
+    env:
+      API: '23'
+      ARCHS: arm64-v8a
+      PREFIXDIR: ${{ github.workspace }}/source/packaging/android/prefix
+      DOWNLOADDIR: ${{ github.workspace }}/source/packaging/android/download
+      BUILDDIR: ${{ github.workspace }}/source/packaging/android/build-deps
+      BUILDDIR_PREFIX: ${{ github.workspace }}/source/packaging/android/build-native
+    steps:
+      - uses: actions/checkout@v6
+      - name: Prepare pinned full source
+        run: python3 prepare-source.py
+      - name: Validate phone protocol and data packaging
+        run: python3 -m unittest discover -s source/packaging/android/tests
+      - name: Install target Android platform
+        run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager 'platforms;android-35' 'build-tools;34.0.0'
+      - uses: actions/cache/restore@v5
+        id: deps
+        with:
+          path: source/packaging/android/prefix
+          key: phone-arm64-deps-v1-${{ hashFiles('source/packaging/android/build-android-dependencies/*') }}
+      - name: Compile Android dependencies
+        if: steps.deps.outputs.cache-hit != 'true'
+        working-directory: source/packaging/android
+        run: bash ./gradlew buildCppDepends --console=plain
+      - uses: actions/cache/save@v5
+        if: steps.deps.outputs.cache-hit != 'true'
+        with:
+          path: source/packaging/android/prefix
+          key: ${{ steps.deps.outputs.cache-primary-key }}
+      - name: Build native game and validate Android code
+        working-directory: source/packaging/android
+        run: bash ./gradlew buildCppSource :app:testDebugUnitTest :app:lintDebug :app:assembleDebug -PphoneAbis=arm64-v8a --console=plain
+      - name: Package all game data and translations
+        run: python3 source/packaging/android/package-phone-data.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: wesnoth-phone-arm64
+          retention-days: 14
+          compression-level: 0
+          path: |
+            source/packaging/android/app/build/outputs/apk/debug/app-arm64-v8a-debug.apk
+            source/packaging/android/dist/wesnoth-phone-data.zip
+            source/packaging/android/dist/wesnoth-phone-data.zip.sha256
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: validation-reports
+          path: source/packaging/android/app/build/reports/
