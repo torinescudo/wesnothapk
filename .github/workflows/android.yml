@@ -2,6 +2,7 @@ name: Build Wesnoth Phone APK
 on:
   push:
     branches: [main]
+    paths: ['overlay/**', 'prepare-source.py', '.github/workflows/android.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -60,6 +61,34 @@ jobs:
           cp dist/wesnoth-phone-data.zip.sha256 app/src/main/assets/gamedata.zip.sha256
           bash ./gradlew :app:assembleDebug -PphoneAbis=arm64-v8a --console=plain
           sha256sum app/build/outputs/apk/debug/app-arm64-v8a-debug.apk > dist/apk.sha256
+          split -b 400M app/build/outputs/apk/debug/app-arm64-v8a-debug.apk dist/phone-apk.part-
+      # Smaller artifacts also support clients with a 512 MB download limit.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: phone-apk-part-aa
+          path: source/packaging/android/dist/phone-apk.part-aa
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: phone-apk-part-ab
+          path: source/packaging/android/dist/phone-apk.part-ab
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        if: hashFiles('source/packaging/android/dist/phone-apk.part-ac') != ''
+        with:
+          name: phone-apk-part-ac
+          path: source/packaging/android/dist/phone-apk.part-ac
+          compression-level: 0
+          retention-days: 7
+      - uses: actions/upload-artifact@v7
+        with:
+          name: phone-native-arm64
+          path: source/packaging/android/app/src/main/jniLibs/arm64-v8a/
+          retention-days: 14
       - uses: actions/upload-artifact@v7
         with:
           name: wesnoth-phone-arm64
