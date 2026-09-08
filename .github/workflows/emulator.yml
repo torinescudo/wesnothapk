@@ -64,7 +64,7 @@ jobs:
   smoke:
     needs: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v8
@@ -84,9 +84,13 @@ jobs:
           profile: pixel_2
           ram-size: 4096M
           disk-size: 8G
-          script: python3 smoke-test.py apk/app-x86_64-debug.apk
+          script: |
+            python3 smoke-test.py apk/app-x86_64-debug.apk
+            python3 campaign-smoke-test.py
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: phone-screenshots-and-logs
-          path: smoke-results/
+          path: |
+            smoke-results/
+            campaign-results/

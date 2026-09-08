@@ -37,8 +37,8 @@ android {
         applicationId "org.wesnoth.phone"
         minSdk 23
         targetSdk 35
-        versionCode 1192700 // version 1.xx.yy, patch zz
-        versionName "1.19.27+dev"
+        versionCode 1192701 // phone campaign content revision
+        versionName "1.19.27+brasa-marea.1"
     }
 
     buildFeatures {

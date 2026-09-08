@@ -6,6 +6,7 @@ import hashlib
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import zipfile
 
@@ -13,6 +14,9 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def package(output, english_only=False):
+    campaign_check = ROOT / 'packaging/android/campaigns/validate_campaigns.py'
+    if (ROOT / 'data/campaigns/Brasa_y_Marea').is_dir():
+        subprocess.run([sys.executable, str(campaign_check)], check=True)
     if not english_only and not shutil.which('msgfmt'):
         raise SystemExit('msgfmt is required for translations (install GNU gettext). '
                          'Use --english-only only for a development data archive.')

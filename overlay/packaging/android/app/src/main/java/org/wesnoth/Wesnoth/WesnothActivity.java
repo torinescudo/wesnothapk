@@ -90,6 +90,20 @@ public class WesnothActivity extends SDLActivity
 	 */
 	@Override
 	protected String[] getArguments() {
+		String campaign = getIntent().getStringExtra("phone_campaign");
+		if (PhoneCampaigns.contains(campaign)) {
+			// Arbitrary CLI arguments are never accepted from an Android Intent.
+			// A debug-only scenario override supports testing every bundled chapter.
+			String scenario = getIntent().getStringExtra("phone_scenario");
+			if (BuildConfig.DEBUG && scenario != null
+					&& scenario.matches(java.util.regex.Pattern.quote(campaign) + "_[0-9]{2}")) {
+				return new String[] { "-r", getFullscreenResolution(this),
+					"--campaign=" + campaign, "--campaign-difficulty=1",
+					"--campaign-scenario=" + scenario, "--campaign-skip-story" };
+			}
+			return new String[] { "-r", getFullscreenResolution(this),
+				"--campaign=" + campaign, "--campaign-difficulty=1" };
+		}
 		if (getIntent().getBooleanExtra("phone_tutorial", false)) {
 			return new String[] { "-r", getFullscreenResolution(this),
 				"--campaign=Heir_To_The_Throne_Classic", "--campaign-difficulty=1",

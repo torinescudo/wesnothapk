@@ -1,0 +1,2158 @@
+{
+  "campaigns": [
+    {
+      "id": "CBM_alba",
+      "key": "alba",
+      "title": "La última luz de Valdara",
+      "scenarios": 3,
+      "first": "CBM_alba_01",
+      "define": "CAMPAIGN_CBM_ALBA"
+    },
+    {
+      "id": "CBM_sira",
+      "key": "sira",
+      "title": "Los que escuchan la piedra",
+      "scenarios": 5,
+      "first": "CBM_sira_01",
+      "define": "CAMPAIGN_CBM_SIRA"
+    },
+    {
+      "id": "CBM_iria",
+      "key": "iria",
+      "title": "La deuda del cielo",
+      "scenarios": 7,
+      "first": "CBM_iria_01",
+      "define": "CAMPAIGN_CBM_IRIA"
+    },
+    {
+      "id": "CBM_maura",
+      "key": "maura",
+      "title": "El trono de ceniza",
+      "scenarios": 9,
+      "first": "CBM_maura_01",
+      "define": "CAMPAIGN_CBM_MAURA"
+    },
+    {
+      "id": "CBM_nerea",
+      "key": "nerea",
+      "title": "Las mareas sin nombre",
+      "scenarios": 12,
+      "first": "CBM_nerea_01",
+      "define": "CAMPAIGN_CBM_NEREA"
+    },
+    {
+      "id": "CBM_darian",
+      "key": "darian",
+      "title": "El pacto de las siete brasas",
+      "scenarios": 16,
+      "first": "CBM_darian_01",
+      "define": "CAMPAIGN_CBM_DARIAN"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "CBM_alba_01",
+      "campaign": "CBM_alba",
+      "title": "Las barcas vacías",
+      "goal": "rescue",
+      "next": "CBM_alba_02",
+      "map": "alba_01.map",
+      "biome": "coast",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/alba/01.cfg"
+    },
+    {
+      "id": "CBM_alba_02",
+      "campaign": "CBM_alba",
+      "title": "Tres fuegos en la niebla",
+      "goal": "beacons",
+      "next": "CBM_alba_03",
+      "map": "alba_02.map",
+      "biome": "coast",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/alba/02.cfg"
+    },
+    {
+      "id": "CBM_alba_03",
+      "campaign": "CBM_alba",
+      "title": "El amanecer prestado",
+      "goal": "survive",
+      "next": "null",
+      "map": "alba_03.map",
+      "biome": "harbor",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/alba/03.cfg"
+    },
+    {
+      "id": "CBM_sira_01",
+      "campaign": "CBM_sira",
+      "title": "La primera grieta",
+      "goal": "escape",
+      "next": "CBM_sira_02",
+      "map": "sira_01.map",
+      "biome": "cave",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/sira/01.cfg"
+    },
+    {
+      "id": "CBM_sira_02",
+      "campaign": "CBM_sira",
+      "title": "Nombres bajo el martillo",
+      "goal": "rescue",
+      "next": "CBM_sira_03",
+      "map": "sira_02.map",
+      "biome": "quarry",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/sira/02.cfg"
+    },
+    {
+      "id": "CBM_sira_03",
+      "campaign": "CBM_sira",
+      "title": "El consejo inmóvil",
+      "goal": "beacons",
+      "next": "CBM_sira_04",
+      "map": "sira_03.map",
+      "biome": "cave",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/sira/03.cfg"
+    },
+    {
+      "id": "CBM_sira_04",
+      "campaign": "CBM_sira",
+      "title": "El peso de los vivos",
+      "goal": "escort",
+      "next": "CBM_sira_05",
+      "map": "sira_04.map",
+      "biome": "quarry",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/sira/04.cfg"
+    },
+    {
+      "id": "CBM_sira_05",
+      "campaign": "CBM_sira",
+      "title": "Una montaña, muchas voces",
+      "goal": "survive",
+      "next": "null",
+      "map": "sira_05.map",
+      "biome": "cave",
+      "start": [
+        3,
+        10
+      ],
+      "enemy": [
+        21,
+        10
+      ],
+      "destination": [
+        22,
+        16
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/sira/05.cfg"
+    },
+    {
+      "id": "CBM_iria_01",
+      "campaign": "CBM_iria",
+      "title": "Un mediodía negro",
+      "goal": "survive",
+      "next": "CBM_iria_02",
+      "map": "iria_01.map",
+      "biome": "forest",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/iria/01.cfg"
+    },
+    {
+      "id": "CBM_iria_02",
+      "campaign": "CBM_iria",
+      "title": "Los molinos sin sombra",
+      "goal": "beacons",
+      "next": "CBM_iria_03",
+      "map": "iria_02.map",
+      "biome": "plains",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/iria/02.cfg"
+    },
+    {
+      "id": "CBM_iria_03",
+      "campaign": "CBM_iria",
+      "title": "El prisionero del viento",
+      "goal": "rescue",
+      "next": "CBM_iria_04",
+      "map": "iria_03.map",
+      "biome": "ruins",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/iria/03.cfg"
+    },
+    {
+      "id": "CBM_iria_04",
+      "campaign": "CBM_iria",
+      "title": "La garganta de las alas",
+      "goal": "escape",
+      "next": "CBM_iria_05",
+      "map": "iria_04.map",
+      "biome": "mountain",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/iria/04.cfg"
+    },
+    {
+      "id": "CBM_iria_05",
+      "campaign": "CBM_iria",
+      "title": "El pueblo que sostuvo el cielo",
+      "goal": "escort",
+      "next": "CBM_iria_06",
+      "map": "iria_05.map",
+      "biome": "plains",
+      "start": [
+        3,
+        10
+      ],
+      "enemy": [
+        21,
+        10
+      ],
+      "destination": [
+        22,
+        16
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/iria/05.cfg"
+    },
+    {
+      "id": "CBM_iria_06",
+      "campaign": "CBM_iria",
+      "title": "La torre de los acreedores",
+      "goal": "conquer",
+      "next": "CBM_iria_07",
+      "map": "iria_06.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        12
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/iria/06.cfg"
+    },
+    {
+      "id": "CBM_iria_07",
+      "campaign": "CBM_iria",
+      "title": "Donde termina la sombra",
+      "goal": "beacons",
+      "next": "null",
+      "map": "iria_07.map",
+      "biome": "harbor",
+      "start": [
+        14,
+        15
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "file": "scenarios/iria/07.cfg"
+    },
+    {
+      "id": "CBM_maura_01",
+      "campaign": "CBM_maura",
+      "title": "El archivo prohibido",
+      "goal": "beacons",
+      "next": "CBM_maura_02",
+      "map": "maura_01.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/01.cfg"
+    },
+    {
+      "id": "CBM_maura_02",
+      "campaign": "CBM_maura",
+      "title": "Pan para los obedientes",
+      "goal": "conquer",
+      "next": "CBM_maura_03",
+      "map": "maura_02.map",
+      "biome": "plains",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/02.cfg"
+    },
+    {
+      "id": "CBM_maura_03",
+      "campaign": "CBM_maura",
+      "title": "El testigo incómodo",
+      "goal": "rescue",
+      "next": "CBM_maura_04",
+      "map": "maura_03.map",
+      "biome": "forest",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/maura/03.cfg"
+    },
+    {
+      "id": "CBM_maura_04",
+      "campaign": "CBM_maura",
+      "title": "La calzada del tributo",
+      "goal": "escort",
+      "next": "CBM_maura_05",
+      "map": "maura_04.map",
+      "biome": "mountain",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/04.cfg"
+    },
+    {
+      "id": "CBM_maura_05",
+      "campaign": "CBM_maura",
+      "title": "La noche de los juramentos",
+      "goal": "survive",
+      "next": "CBM_maura_06",
+      "map": "maura_05.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        10
+      ],
+      "enemy": [
+        21,
+        10
+      ],
+      "destination": [
+        22,
+        16
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/05.cfg"
+    },
+    {
+      "id": "CBM_maura_06",
+      "campaign": "CBM_maura",
+      "title": "Las tres campanas",
+      "goal": "beacons",
+      "next": "CBM_maura_07",
+      "map": "maura_06.map",
+      "biome": "harbor",
+      "start": [
+        3,
+        12
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/06.cfg"
+    },
+    {
+      "id": "CBM_maura_07",
+      "campaign": "CBM_maura",
+      "title": "El precio de una tregua",
+      "goal": "conquer",
+      "next": "CBM_maura_08",
+      "map": "maura_07.map",
+      "biome": "forest",
+      "start": [
+        14,
+        15
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "file": "scenarios/maura/07.cfg"
+    },
+    {
+      "id": "CBM_maura_08",
+      "campaign": "CBM_maura",
+      "title": "La puerta sin retorno",
+      "goal": "escape",
+      "next": "CBM_maura_09",
+      "map": "maura_08.map",
+      "biome": "cave",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        16
+      ],
+      "destination": [
+        20,
+        18
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/08.cfg"
+    },
+    {
+      "id": "CBM_maura_09",
+      "campaign": "CBM_maura",
+      "title": "Una corona sin herederos",
+      "goal": "conquer",
+      "next": "null",
+      "map": "maura_09.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        8
+      ],
+      "enemy": [
+        21,
+        8
+      ],
+      "destination": [
+        22,
+        12
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/maura/09.cfg"
+    },
+    {
+      "id": "CBM_nerea_01",
+      "campaign": "CBM_nerea",
+      "title": "El puerto sin cartas",
+      "goal": "rescue",
+      "next": "CBM_nerea_02",
+      "map": "nerea_01.map",
+      "biome": "harbor",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/01.cfg"
+    },
+    {
+      "id": "CBM_nerea_02",
+      "campaign": "CBM_nerea",
+      "title": "Los dientes del arrecife",
+      "goal": "escape",
+      "next": "CBM_nerea_03",
+      "map": "nerea_02.map",
+      "biome": "coast",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/02.cfg"
+    },
+    {
+      "id": "CBM_nerea_03",
+      "campaign": "CBM_nerea",
+      "title": "Agua dulce en mar abierto",
+      "goal": "beacons",
+      "next": "CBM_nerea_04",
+      "map": "nerea_03.map",
+      "biome": "islands",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/nerea/03.cfg"
+    },
+    {
+      "id": "CBM_nerea_04",
+      "campaign": "CBM_nerea",
+      "title": "La isla borrada",
+      "goal": "conquer",
+      "next": "CBM_nerea_05",
+      "map": "nerea_04.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/04.cfg"
+    },
+    {
+      "id": "CBM_nerea_05",
+      "campaign": "CBM_nerea",
+      "title": "El cuaderno de otra vida",
+      "goal": "escort",
+      "next": "CBM_nerea_06",
+      "map": "nerea_05.map",
+      "biome": "forest",
+      "start": [
+        3,
+        10
+      ],
+      "enemy": [
+        21,
+        10
+      ],
+      "destination": [
+        22,
+        16
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/05.cfg"
+    },
+    {
+      "id": "CBM_nerea_06",
+      "campaign": "CBM_nerea",
+      "title": "Quienes pagan la calma",
+      "goal": "survive",
+      "next": "CBM_nerea_07",
+      "map": "nerea_06.map",
+      "biome": "islands",
+      "start": [
+        3,
+        12
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/06.cfg"
+    },
+    {
+      "id": "CBM_nerea_07",
+      "campaign": "CBM_nerea",
+      "title": "El mercado de los nombres",
+      "goal": "rescue",
+      "next": "CBM_nerea_08",
+      "map": "nerea_07.map",
+      "biome": "harbor",
+      "start": [
+        14,
+        15
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "file": "scenarios/nerea/07.cfg"
+    },
+    {
+      "id": "CBM_nerea_08",
+      "campaign": "CBM_nerea",
+      "title": "Las compuertas del olvido",
+      "goal": "beacons",
+      "next": "CBM_nerea_09",
+      "map": "nerea_08.map",
+      "biome": "cave",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        16
+      ],
+      "destination": [
+        20,
+        18
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/08.cfg"
+    },
+    {
+      "id": "CBM_nerea_09",
+      "campaign": "CBM_nerea",
+      "title": "La flota de nadie",
+      "goal": "conquer",
+      "next": "CBM_nerea_10",
+      "map": "nerea_09.map",
+      "biome": "coast",
+      "start": [
+        3,
+        8
+      ],
+      "enemy": [
+        21,
+        8
+      ],
+      "destination": [
+        22,
+        12
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/09.cfg"
+    },
+    {
+      "id": "CBM_nerea_10",
+      "campaign": "CBM_nerea",
+      "title": "Un camino para los naga",
+      "goal": "escort",
+      "next": "CBM_nerea_11",
+      "map": "nerea_10.map",
+      "biome": "islands",
+      "start": [
+        3,
+        14
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/10.cfg"
+    },
+    {
+      "id": "CBM_nerea_11",
+      "campaign": "CBM_nerea",
+      "title": "El último mar en calma",
+      "goal": "survive",
+      "next": "CBM_nerea_12",
+      "map": "nerea_11.map",
+      "biome": "ruins",
+      "start": [
+        14,
+        17
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          10
+        ],
+        [
+          5,
+          10
+        ]
+      ],
+      "file": "scenarios/nerea/11.cfg"
+    },
+    {
+      "id": "CBM_nerea_12",
+      "campaign": "CBM_nerea",
+      "title": "Nombres sobre el agua",
+      "goal": "escape",
+      "next": "null",
+      "map": "nerea_12.map",
+      "biome": "harbor",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        12
+      ],
+      "destination": [
+        20,
+        14
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/nerea/12.cfg"
+    },
+    {
+      "id": "CBM_darian_01",
+      "campaign": "CBM_darian",
+      "title": "Siete cartas, ningún rey",
+      "goal": "escape",
+      "next": "CBM_darian_02",
+      "map": "darian_01.map",
+      "biome": "forest",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/01.cfg"
+    },
+    {
+      "id": "CBM_darian_02",
+      "campaign": "CBM_darian",
+      "title": "La luz que emigró",
+      "goal": "survive",
+      "next": "CBM_darian_03",
+      "map": "darian_02.map",
+      "biome": "harbor",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/02.cfg"
+    },
+    {
+      "id": "CBM_darian_03",
+      "campaign": "CBM_darian",
+      "title": "La puerta que escucha",
+      "goal": "beacons",
+      "next": "CBM_darian_04",
+      "map": "darian_03.map",
+      "biome": "mountain",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/darian/03.cfg"
+    },
+    {
+      "id": "CBM_darian_04",
+      "campaign": "CBM_darian",
+      "title": "Los hijos de la sombra",
+      "goal": "rescue",
+      "next": "CBM_darian_05",
+      "map": "darian_04.map",
+      "biome": "plains",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/04.cfg"
+    },
+    {
+      "id": "CBM_darian_05",
+      "campaign": "CBM_darian",
+      "title": "El puente de los agravios",
+      "goal": "escort",
+      "next": "CBM_darian_06",
+      "map": "darian_05.map",
+      "biome": "forest",
+      "start": [
+        3,
+        10
+      ],
+      "enemy": [
+        21,
+        10
+      ],
+      "destination": [
+        22,
+        16
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          16
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/05.cfg"
+    },
+    {
+      "id": "CBM_darian_06",
+      "campaign": "CBM_darian",
+      "title": "La cuarta brasa",
+      "goal": "conquer",
+      "next": "CBM_darian_07",
+      "map": "darian_06.map",
+      "biome": "coast",
+      "start": [
+        3,
+        12
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/06.cfg"
+    },
+    {
+      "id": "CBM_darian_07",
+      "campaign": "CBM_darian",
+      "title": "Quienes no firmaron",
+      "goal": "survive",
+      "next": "CBM_darian_08",
+      "map": "darian_07.map",
+      "biome": "quarry",
+      "start": [
+        14,
+        15
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          5,
+          9
+        ]
+      ],
+      "file": "scenarios/darian/07.cfg"
+    },
+    {
+      "id": "CBM_darian_08",
+      "campaign": "CBM_darian",
+      "title": "El mensajero de hueso",
+      "goal": "rescue",
+      "next": "CBM_darian_09",
+      "map": "darian_08.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        16
+      ],
+      "destination": [
+        20,
+        18
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/08.cfg"
+    },
+    {
+      "id": "CBM_darian_09",
+      "campaign": "CBM_darian",
+      "title": "La sal de los juramentos",
+      "goal": "beacons",
+      "next": "CBM_darian_10",
+      "map": "darian_09.map",
+      "biome": "islands",
+      "start": [
+        3,
+        8
+      ],
+      "enemy": [
+        21,
+        8
+      ],
+      "destination": [
+        22,
+        12
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/09.cfg"
+    },
+    {
+      "id": "CBM_darian_10",
+      "campaign": "CBM_darian",
+      "title": "La sexta respuesta",
+      "goal": "escort",
+      "next": "CBM_darian_11",
+      "map": "darian_10.map",
+      "biome": "cave",
+      "start": [
+        3,
+        14
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/10.cfg"
+    },
+    {
+      "id": "CBM_darian_11",
+      "campaign": "CBM_darian",
+      "title": "Un ejército de vecinos",
+      "goal": "conquer",
+      "next": "CBM_darian_12",
+      "map": "darian_11.map",
+      "biome": "plains",
+      "start": [
+        14,
+        17
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          10
+        ],
+        [
+          5,
+          10
+        ]
+      ],
+      "file": "scenarios/darian/11.cfg"
+    },
+    {
+      "id": "CBM_darian_12",
+      "campaign": "CBM_darian",
+      "title": "La noche de las dos órdenes",
+      "goal": "survive",
+      "next": "CBM_darian_13",
+      "map": "darian_12.map",
+      "biome": "forest",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        12
+      ],
+      "destination": [
+        20,
+        14
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/12.cfg"
+    },
+    {
+      "id": "CBM_darian_13",
+      "campaign": "CBM_darian",
+      "title": "El nombre del sello",
+      "goal": "beacons",
+      "next": "CBM_darian_14",
+      "map": "darian_13.map",
+      "biome": "ruins",
+      "start": [
+        3,
+        9
+      ],
+      "enemy": [
+        21,
+        9
+      ],
+      "destination": [
+        22,
+        14
+      ],
+      "prison": [
+        12,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          19,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/13.cfg"
+    },
+    {
+      "id": "CBM_darian_14",
+      "campaign": "CBM_darian",
+      "title": "La ciudad que abrió sus puertas",
+      "goal": "rescue",
+      "next": "CBM_darian_15",
+      "map": "darian_14.map",
+      "biome": "harbor",
+      "start": [
+        3,
+        16
+      ],
+      "enemy": [
+        23,
+        4
+      ],
+      "destination": [
+        24,
+        3
+      ],
+      "prison": [
+        13,
+        4
+      ],
+      "points": [
+        [
+          8,
+          4
+        ],
+        [
+          13,
+          16
+        ],
+        [
+          21,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/14.cfg"
+    },
+    {
+      "id": "CBM_darian_15",
+      "campaign": "CBM_darian",
+      "title": "La reina que no descansaba",
+      "goal": "conquer",
+      "next": "CBM_darian_16",
+      "map": "darian_15.map",
+      "biome": "ruins",
+      "start": [
+        14,
+        13
+      ],
+      "enemy": [
+        14,
+        3
+      ],
+      "destination": [
+        25,
+        2
+      ],
+      "prison": [
+        9,
+        4
+      ],
+      "points": [
+        [
+          9,
+          4
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          5,
+          8
+        ]
+      ],
+      "file": "scenarios/darian/15.cfg"
+    },
+    {
+      "id": "CBM_darian_16",
+      "campaign": "CBM_darian",
+      "title": "La última entrega",
+      "goal": "escape",
+      "next": "null",
+      "map": "darian_16.map",
+      "biome": "mountain",
+      "start": [
+        3,
+        4
+      ],
+      "enemy": [
+        19,
+        14
+      ],
+      "destination": [
+        20,
+        16
+      ],
+      "prison": [
+        11,
+        4
+      ],
+      "points": [
+        [
+          7,
+          4
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          17,
+          5
+        ]
+      ],
+      "file": "scenarios/darian/16.cfg"
+    }
+  ],
+  "units": [
+    "CBM Litario Guardian",
+    "CBM Litario Bastion",
+    "CBM Litario Resonador",
+    "CBM Litario Voz Profunda",
+    "CBM Litario Tejedor",
+    "CBM Litario Restaurador",
+    "CBM Litario Explorador",
+    "CBM Litario Caminante",
+    "CBM Velario Lancero",
+    "CBM Velario Arconte",
+    "CBM Velario Cosechador",
+    "CBM Velario Prisma",
+    "CBM Velario Vigia",
+    "CBM Velario Acechante",
+    "CBM Velario Cantor",
+    "CBM Velario Aurora",
+    "CBM Hero alba",
+    "CBM Hero sira",
+    "CBM Hero iria",
+    "CBM Hero maura",
+    "CBM Hero nerea",
+    "CBM Hero darian"
+  ]
+}

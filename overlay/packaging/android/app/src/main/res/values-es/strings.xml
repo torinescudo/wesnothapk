@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Wesnoth Phone</string>
+    <string name="phone_install_failed">No se pudo preparar el juego</string>
+    <string name="phone_install_retry">Comprueba que haya espacio libre y vuelve a intentarlo. Las partidas se guardan por separado.</string>
+    <string name="phone_retry">Reintentar</string>
+    <string name="phone_game_data">Contenido del juego</string>
+    <string name="phone_preparing">Preparando el juego…</string>
+    <string name="phone_play">Jugar a Wesnoth</string>
+    <string name="phone_tutorial">Aprender a jugar</string>
+    <string name="phone_campaigns">Campañas originales</string>
+    <string name="phone_welcome">Un mundo de estrategia al alcance de tus dedos</string>
+    <string name="phone_first_launch">El primer inicio prepara las campañas y la música incluidas. No necesitas descargar nada más.</string>
+    <string name="phone_settings">Contenido y partidas guardadas</string>
+    <string name="phone_controls">Controles</string>
+    <string name="phone_hide">Ocultar</string>
+    <string name="phone_next">Otra unidad</string>
+    <string name="phone_move_action">Mover / atacar</string>
+    <string name="phone_recruit">Reclutar</string>
+    <string name="phone_undo">Deshacer</string>
+    <string name="phone_end_turn">Terminar turno</string>
+    <string name="phone_zoom_in">Zoom +</string>
+    <string name="phone_zoom_out">Zoom −</string>
+    <string name="phone_more">Más</string>
+    <string name="phone_objectives">Objetivos</string>
+    <string name="phone_save">Guardar partida</string>
+    <string name="phone_recall">Reincorporar</string>
+    <string name="phone_units">Lista de unidades</string>
+    <string name="phone_leader">Buscar líder</string>
+    <string name="phone_unit_info">Detalles de unidad</string>
+    <string name="phone_preferences">Preferencias</string>
+    <string name="phone_quit">Volver al menú</string>
+    <string name="phone_unavailable">Esta acción no está disponible ahora.</string>
+    <string name="phone_end_confirm">¿Terminar el turno? Las unidades que aún puedan moverse esperarán hasta tu próximo turno.</string>
+    <string name="phone_quit_confirm">¿Volver al menú principal? Guarda antes la partida para conservar tu progreso más reciente.</string>
+    <string name="phone_help">Controles táctiles</string>
+    <string name="phone_help_text">Toca tu unidad y después un destino para ver la ruta. Pulsa Mover / atacar para confirmar. Para atacar, toca un enemigo al alcance y pulsa Mover / atacar; podrás revisar las armas y probabilidades antes de confirmar.\n\nToca otra vez la unidad seleccionada para deseleccionarla y arrastra para explorar el mapa. Usa Zoom + y Zoom − para cambiar la escala. Mantén pulsada una casilla para abrir su menú.\n\nOtra unidad busca una unidad disponible. Reclutar abre el reclutamiento. Deshacer revierte movimientos cuando las reglas lo permiten. Terminar turno pide confirmación.\n\nOcultar reduce esta barra. Más contiene objetivos, partidas guardadas, información de unidades y preferencias.</string>
+</resources>

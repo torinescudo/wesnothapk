@@ -71,6 +71,7 @@ public class InitActivity extends Activity {
 	private File dataDir;
 	private Properties status = new Properties();
 	private boolean launchTutorial;
+	private String launchCampaign;
 
 	private String toSizeString(long bytes) {
 		return String.format("%4.2f MB", (bytes * 1.0f) / (1e6));
@@ -208,6 +209,7 @@ public class InitActivity extends Activity {
 		lblTap.setText(R.string.phone_play);
 		lblTap.setVisibility(View.VISIBLE);
 		findViewById(R.id.phone_tutorial).setVisibility(View.VISIBLE);
+		findViewById(R.id.phone_campaigns).setVisibility(View.VISIBLE);
 	}
 
 	// Note: wrap in runOnUiThread(()-> {...}) if called from another thread
@@ -217,6 +219,7 @@ public class InitActivity extends Activity {
 		lblTap.clearAnimation();
 		lblTap.setVisibility(View.INVISIBLE);
 		findViewById(R.id.phone_tutorial).setVisibility(View.GONE);
+		findViewById(R.id.phone_campaigns).setVisibility(View.GONE);
 		findViewById(R.id.download_msg).setVisibility(View.VISIBLE);
 		findViewById(R.id.download_progress).setVisibility(View.VISIBLE);
 	}
@@ -255,12 +258,23 @@ public class InitActivity extends Activity {
 			showLaunchScreen();
 			findViewById(R.id.tap_label).setOnClickListener(e -> {
 				launchTutorial = false;
+				launchCampaign = null;
 				initializeAssets();
 			});
 			findViewById(R.id.phone_tutorial).setOnClickListener(e -> {
 				launchTutorial = true;
+				launchCampaign = null;
 				initializeAssets();
 			});
+			findViewById(R.id.phone_campaigns).setOnClickListener(e ->
+				new AlertDialog.Builder(this)
+					.setTitle(R.string.phone_campaigns)
+					.setItems(R.array.phone_campaign_titles, (dialog, which) -> {
+						launchTutorial = false;
+						launchCampaign = PhoneCampaigns.IDS[which];
+						initializeAssets();
+					})
+					.setNegativeButton(android.R.string.cancel, null).show());
 		});
 	}
 
@@ -391,6 +405,7 @@ public class InitActivity extends Activity {
 		Log.d("InitActivity", "Launch wesnoth");
 		Intent launchIntent = new Intent(this, WesnothActivity.class);
 		launchIntent.putExtra("phone_tutorial", launchTutorial);
+		launchIntent.putExtra("phone_campaign", launchCampaign);
 		launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(launchIntent);
 		finish();

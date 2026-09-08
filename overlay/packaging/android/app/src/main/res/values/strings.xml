@@ -7,6 +7,15 @@
     <string name="phone_preparing">Preparing your game…</string>
     <string name="phone_play">Play Wesnoth</string>
     <string name="phone_tutorial">Learn to play</string>
+    <string name="phone_campaigns">Original campaigns · Español</string>
+    <string-array name="phone_campaign_titles">
+        <item>La última luz de Valdara · 3 escenarios</item>
+        <item>Los que escuchan la piedra · 5 escenarios</item>
+        <item>La deuda del cielo · 7 escenarios</item>
+        <item>El trono de ceniza · 9 escenarios · Villana</item>
+        <item>Las mareas sin nombre · 12 escenarios</item>
+        <item>El pacto de las siete brasas · 16 escenarios</item>
+    </string-array>
     <string name="phone_welcome">A world of strategy, ready for touch</string>
     <string name="phone_first_launch">The first launch prepares the included campaigns and music. No extra download is needed.</string>
     <string name="phone_settings">Game data and save settings</string>

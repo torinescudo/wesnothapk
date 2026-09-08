@@ -1,0 +1,4 @@
+Campaign code, stories, procedural compositions and generated artwork: GPL-2.0-or-later.
+See the root COPYING file. Existing Wesnoth terrain, item art, core units and sound effects retain their original licenses and credits.
+Original raster portraits and unit illustrations were generated with the built-in image generation tool; prompts are in ART_PROMPTS.json.
+Music is an original procedural composition; source is packaging/android/campaigns/compose_music.py.
