@@ -1,8 +1,9 @@
 # Wesnoth Phone
 
 Android phone interface on the complete upstream Wesnoth engine. A signed ARM64
-base APK has been built and its x86_64 counterpart passed Android 15 emulator
-gameplay checks. The Brasa y Marea campaign expansion is being validated separately.
+APK includes the Brasa y Marea expansion. Its x86_64 counterpart passed Android
+15 emulator checks for installation, controls, six campaign openings and all
+52 scenario objectives and transitions.
 
 Upstream: https://github.com/wesnoth/wesnoth
 Base revision: 682b77a27215f673397bfd2c6f65b854a01a6df8 (1.19.27+dev).
@@ -110,7 +111,9 @@ objectives and resource references. The build repository's campaign emulator
 test opens all six campaigns without modification, then injects test events
 only into extracted emulator data to exercise the actual objective events and
 transitions. This does not measure campaign balance or substitute for manual
-playthroughs. See the build repository's `VALIDATION.md` for completed results.
+playthroughs. These checks passed for version `1.19.27+brasa-marea.2` in
+https://github.com/torinescudo/wesnothapk/actions/runs/34274771110.
+See the build repository's `VALIDATION.md` for the detailed evidence and limits.
 
 ## Practical limits
 
