@@ -43,7 +43,7 @@ jobs:
           git -C source submodule update --init --depth 1 src/modules/lua
       - name: Compile native game
         run: |
-          cmake -S source -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DENABLE_SERVER=OFF -DENABLE_CAMPAIGN_SERVER=OFF -DENABLE_TESTS=OFF -DENABLE_NLS=OFF -DENABLE_NOTIFICATIONS=OFF -DENABLE_DISPLAY_REVISION=OFF -DENABLE_DESKTOP_ENTRY=OFF -DENABLE_APPDATA_FILE=OFF
+          cmake -S source -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DCMAKE_CXX_FLAGS=-I/home/runner/wesnoth-sdl/include -DENABLE_SERVER=OFF -DENABLE_CAMPAIGN_SERVER=OFF -DENABLE_TESTS=OFF -DENABLE_NLS=OFF -DENABLE_NOTIFICATIONS=OFF -DENABLE_DISPLAY_REVISION=OFF -DENABLE_DESKTOP_ENTRY=OFF -DENABLE_APPDATA_FILE=OFF
           cmake --build build --target wesnoth -j 4
       - name: Assemble runtime and verify native executable
         run: |
