@@ -1,0 +1,86 @@
+name: Build Wesnoth for ROCKNIX ARM64
+on:
+  push:
+    branches: [rgds-rocknix]
+    paths: [.github/workflows/rocknix.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    steps:
+      - name: Build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ninja-build cmake pkg-config gettext libboost-all-dev libssl-dev libicu-dev libcurl4-openssl-dev libvorbis-dev libfontconfig1-dev libpango1.0-dev libreadline-dev libdbus-1-dev libpng-dev libjpeg-dev libwebp-dev libavif-dev libtiff-dev libasound2-dev libpulse-dev libwayland-dev libxkbcommon-dev libegl1-mesa-dev libgles2-mesa-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxfixes-dev libxss-dev libxtst-dev libdrm-dev libgbm-dev libogg-dev libflac-dev libmpg123-dev libopus-dev
+      - name: Cache SDL
+        id: sdl
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/wesnoth-sdl
+          key: rocknix-arm64-sdl-3.4.2-image-3.4.0-mixer-3.2.0-v1
+      - name: Compile SDL libraries
+        if: steps.sdl.outputs.cache-hit != 'true'
+        run: |
+          set -euxo pipefail
+          sudo mkdir -p /home/runner/wesnoth-sdl
+          sudo chown "$USER" /home/runner/wesnoth-sdl
+          for entry in 'SDL 3.4.2' 'SDL_image 3.4.0' 'SDL_mixer 3.2.0'; do
+            read -r project version <<< "$entry"
+            git clone --depth 1 --branch "release-$version" "https://github.com/libsdl-org/$project.git" "$project"
+            cmake -S "$project" -B "$project/build" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/runner/wesnoth-sdl -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DSDL_SHARED=ON -DSDL_STATIC=OFF -DSDL_TESTS=OFF -DSDLIMAGE_SAMPLES=OFF -DSDLIMAGE_TESTS=OFF -DSDLMIXER_SAMPLES=OFF -DSDLMIXER_TESTS=OFF -DSDLMIXER_VENDORED=OFF
+            cmake --build "$project/build" -j 4
+            cmake --install "$project/build"
+          done
+      - name: Fetch matching Wesnoth source
+        run: |
+          git init source
+          git -C source remote add origin https://github.com/wesnoth/wesnoth.git
+          git -C source fetch --depth 1 origin 682b77a27215f673397bfd2c6f65b854a01a6df8
+          git -C source checkout FETCH_HEAD
+          git -C source submodule update --init --depth 1 src/modules/lua
+      - name: Compile native game
+        run: |
+          cmake -S source -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DENABLE_SERVER=OFF -DENABLE_CAMPAIGN_SERVER=OFF -DENABLE_TESTS=OFF -DENABLE_NLS=OFF -DENABLE_NOTIFICATIONS=OFF -DENABLE_DISPLAY_REVISION=OFF -DENABLE_DESKTOP_ENTRY=OFF -DENABLE_APPDATA_FILE=OFF
+          cmake --build build --target wesnoth -j 4
+      - name: Assemble runtime and verify native executable
+        run: |
+          set -euxo pipefail
+          mkdir -p runtime/bin runtime/lib runtime/licenses
+          cp build/wesnoth runtime/bin/wesnoth
+          export LD_LIBRARY_PATH=/home/runner/wesnoth-sdl/lib:/home/runner/wesnoth-sdl/lib/aarch64-linux-gnu
+          ldd build/wesnoth | tee runtime/ldd-build.txt
+          ! grep -q 'not found' runtime/ldd-build.txt
+          python3 - <<'PY'
+          import pathlib,re,shutil,subprocess
+          root=pathlib.Path('runtime')
+          # Keep libc and hardware drivers supplied by ROCKNIX. Bundle all
+          # other linked libraries to avoid distribution ABI mismatches.
+          skip=re.compile(r'^(ld-linux|libc\.|libm\.|libpthread\.|libdl\.|librt\.|libresolv\.|libGL\.|libEGL\.|libGLES|libGLX|libGLdispatch|libdrm|libgbm|libvulkan)')
+          for line in subprocess.check_output(['ldd','build/wesnoth'],text=True).splitlines():
+              m=re.search(r'=> (/\S+)',line)
+              if not m:continue
+              path=pathlib.Path(m[1])
+              if not skip.match(path.name):shutil.copy2(path,root/'lib'/path.name)
+          for copyright in pathlib.Path('/usr/share/doc').glob('*/copyright'):
+              shutil.copy2(copyright,root/'licenses'/(copyright.parent.name+'.txt'))
+          for project in ('SDL','SDL_image','SDL_mixer'):
+              path=pathlib.Path(project)/'LICENSE.txt'
+              if path.exists():shutil.copy2(path,root/'licenses'/(project+'.txt'))
+          shutil.copy2('source/COPYING',root/'licenses/Wesnoth-COPYING')
+          (root/'SOURCE.txt').write_text('Wesnoth: https://github.com/wesnoth/wesnoth/tree/682b77a27215f673397bfd2c6f65b854a01a6df8\nSDL 3.4.2; SDL_image 3.4.0; SDL_mixer 3.2.0\nBuild: Ubuntu 24.04 ARM64; glibc >= 2.39\n')
+          PY
+          LD_LIBRARY_PATH="$PWD/runtime/lib" runtime/bin/wesnoth --version | tee runtime/version.txt
+          readelf -h runtime/bin/wesnoth | tee runtime/elf-header.txt
+          grep -q AArch64 runtime/elf-header.txt
+          strip runtime/bin/wesnoth
+          tar -czf wesnoth-rocknix-runtime.tar.gz runtime
+          sha256sum wesnoth-rocknix-runtime.tar.gz > wesnoth-rocknix-runtime.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wesnoth-rocknix-arm64-runtime
+          path: wesnoth-rocknix-runtime.tar.gz*
+          if-no-files-found: error
+
