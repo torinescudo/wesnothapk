@@ -41,9 +41,17 @@ jobs:
           git -C source fetch --depth 1 origin 682b77a27215f673397bfd2c6f65b854a01a6df8
           git -C source checkout FETCH_HEAD
           git -C source submodule update --init --depth 1 src/modules/lua
+          # Upstream static client/widget targets do not inherit the SDL
+          # executable's usage requirements when SDL is outside /usr/include.
+          cat >> source/src/CMakeLists.txt <<'CMAKE'
+          if(ENABLE_GAME)
+            target_link_libraries(wesnoth-client SDL3::SDL3 SDL3_image::SDL3_image SDL3_mixer::SDL3_mixer)
+            target_link_libraries(wesnoth-widgets SDL3::SDL3 SDL3_image::SDL3_image SDL3_mixer::SDL3_mixer)
+          endif()
+          CMAKE
       - name: Compile native game
         run: |
-          cmake -S source -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DCMAKE_CXX_FLAGS=-I/home/runner/wesnoth-sdl/include -DENABLE_SERVER=OFF -DENABLE_CAMPAIGN_SERVER=OFF -DENABLE_TESTS=OFF -DENABLE_NLS=OFF -DENABLE_NOTIFICATIONS=OFF -DENABLE_DISPLAY_REVISION=OFF -DENABLE_DESKTOP_ENTRY=OFF -DENABLE_APPDATA_FILE=OFF
+          cmake -S source -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/home/runner/wesnoth-sdl -DENABLE_SERVER=OFF -DENABLE_CAMPAIGN_SERVER=OFF -DENABLE_TESTS=OFF -DENABLE_NLS=OFF -DENABLE_NOTIFICATIONS=OFF -DENABLE_DISPLAY_REVISION=OFF -DENABLE_DESKTOP_ENTRY=OFF -DENABLE_APPDATA_FILE=OFF
           cmake --build build --target wesnoth -j 4
       - name: Assemble runtime and verify native executable
         run: |
