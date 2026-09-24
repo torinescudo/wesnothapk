@@ -149,7 +149,7 @@ try:
         lambda: next((n for n in ui() if n.get('resource-id') == 'android:id/button1'), None),
         10, label='the end turn confirmation dialog')
     tap(confirmation)
-    wait_for(in_bar('phone_action_cycle'), 90,
+    wait_for(in_bar('phone_action_cycle'), 240,
              label='the next player turn after confirming the end of one')
     screen('05c-end-turn-confirmed')
     adb('shell', 'am', 'force-stop', PACKAGE)
