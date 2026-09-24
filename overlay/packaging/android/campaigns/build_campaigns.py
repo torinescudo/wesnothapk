@@ -484,17 +484,27 @@ def scenario(c, index, chapter, manifest):
         var = 'cbm_decide_%s_%02d_%d' % (key, index - 1, n)
         first = keys[0].replace('-', ' ')
         second = keys[1].replace('-', ' ') if len(keys) > 1 else 'lo otro'
+        # What you chose becomes the situation of this chapter: a different
+        # story, a different thing to protect and the resources to match.
         pre += tag('if', {}, body=(
             tag('variable', {'name': var, 'equals': keys[0]})
             + tag('then', {}, body=(
                 tag('message', {'speaker': 'narrator',
-                                'message': 'Viniste de %s apostando por %s.'
+                                'message': 'Viniste de %s apostando por %s. Lo que dejaste '
+                                           'atrás sigue donde lo dejaste, y pesa.'
                                            % (chapter['biome'], first)})
+                + tag('story', {}, body=tag('part', {}, body=tag(
+                    'story', {'text': 'Por %s llegaste tarde a lo otro. Aun así, lo que '
+                                      'elegiste sostiene esta jornada.' % first})))
                 + tag('gold', {'side': 1, 'amount': -20})))
             + tag('else', {}, body=(
                 tag('message', {'speaker': 'narrator',
-                                'message': 'Viniste de %s apostando por %s.'
+                                'message': 'Viniste de %s apostando por %s. Lo otro quedó '
+                                           'sin quien lo defendiera.'
                                            % (chapter['biome'], second)})
+                + tag('story', {}, body=tag('part', {}, body=tag(
+                    'story', {'text': 'Por %s ganaste terreno y perdiste lo otro. Aquí se '
+                                      'empieza a notar.' % second})))
                 + tag('gold', {'side': 1, 'amount': 60})))))
     body += event('prestart', pre)
     for n, (question, keys) in enumerate(WORLD.BRANCHES.get(key, {}).get(index, []), start=1):
