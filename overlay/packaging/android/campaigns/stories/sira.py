@@ -32,12 +32,23 @@ CAMPAIGN = dict(
             opening=(
                 'La perforadora abrió una grieta en la cámara donde Sira despertaba. Los mineros '
                 'creyeron haber encontrado estatuas. Solo cambiaron de opinión cuando una de ellas '
-                'apartó del derrumbe a un niño humano. La mina se llama Vena Hundida y lleva tres '
+                'apartó del derrumbe a un niño humano. Esa estatua era Sira de las Siete Vetas, '
+                'memorista de la cámara Séptima: su oficio es sostener siete recuerdos que discuten '
+                'entre ellos y devolver cada uno con su nombre. Acaba de despertar con su casa '
+                'rajada y necesita sacar a los que duermen debajo por el paso viejo antes de que la '
+                'puerta de basalto se cierre. Actuar le sale caro: cada palabra suya despierta '
+                'guardianes y mineros asustados, y un grito mal dado convierte la fuga en '
+                'estampida. Quiere una cosa concreta: pasar una noche entera sin que ninguna de '
+                'sus memorias le cuente cómo termina el día. La mina se llama Vena Hundida y lleva tres '
                 'generaciones arrancando basalto de sus galerías. Bajo la Séptima duerme la cámara '
                 'del eco: si la perforadora llega antes, los litarios que aún no han despertado '
                 'saldrán en bloques y nadie volverá a oír sus nombres. Sira tiene hasta que se '
                 'cierre la puerta de basalto para sacarlos por el paso viejo. Un solo error y la '
-                'montaña queda en silencio para siempre.'),
+                'montaña queda en silencio para siempre. Desde la boca del pozo, Sira ve a Edran '
+                'repartir fichas de jornal sin alzar la vista mientras la cuadrilla acompasa los '
+                'picos a la perforadora. Cuando la puerta se cierre, la Casa del Diezmo llevará su '
+                'cuenta a la cantera, y todo lo que no salga hoy por el paso viejo saldrá mañana '
+                'con un número pintado en el hombro.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -88,6 +99,13 @@ CAMPAIGN = dict(
                         'Almacén de la cuadrilla tomado. Los mineros que lo custodiaban dejan los '
                         'picos y retroceden.')),
                     ('hero', 'Que se retiren. No hemos venido a contar bajas.'),
+                    ('antagonist', (
+                        'Ese almacén lo pagó la Casa con sal y con clavos. Todo lo que movéis pesa '
+                        'en un libro, y el libro no perdona deudas.')),
+                    ('narrator', (
+                        'El paso viejo corre pegado al vacío: ancho para correr e imposible de '
+                        'defender en fila. Edran empuja la cuadrilla hacia la boca; decidid si '
+                        'cerráis la retaguardia o ganáis turnos hacia la puerta.')),
                 ]),
                 ('turn 6', [
                     ('antagonist', (
@@ -100,6 +118,14 @@ CAMPAIGN = dict(
                         'Mitad del plazo. La perforadora sigue mordiendo la Séptima y las voces de '
                         'dentro se oyen más débiles.')),
                     ('hero', 'Aunque no lleguemos a todas, llegaremos a la puerta.'),
+                    ('antagonist', (
+                        'Cada bloque que sale de Vena Hundida paga el pan del invierno en tres '
+                        'pueblos. No firmé un contrato: firmé la lista de lo que se debe y de lo '
+                        'que se cobra.')),
+                    ('companion', (
+                        'La galería ancha da ventaja a sus picos y estorba nuestras lanzas. Si '
+                        'partimos la columna cubrimos las dos rutas; si vamos juntos, llegamos '
+                        'enteros pero más tarde.')),
                 ]),
                 ('time limit', [
                     ('narrator', 'Últimos turnos. La puerta de basalto empieza a cerrarse sola.'),
@@ -128,7 +154,11 @@ CAMPAIGN = dict(
                 'estaban apagando. Contó las que respondían y le faltaron dos: la perforadora había '
                 'sellado la Séptima antes de detenerse. En la lista de la cuadrilla figuraban '
                 'litarios que nadie había visto despertar, y la Casa del Diezmo la había firmado con '
-                'una rúbrica que Sira reconocería más adelante.'),
+                'una rúbrica que Sira reconocería más adelante. Al amanecer, la cuadrilla colgó en '
+                'la caseta una hoja con números donde debían ir nombres, y la firmó la inspectora '
+                'que llevaba el catastro de Piedra Partida. Sira guardó junto a ella el recuento de '
+                'las dos voces que faltaban y cenó de pie, temiendo cada recuerdo que se le '
+                'acercaba: todavía no sabía cuánto pesaba aquella firma.'),
         ),
         dict(
             title='Nombres bajo el martillo',
@@ -142,7 +172,11 @@ CAMPAIGN = dict(
                 'abierta y ya tiene catastro: cada prisionero lleva un número pintado en el hombro. '
                 'El guardián se llama Varon de la Raíz y guarda ese nombre antiguo. Si lo cortan en '
                 'bloques, el nombre se pierde para siempre y el catastro queda como la única memoria '
-                'del pueblo. La inspectora Nes firma cada partida y cree que sus cifras no mienten.'),
+                'del pueblo. La inspectora Nes firma cada partida y cree que sus cifras no mienten. '
+                'Bajo la caseta, el catastro espera bajo llave, firmado por una autoridad que ni la '
+                'inspectora nombra en voz alta. Cuando salga el último bloque, ese libro decidirá '
+                'qué nombre puede quedarse en la montaña. Sira peina sus siete memorias en busca de '
+                'la letra de aquella rúbrica: para eso está su oficio, y hoy le cuesta dormir.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'En la lista no aparece mi maestro. Solo una pieza de cuarenta arrobas.'),
@@ -185,6 +219,14 @@ CAMPAIGN = dict(
                         'El primer puesto de control es nuestro. Las listas siguen colgadas en la '
                         'caseta, con los números todavía frescos.')),
                     ('hero', 'Arrancadlas. Que cada guardián se lleve su número a casa.'),
+                    ('antagonist', (
+                        'El catastro es la única balanza que no discute: piedra por herramientas, '
+                        'peso por sal. Quitadlo y solo queda la ley del que empuña el pico más '
+                        'grande.')),
+                    ('narrator', (
+                        'La cantera está descubierta donde giran las grúas: ninguna sombra cubre la '
+                        'marcha y cada cuerda delata el paso. Los guardias de Nes cortan la rampa; '
+                        'decidid si la forzáis o engañáis al peso por el foso.')),
                 ]),
                 ('half strength', [
                     ('protected', 'Me han alcanzado el hombro donde pintaron el cuatro. Que no me lo tachen.'),
@@ -195,12 +237,19 @@ CAMPAIGN = dict(
                         'He cuadrado las cuentas con las piezas que quedan. Si falta una, el '
                         'descuadre es vuestro.')),
                     ('narrator', 'Las grúas giran hacia la jaula. Nes no manda cerrar: manda pesar.'),
+                    ('companion', (
+                        'La rampa da paso ancho pero pasa bajo las grúas; el foso da sombra y se '
+                        'inunda con el primer temporal. Nes gana si dudamos; decidid por dónde sale '
+                        'el maestro.')),
                 ]),
                 ('time limit', [
                     ('narrator', (
                         'El plazo se agota. La siguiente partida sale al amanecer y Varon está en '
                         'ella.')),
                     ('hero', 'Entonces salimos antes. Nadie cobra un amanecer ajeno.'),
+                    ('antagonist', (
+                        'La partida del amanecer ya está firmada. Un contrato no espera al que '
+                        'discute su letra: por eso la letra manda.')),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', 'Los números eran neutrales. Yo también. ¿Y ahora quién carga con la cuenta?'),
@@ -226,7 +275,10 @@ CAMPAIGN = dict(
                 'herramientas. Los contratos no distinguían la piedra dormida de la que soñaba. '
                 'Varon guardó el número pintado en el hombro como prueba. Sira comparó la rúbrica '
                 'del catastro con la séptima de sus memorias y no pudo dormir: la letra era la del '
-                'consejero que había portado esas memorias antes que ella.'),
+                'consejero que había portado esas memorias antes que ella. Antes del alba, Varon '
+                'señaló tres cámaras selladas con cera en la Veta Única: los archivos públicos donde '
+                'dormía el pacto entero. Hasta que no ardieran, aquella firma seguiría mandando más '
+                'que todas las voces que la habían sufrido.'),
         ),
         dict(
             title='El consejo inmóvil',
@@ -242,7 +294,12 @@ CAMPAIGN = dict(
                 'extracción seguirá siendo secreto. El custodio de guardia la conoce desde niña y le '
                 'enseñó a resonar; cree de verdad que una sola voz evita la guerra. Si Sira fracasa, '
                 'el consejo fundirá las siete cámaras en una y nadie volverá a discrepar en la '
-                'montaña.'),
+                'montaña. En la terraza, un aprendiz pesa las llaves de las lámparas en una balanza '
+                'de latón y anota cada una como si fuera un bloque de basalto. Sira, que aprendió '
+                'aquí a sostener la nota sin romperla, sabe lo que hoy le cuesta actuar: cada voz '
+                'que alce la llamará enemiga con su propio nombre. Al pie de la montaña, un '
+                'ingeniero de la Casa ya cuenta compuertas: lo que esta noche no pueda leerse, Voss '
+                'piensa ahogarlo antes de que llegue el auditor.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -300,6 +357,9 @@ CAMPAIGN = dict(
                         'Segundo archivo. El pacto menciona herramientas, sal y un pasillo abierto '
                         'para los carros humanos.')),
                     ('hero', 'Un pasillo, no una caravana. Que lo oiga quien lo negoció.'),
+                    ('antagonist', (
+                        'Lo que has encendido es un mapa de nuestras divisiones. Con una voz, la '
+                        'Casa del Diezmo habría negociado; con siete, ya sabe dónde golpear.')),
                 ]),
                 ('beacon lit 3', [
                     ('antagonist', 'Está entero. Ahora todos saben que fui yo quien firmó. ¿Contenta?'),
@@ -310,12 +370,24 @@ CAMPAIGN = dict(
                         'Los custodios apagan lámparas para que los archivos no se lean desde fuera. '
                         'La sala se queda a oscuras por tramos.')),
                     ('hero', 'Encended con lo que tengáis. El pacto no necesita luz para ser cierto.'),
+                    ('companion', (
+                        'Los tres archivos se enlazan por pasarelas estrechas donde tres custodios '
+                        'aguantan uno a uno. Si vamos juntos llegamos enteros y tarde; si partimos '
+                        'la columna, llegamos a los tres y llegamos rotos.')),
                 ]),
                 ('time limit', [
                     ('narrator', (
                         'Últimos turnos. El consejo prepara la fusión de las siete cámaras en una '
                         'sola voz.')),
                     ('hero', 'Todavía no. Falta el eco del pozo.'),
+                    ('antagonist', (
+                        'Guardamos el pacto para que no vuelva la guerra de nombres que la montaña '
+                        'ya pagó una vez. Una voz no es la verdad, Sira: es lo que cupo en una mesa '
+                        'sin que nadie sacara el pico.')),
+                    ('narrator', (
+                        'Los custodios han cerrado los accesos anchos y solo dejan libre la '
+                        'pasarela del pozo. Elegid si encendéis antes el archivo del pozo o bajáis '
+                        'primero a sacar a los humanos atrapados.')),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', 'Una voz sola no discute. Yo quería eso: que nadie tuviera que elegir.'),
@@ -338,7 +410,10 @@ CAMPAIGN = dict(
                 'baja antes de responder a ninguna de las dos. Cuando volvió a la terraza, el '
                 'consejo seguía inmóvil, pero ya nadie fingía que el pacto no existía. En su séptima '
                 'memoria, la rúbrica del consejero tenía ahora fecha, testigos y una voz que la leía '
-                'en alto.'),
+                'en alto. Pero el pacto tenía un anexo que apenas se sostenía: cuentas que solo '
+                'vivían en los libros de la Casa. Sira mandó copiar el contrato por triplicado antes '
+                'de bajar a las galerías: lo que pesa poco viaja mejor cuando hay que cerrar una '
+                'compuerta.'),
         ),
         dict(
             title='El peso de los vivos',
@@ -352,7 +427,13 @@ CAMPAIGN = dict(
                 'del río y Voss ya ha abierto dos compuertas. La aprendiz Leth lleva la llave de la '
                 'válvula grabada en la piel de tanto usarla. Si el agua llega a la Séptima, se ahogan '
                 'por igual los liberados y los mineros que siguen abajo. Voss dice que solo cumple '
-                'una orden de la Casa: borrar los libros antes de que un auditor los lea.'),
+                'una orden de la Casa: borrar los libros antes de que un auditor los lea. En el '
+                'rellano, Leth se pasa la llave de mano en mano y el metal brilla donde los dedos '
+                'han borrado el hierro. Sira vuelve a cargar con su oficio completo: siete '
+                'memorias que ya saben cómo pesa cada puerta, y ni una sola noche sin que le '
+                'cuenten el final del día. Cuando baje el agua, la Casa del Diezmo no mandará un '
+                'capataz ni una inspectora: mandará un mariscal con cuarenta días de ración y una '
+                'lista para confiscarlo todo.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -395,20 +476,34 @@ CAMPAIGN = dict(
                         'Primer relevo de la cantera tomado. En la caseta hay planos mojados: Voss '
                         'lleva contando compuertas desde el invierno.')),
                     ('hero', 'Guardadlos. Todo lo que cuente se lo devolveremos firmado.'),
+                    ('antagonist', (
+                        'Un plano mojado no borra una cuenta. Lo que la Casa pagó por cada veta '
+                        'sigue escrito en tinta, y la tinta es lo único que un auditor respeta.')),
                 ]),
                 ('half strength', [
                     ('protected', (
                         'Me he torcido el tobillo en la escalera. Dadme la pared y sigo; no pienso '
                         'ser el peso que os retrase.')),
                     ('hero', 'Tú marcas el paso. El que se retrase, se retrasa con nosotros.'),
+                    ('narrator', (
+                        'La escalera ancha baja recta hacia la válvula, pero el agua la sube por '
+                        'delante; la estrecha da un rodeo seco y gana media hora. Voss corta el paso '
+                        'por donde vea luces: decidid por dónde baja la columna.')),
                 ]),
                 ('turn 8', [
                     ('antagonist', 'He abierto la tercera compuerta. Ya no manda el ingeniero sobre el agua: manda el río.'),
                     ('companion', 'Se oye subir por el pozo. Nos quedan dos escaleras secas.'),
+                    ('companion', (
+                        'El pozo central sube el agua de golpe y las galerías laterales la reparten '
+                        'lenta. Si abrimos las traseras ganamos salida y perdemos presión; si las '
+                        'cerramos, aguantamos y nos quedamos sin marcha atrás.')),
                 ]),
                 ('time limit', [
                     ('narrator', 'El agua alcanza el segundo tramo. La válvula está al final de la galería oeste.'),
                     ('hero', 'Corred hacia la válvula. Yo cierro las puertas que vayan quedando atrás.'),
+                    ('antagonist', (
+                        'El mundo lleva sus cuentas con tinta y con peso. Yo solo elijo qué se '
+                        'borra primero: los libros o la mina.')),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', (
@@ -434,7 +529,10 @@ CAMPAIGN = dict(
                 'primera vez, los litarios pudieron decidir qué puertas abrir. Sira guardó el plano '
                 'con la firma de Voss y lo puso junto a la rúbrica de su séptima memoria: la misma '
                 'mano, la misma prisa por borrar. Leth se quedó en la Séptima, enseñando a leer los '
-                'niveles del agua a quien nunca había visto un río.'),
+                'niveles del agua a quien nunca había visto un río. Los planos que secaban las siete '
+                'cámaras eran también el mapa por el que subiría quien viniera a confiscarlas. Sira '
+                'repartió los resonadores antes de que en el valle se viera la primera bandera del '
+                'diezmo, y esa noche ninguna de sus memorias se atrevió a contarle el final del día.'),
         ),
         dict(
             title='Una montaña, muchas voces',
@@ -449,7 +547,12 @@ CAMPAIGN = dict(
                 'resonadores se apagan, los ingenieros fundirán las cámaras en una sola y la montaña '
                 'cantará la marcha que le impongan. Sira reparte un resonador por cámara: siete '
                 'voces distintas, ninguna obediente y ninguna sola. Hay que mantenerlas cantando '
-                'doce turnos, hasta que la piedra cierre los pasos estrechos del ejército.'),
+                'doce turnos, hasta que la piedra cierre los pasos estrechos del ejército. Abajo, '
+                'los carros del diezmo descargan balanzas y cadenas junto a la puerta del valle, y '
+                'el mariscal anota cada boca de chimenea en un pliego sin márgenes. Sira ya no pide '
+                'para sí ni una noche quieta: hoy sostiene siete voces a la vez y lo que le cuesta '
+                'cada una lo decidirán las cámaras. Si la montaña oye una sola voz, mañana repetirá '
+                'una marcha que no eligió.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Podrías ordenar un solo canto. Sería más fuerte.'),
@@ -492,10 +595,18 @@ CAMPAIGN = dict(
                         'Los ingenieros han marcado el primer paso. Si lo vuelan, subiré con carros y '
                         'no quedará canción que oír.')),
                     ('companion', 'La cámara del pozo desafina. Le queda cuerda para dos turnos más.'),
+                    ('narrator', (
+                        'Los pasos estrechos son la muralla: los carros y las máquinas no caben, '
+                        'pero los zapadores sí. El mariscal manda volar los repechos para '
+                        'ensancharlos; decidid qué aproximación cubrís y cuál dejáis a la piedra.')),
                 ]),
                 ('village captured', [
                     ('narrator', 'Primer puesto del diezmo desmantelado. En su registro no hay nombres, solo tonelajes.'),
                     ('hero', 'Escribid los nombres en el reverso. Que el próximo auditor lea a quién contaba.'),
+                    ('antagonist', (
+                        'Un puesto del diezmo no es un campamento: es una cuenta viva. Cada '
+                        'tonelaje que dejéis de pagar lo adelanta un pueblo que ni ha oído el '
+                        'nombre de esta montaña.')),
                 ]),
                 ('turn 8', [
                     ('narrator', (
@@ -506,6 +617,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Últimos turnos. El ejército empuja hacia la puerta pequeña del valle.'),
                     ('hero', 'Cerrad todo menos esa puerta. La dejamos abierta a propósito.'),
+                    ('companion', (
+                        'Las rampas anchas favorecen sus lanzas y dejan las cámaras a la '
+                        'intemperie. Elegid dónde canta cada cámara: dentro, o a la boca del paso.')),
+                    ('antagonist', (
+                        'La capital no os quiere mal: os quiere contados. Una voz para la montaña '
+                        'y habrá trato firmado; siete voces y solo habrá expedientes.')),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', (
@@ -531,7 +648,11 @@ CAMPAIGN = dict(
                 'estrechos. En el valle, una puerta pequeña siguió abierta para los visitantes sin '
                 'cadenas. Sira no volvió a firmar en nombre de nadie. Guardó la rúbrica de su '
                 'séptima memoria junto al contrato del consejo, y cada cámara eligió a su portavoz '
-                'sin que ninguna veta fuera cerrada por disentir.'),
+                'sin que ninguna veta fuera cerrada por disentir. Por la puerta pequeña entró un '
+                'viajero sin cadenas que preguntó por el precio del basalto, y nadie le respondió '
+                'con una cifra sino con siete nombres. Sira pudo por fin pasar una noche sin que '
+                'ninguna memoria le contara cómo terminaba el día: la montaña siguió recordando, '
+                'pero ya no para un solo dueño.'),
         ),
     ],
 )

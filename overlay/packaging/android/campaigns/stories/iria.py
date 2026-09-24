@@ -30,11 +30,21 @@ CAMPAIGN = dict(
             biome='forest',
             antagonist='Recolectora Thess',
             opening=(
-                'Iria descubrió que la tinta de su mapa se secaba antes que el trigo. Una estructura '
-                'alada tapaba el sol y guerreros de cuatro brazos descendían a buscar los cristales '
-                'de los molinos. La sombra no viajaba como una nube: avanzaba en línea recta y se '
-                'detenía donde terminaban las eras. Iria ató una piedra a su cuerda de medir y '
-                'comprobó que la mancha crecía cada vez que un velario tocaba el prisma del molino.'),
+                'Iria descubrió que la tinta de su mapa se secaba antes que el trigo. Era cartógrafa '
+                'de oficio: medía tierras por encargo y cobraba por los nombres bien puestos, y '
+                'llevaba cinco años intentando entregar la carta de la comarca antes del otoño. Una '
+                'estructura alada tapaba el sol y guerreros de cuatro brazos descendían a buscar los '
+                'cristales de los molinos. La sombra no viajaba como una nube: avanzaba en línea '
+                'recta y se detenía donde terminaban las eras, y en cuanto se detenía, los campos '
+                'perdían color y los nombres de los pagos se borraban con la tinta todavía fresca. '
+                'Iria ató una piedra a su cuerda de medir y comprobó que la mancha crecía cada vez '
+                'que un velario tocaba el prisma del molino. Cada salida a medirla le costaba su '
+                'única garrafa de tinta buena y una jornada de encargos que nadie iba a pagarle. A '
+                'la una midió la sombra y a las dos volvió a medirla: otro palmo de trigal borrado, '
+                'siempre en dirección al río, y los segadores aún esperando su turno de cruzar. La '
+                'carta de la comarca ya no era solo su trabajo: era lo único que quedaba escrito de '
+                'aquella tierra, y para defenderla primero tendría que dejar los tres molinos del '
+                'llano sin un solo prisma encendido.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Las raíces sienten frío. No es una nube: alguien está llevándose el día.'),
@@ -76,6 +86,15 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'El robledal parte la sombra en parches: entre troncos aún cae luz, pero las '
+                        'eras del camino quedan cubiertas enteras. Thess estira la mancha hacia el '
+                        'vado para que los segadores no crucen.')),
+                    ('hero', (
+                        'Cubrir el vado deja la aldea a oscuras; cubrir la aldea cierra el vado con '
+                        'la tercera tanda fuera. Elegid una antes de que la nave termine de girar.')),
+                ]),
                 ('turn 3', [
                     ('narrator', (
                         'La sombra gira sobre el molino del norte. El cristal pierde color por la '
@@ -97,6 +116,10 @@ CAMPAIGN = dict(
                     ('hero', (
                         'Que suelten. Nosotros ya tenemos los molinos mapeados y ellos no tienen el '
                         'río.')),
+                    ('antagonist', (
+                        'Contad la luz que os queda antes de jugárosla: treinta naves esperan su '
+                        'cuota y el consejo cobra doble lo que se entrega tarde. Si me rendís los '
+                        'prismas hoy, la aldea sale del recuento un año entero.')),
                 ]),
                 ('time limit', [
                     ('narrator', (
@@ -128,7 +151,12 @@ CAMPAIGN = dict(
             resolution=(
                 'Una lanza rota conservaba luz en su interior. Belis oyó un corazón al acercarla a '
                 'una semilla. Iria añadió al mapa la primera línea honesta: la ruta de la sombra, '
-                'con horas y con nombres. Alguien del cielo la leería algún día, y no le gustaría.'),
+                'con horas y con nombres. Alguien del cielo la leería algún día, y no le gustaría. '
+                'Clavó la lanza junto al molino del norte y toda la noche la junta herida del '
+                'cristal latió despacio, en compás con la semilla. Al amanecer dibujó los tres '
+                'molinos del llano y escribió al lado el orden de los prismas: sur, centro, norte, '
+                'uno por noche. Sabía que cada prisma apagado era un barrio que bajaría buscando '
+                'agua, y firmó la lista sin tachar nada.'),
         ),
         dict(
             title='Los molinos sin sombra',
@@ -141,7 +169,12 @@ CAMPAIGN = dict(
                 'fuera una cuna. Cada molino alimentaba una ciudad distinta, y las tres ciudades, '
                 'juntas, sumaban dos millones de alas. Iria escribió en el margen los nombres de las '
                 'aldeas que bebían del mismo acueducto y comprobó que ninguna figuraba en los mapas '
-                'velarios.'),
+                'velarios. Al mediodía pesó un prisma suelto en la palma: caliente, con algo '
+                'latiendo dentro y una marca de sello en la base que solo se veía al trasluz. Iria '
+                'ordenó los depósitos de sur a norte y se repitió la regla en voz alta: apagar sin '
+                'romper, porque un depósito roto no vuelve a encenderse. Aceptó de antemano lo que '
+                'costaba: cada depósito apagado era una ciudad que perdía altura, y dos millones de '
+                'alas aprenderían a leer su nombre en el registro del hambre.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Hay voces dentro de los cristales. Están manteniendo algo vivo.'),
@@ -190,6 +223,16 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'El llano no da sombra: los tres depósitos se ven desde la estructura '
+                        'suspendida y Oth puede apuntar a cualquiera. El canal del sur está minado y '
+                        'revienta junto a su depósito.')),
+                    ('hero', (
+                        'Ir todos juntos de sur a norte deja el llano a la vista pero corta el agua '
+                        'de Oth al final; con media guardia en el sur cubrimos los dos frentes y '
+                        'llegamos tarde al norte. Elegid antes del primer depósito.')),
+                ]),
                 ('beacon lit 1', [
                     ('narrator', (
                         'Primer depósito encendido. La estructura suspendida baja un codo y se oye '
@@ -241,7 +284,13 @@ CAMPAIGN = dict(
             resolution=(
                 'Al volver el flujo, un velario aterrizó sin armas. Se llamaba Esh y llevaba una cría '
                 'demasiado débil para plegar las alas. Iria le dio el sitio seco junto al fuego y le '
-                'pidió que repitiera, despacio, cuánta luz consumía una ciudad en un año.'),
+                'pidió que repitiera, despacio, cuánta luz consumía una ciudad en un año. Esh la '
+                'dijo tres veces, con las cifras exactas, y la cría repetía el último número como '
+                'si fuera una canción. Fuera, la estructura suspendida recuperaba altura palmo a '
+                'palmo mientras los depósitos volvían a girar. Iria escribió la cifra en el margen '
+                'del mapa y tachó «consumía» para poner «debe»: nadie gasta un año de luz de dos '
+                'valles sin deberlo. Y una cifra dicha en voz alta junto a un fuego cualquiera '
+                'empezó a parecerse demasiado a una fecha de juicio.'),
         ),
         dict(
             title='El prisionero del viento',
@@ -253,7 +302,14 @@ CAMPAIGN = dict(
                 'juicio no lo acusaron de traición, sino de haber revelado que las ciudades del '
                 'cielo estaban muriendo. La sala del tribunal era una nave vacía con las vigas a la '
                 'vista, y cada viga llevaba grabado el nombre de un barrio. Iria contó once nombres '
-                'y ninguno se repetía.'),
+                'y ninguno se repetía. Antes del alba paseó bajo las vigas y comprobó que los '
+                'nombres estaban grabados de dentro afuera: quien supiera leer velario sabía desde '
+                'la puerta cuántos barrios vivían de que nadie dijera la verdad. Iria, que se ganaba '
+                'la vida poniendo nombres donde otros solo veían linderos, entendió la jugada antes '
+                'que nadie. La jueza Veyth llevaba el registro en la mano y no lo soltó ni al '
+                'sentarse. Sacarían a Esh por el portón agrietado antes del fallo, aunque fuera con '
+                'fiebre y sin alas: un juicio contra un secreto se gana callando al testigo, y la '
+                'sentencia saldría con el amanecer.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Si lo liberamos, también tendremos que escuchar lo que no queremos oír.'),
@@ -294,6 +350,16 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'La nave del tribunal está sin muros: las vigas a la vista dejan ver a los '
+                        'guardias a lo lejos y no hay un rincón donde esconder a un herido. Veyth '
+                        'mantiene la sala iluminada para que la sentencia se vea venir.')),
+                    ('hero', (
+                        'Esh no vuela y la escalera de vigas lo delata. Decid si salimos por el '
+                        'portón agrietado con las guardias encima o aguantamos dentro hasta el '
+                        'fallo.')),
+                ]),
                 ('half strength', [
                     ('protected', 'No puedo correr. Dejadme y llevad los planos del anclaje.'),
                     ('hero', 'Los planos se copian. Tú no. Sigue andando.'),
@@ -320,6 +386,10 @@ CAMPAIGN = dict(
                     ('narrator', (
                         'Suena la campana de la sentencia. Queda un turno para sacar a Esh por el '
                         'portón.')),
+                    ('antagonist', (
+                        'Cada nombre grabado en mis vigas es un barrio que se ahorrará ver caer su '
+                        'ciudad. Si me devolvéis al acusado antes del fallo, borro dos nombres de '
+                        'la lista y el cielo sigue arriba un invierno más.')),
                     ('hero', 'Todos al portón. Si no cabe, salgo yo el último y ya está.'),
                 ]),
             ],
@@ -339,7 +409,12 @@ CAMPAIGN = dict(
                 'Esh contó que los velarios habían gastado sus reservas durante una guerra lejana. El '
                 'consejo prefería robar estaciones enteras antes que admitir que debían aterrizar. '
                 'Iria anotó la fecha de la guerra en el borde del mapa: era la misma que la del '
-                'primer verano sin cosecha en su pueblo.'),
+                'primer verano sin cosecha en su pueblo. Esh no pudo volar en dos días, y en esos '
+                'dos días dibujó con el dedo sobre la mesa el observatorio donde se guardaban los '
+                'planos de los anclajes: una cornisa vieja, dos salidas al desfiladero y un '
+                'telescopio apuntando al suelo. Iria lo copió antes de que lo olvidara. Al tercer '
+                'día las patrullas de Veyth ya cerraban la garganta, y la jueza mandaba copiar su '
+                'sentencia en todas las vigas que quedaban libres.'),
         ),
         dict(
             title='La garganta de las alas',
@@ -351,7 +426,12 @@ CAMPAIGN = dict(
                 'solares y la promesa de Esh: si lograban llegar al observatorio, podrían bajar las '
                 'ciudades lentamente. El desfiladero tenía dos salidas y Uru vigilaba una; la otra '
                 'era una cornisa que solo aparecía en los mapas viejos. Iria había copiado esa '
-                'cornisa de un mapa que nadie más conservaba.'),
+                'cornisa de un mapa que nadie más conservaba. La niebla bajaba del nevero a ciertas '
+                'horas y borraba la cornisa incluso de su propio mapa. Uru volaba en círculos que se '
+                'cerraban un poco más cada tarde, y cada círculo costaba a su barrio un cubo que él '
+                'no pensaba pagar. Cruzar era la última vez que el mapa valdría más que unas alas: '
+                'si el observatorio confirmaba lo que Esh había prometido, la caída dejaría de ser '
+                'una catástrofe para convertirse en una obra medida.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Por el aire nos ven. Por el fondo del paso no podremos correr.'),
@@ -393,6 +473,16 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'En el fondo del paso sus alas no caben: los velarios tienen que posarse y '
+                        'en tierra valen uno por uno. La niebla del nevero tapa la cornisa a ratos, '
+                        'y Uru la conoce mejor que nosotros.')),
+                    ('hero', (
+                        'La cornisa baja es larga y el ancho, corto: por abajo llegamos tarde pero '
+                        'peleamos a su medida; por arriba llegamos en dos turnos y nos cogen en el '
+                        'aire. Elegid la llegada que queréis.')),
+                ]),
                 ('village captured', [
                     ('hero', 'Una repisa asegurada. Desde aquí veo el observatorio y su puerta cerrada.'),
                 ]),
@@ -411,6 +501,10 @@ CAMPAIGN = dict(
                     ('narrator', (
                         'Uru cierra el paso por el sur en dos turnos. La salida es la cornisa baja '
                         'del este.')),
+                    ('antagonist', (
+                        'Contad las bocas que sacáis de la garganta: cada una dormirá esta noche en '
+                        'un rellano de mi barrio, donde el pozo ya se raciona por turnos. No os '
+                        'persigo por crueldad: persigo el agua que me quitáis al bajar.')),
                     ('companion', 'La marea de alas sube detrás de nosotros. Se oye el viento en las juntas.'),
                 ]),
                 ('enemy leader defeated', [
@@ -434,7 +528,11 @@ CAMPAIGN = dict(
                 'Desde el observatorio, Iria vio que una ciudad ya se inclinaba. Bajo ella estaba el '
                 'pueblo donde había aprendido a escribir. Marcó la inclinación con dos trazos y '
                 'calculó, por primera vez sin equivocarse, cuántos días quedaban antes de que la '
-                'sombra tocara los tejados.'),
+                'sombra tocara los tejados. El telescopio, girado hacia el suelo, señalaba cada '
+                'pozo de la región y lo que quedaba dentro: doce días de margen, ni uno más. Entre '
+                'dos fardos de paja del almacén, Belis encontró un cristal de anclaje de repuesto y '
+                'se puso a calcular cuánto pesaba. Abajo, el pueblo seguía abriendo la acequia al '
+                'amanecer sin mirar hacia arriba.'),
         ),
         dict(
             title='El pueblo que sostuvo el cielo',
@@ -446,7 +544,12 @@ CAMPAIGN = dict(
                 'lo llevaría hasta el anclaje, mientras los recolectores intentaban recuperarlo para '
                 'sus propios barrios. El cristal pesaba lo que un niño y latía como un pájaro. Iria '
                 'trazó el camino más corto entre la acequia y el anclaje, y en el mapa marcó con '
-                'tinta roja los tres vados que lo cortaban.'),
+                'tinta roja los tres vados que lo cortaban. El transportista se llamaba Barun y ató '
+                'el cristal a la espalda con dos correas de carro, probando el peso en cada escalón '
+                'del umbral. Arriba, la ciudad inclinada ya crujía por las noches, y cada crujido '
+                'era un barrio empujando hacia donde había agua. Llevar el cristal al anclaje del '
+                'oeste era sostener el cielo con una espalda de suelo, y el mapa señalaba tres '
+                'vados donde esa espalda podía romperse.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Cada calle que salvemos arriba puede costarnos una cosecha abajo.'),
@@ -480,9 +583,23 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'El camino cruza la acequia tres veces y en cada vado el carro se para '
+                        'mientras lo cargan. Neth cortará el paso donde el agua llegue a la '
+                        'cintura, que es donde Barun no puede correr.')),
+                    ('hero', (
+                        'Rodear por el molino viejo cuesta dos turnos pero cubre la retirada; la '
+                        'orilla corta deja el cristal a tiro de arco desde el vado. Decidlo antes '
+                        'del segundo cruce.')),
+                ]),
                 ('half strength', [
                     ('protected', 'Me han dado. Puedo seguir, pero el cristal pesa el doble.'),
                     ('hero', 'Dámelo a mí un tramo. El cristal no distingue de quién es la espalda.'),
+                    ('antagonist', (
+                        'El cristal pesa lo que un niño y os quedan dos vados antes del anclaje. '
+                        'Dejadlo en el camino: lo recojo para mi barrio y retiro a mis recolectores '
+                        'del pueblo, porque una ciudad que cae partida no da agua a nadie.')),
                 ]),
                 ('village captured', [
                     ('hero', 'Asegurad la acequia. Si el anclaje falla, esta zanja es lo único que nos queda.'),
@@ -514,7 +631,11 @@ CAMPAIGN = dict(
                 'El anclaje resistió. Desde las plataformas bajaron cuerdas con agua y alimentos: '
                 'algunos velarios habían visto quién los había salvado. Iria anotó junto al anclaje '
                 'los cubos que bajaron y los que faltaban, y dejó la resta escrita donde cualquiera '
-                'pudiera leerla.'),
+                'pudiera leerla. La resta tenía un último renglón sin número, y el renglón se '
+                'llamaba palacio. Apenas la ciudad enderezó el cuello llegó la noticia de arriba: '
+                'Sesher exigía otro invierno de oscuridad a cambio de negociar. Iria dobló el mapa '
+                'con la resta hacia afuera y salió a buscar a quienes habían apretado los anclajes, '
+                'porque una torre de acreedores no se toma sola.'),
         ),
         dict(
             title='La torre de los acreedores',
@@ -526,7 +647,12 @@ CAMPAIGN = dict(
                 'habían trabajado en los anclajes para tomar su torre y abrir los registros de '
                 'consumo. La torre tenía tres patios y una sola puerta, y en la puerta un escriba '
                 'anotaba cada nombre que entraba. Iria se detuvo a leer la lista y reconoció tres '
-                'apellidos de su propio pueblo.'),
+                'apellidos de su propio pueblo. El escriba escribía despacio, con tinta comprada a '
+                'plazos, y junto a cada nombre iban la fecha y la deuda: para Iria, que había '
+                'ganado la vida poniendo linderos en un papel, aquello era un mapa al revés. Arriba, '
+                'el libro de consumo guardaba cuatro columnas de cifras que nadie había cruzado '
+                'nunca. Si las cruzaban aquella noche, la palabra «oscuridad» dejaría de ser un '
+                'castigo para convertirse en una cuenta con deudor y todo.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Dirá que el cielo le pertenece porque sus antepasados lo levantaron.'),
@@ -560,6 +686,16 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'La torre tiene tres patios y una sola puerta: quien controla la puerta '
+                        'manda en los tres, pero en ella también se amontonan. La sala alta se ve '
+                        'desde el patio segundo.')),
+                    ('hero', (
+                        'Podemos tomar los patios uno a uno y llegar con el libro intacto, o ir '
+                        'derechos a la sala y dejar la espalda abierta. Elegid: hoy el libro vale '
+                        'más que la torre.')),
+                ]),
                 ('village captured', [
                     ('hero', 'Un patio tomado. La cámara de registros está en el siguiente.'),
                 ]),
@@ -573,6 +709,10 @@ CAMPAIGN = dict(
                     ('narrator', (
                         'Los guardias oyen las cifras desde el patio: seis barrios gastan menos luz '
                         'que el palacio de Sesher.')),
+                    ('antagonist', (
+                        'Ese libro sostiene la confianza de cuarenta mil personas. Pesad bien lo que '
+                        'vale una página: si sale de la torre, la ciudad baja sola y el hambre os '
+                        'cobra el papel.')),
                 ]),
                 ('time limit', [
                     ('narrator', (
@@ -601,7 +741,12 @@ CAMPAIGN = dict(
                 'Los registros mostraron que el palacio gastaba más luz que seis barrios. La guardia '
                 'de Sesher abandonó sus puestos al conocer los números. Iria copió las cuatro '
                 'columnas del libro en una sola tabla y la clavó en la puerta de la torre, para que '
-                'el siguiente que entrara supiera de antemano cuánto le iban a cobrar.'),
+                'el siguiente que entrara supiera de antemano cuánto le iban a cobrar. Los guardias '
+                'se llevaron copias dobladas dentro del casco, y esa fue toda la ceremonia. Pero en '
+                'el puerto quedaban tres cabrestantes viejos bajo la misma facción que juraba no '
+                'bajar nunca, y en los muelles las familias velarias esperaban sobre plataformas que '
+                'crujían. Iria afiló el lápiz de la tabla: la última resta se llamaría «muelle» y se '
+                'firmaría con el agua a la vista de todos.'),
         ),
         dict(
             title='Donde termina la sombra',
@@ -613,7 +758,13 @@ CAMPAIGN = dict(
                 'Belis debían sincronizarlos mientras las familias velarias esperaban sobre '
                 'plataformas que crujían. Los tres anclajes eran antiguos cabrestantes de barco, y '
                 'ninguno estaba calculado para el peso de una ciudad. Iria midió la sombra que '
-                'proyectaban sobre el agua y supo que la ciudad bajaría justo sobre los muelles.'),
+                'proyectaban sobre el agua y supo que la ciudad bajaría justo sobre los muelles. El '
+                'del dique estaba minado, el del faro se veía desde tres lados y el del muelle se '
+                'hundía un palmo cada noche bajo el peso de las cuerdas. El Vigía de la Última '
+                'Altura juraba partir la ciudad antes que verla tocar tierra, y lo decía con la voz '
+                'de quien ya vio abrirse una. Aquel atardecer se decidía si la deuda del cielo se '
+                'pagaba en luz o en gente: los tres cabrestantes encendidos a la vez eran el último '
+                'plazo.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Cuando aterricen, habrá menos cielo y mucha más gente en nuestros caminos.'),
@@ -646,6 +797,16 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('narrator', (
+                        'El dique es una pasarela estrecha sobre agua honda: da para un frente '
+                        'solo, pero una caída allí no se recoge. Desde el agua y desde las '
+                        'plataformas nos ven llegar a los tres cabrestantes.')),
+                    ('hero', (
+                        'Con un solo anclaje encendido la ciudad no se endereza. Decid si bajamos '
+                        'todos juntos al dique o dejamos media guardia en el del muelle mientras el '
+                        'faro espera su turno.')),
+                ]),
                 ('beacon lit 1', [
                     ('narrator', (
                         'Primer anclaje encendido. La ciudad se endereza un grado y el muelle cruje '
@@ -665,6 +826,10 @@ CAMPAIGN = dict(
                     ('narrator', (
                         'Última marea de la noche. Si el tercer anclaje no enciende ahora, la ciudad '
                         'toca el agua.')),
+                    ('antagonist', (
+                        'He minado el dique porque una ciudad que baja mal se abre como una nuez. '
+                        'Contad las familias que duermen en los barrios bajos antes de encender el '
+                        'tercero: prefiero deberos una caída a firmar cuatro mil muertos.')),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', (
@@ -686,7 +851,11 @@ CAMPAIGN = dict(
                 'una. Nadie aplaudió al principio: todos estaban escuchando un silencio sin motores. '
                 'Iria abrió el mapa en el suelo del muelle y '
                 'señaló el primer pozo que habría que cavar, con la fecha escrita al lado y el '
-                'nombre del pueblo que lo bebería.'),
+                'nombre del pueblo que lo bebería. Belis plantó junto al pozo la lanza rota del '
+                'primer día, y su luz latió una vez, como dando el visto bueno. Cuando terminó la '
+                'lista, Iria dibujó en el margen el primer camino entre dos pueblos que hasta '
+                'entonces solo se habían conocido como sombras. El margen quedó largo de más y ella '
+                'lo dejó así: sabía exactamente cuántos nombres faltaban por escribir.'),
         ),
     ],
 )

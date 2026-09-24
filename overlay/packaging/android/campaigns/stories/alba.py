@@ -29,11 +29,20 @@ CAMPAIGN = dict(
             antagonist='Sarel, el cobrador',
             opening='La campana del faro sonó a mediodía, aunque Alba había retirado su '
                     'badajo. En la playa aparecieron barcas vacías y, en sus bancos, '
-                    'nombres de vecinos todavía vivos. Los hombres de Sarel cerraron el '
-                    'embarcadero para cobrar por la huida. Nadie las había visto llegar: '
-                    'la marea las dejó de costado, como si alguien las hubiera empujado '
-                    'desde dentro. Alba contó once nombres escritos con una tinta que no '
-                    'era de la ciudad, y reconoció la letra de su madre en el primero.',
+                    'nombres de vecinos todavía vivos. Alba era la farera de Valdara: '
+                    'encendía la torre al anochecer y cobraba de un concejo que llevaba '
+                    'dos meses sin pagarle. Los hombres de Sarel cerraron el embarcadero '
+                    'para cobrar por la huida. Nadie las había visto llegar: la marea las '
+                    'dejó de costado, como si alguien las hubiera empujado desde dentro. '
+                    'Alba contó once nombres escritos con una tinta que no era de la '
+                    'ciudad, y reconoció la letra de su madre en el primero. Antes de la '
+                    'pleamar quería escuchar esos once nombres fuera del agua, contados '
+                    'uno por uno. Pero cada vecino que sacara de la aduana Sarel lo '
+                    'apuntaría en su libro de deudas, y la primera cuenta del libro era el '
+                    'faro. La vela del primer banco aún olía a brea, como si la barca '
+                    'acabara de salir del astillero. Al anochecer midió el aceite que '
+                    'quedaba en la torre: apenas tres fuegos, y en el concejo no quedaba '
+                    'nadie a quien pedir más.',
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Mi hermana está encerrada en la aduana. Dice Sarel que '
@@ -66,6 +75,21 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('antagonist', 'Once nombres en la arena y once fianzas sin pagar. '
+                                   'Una ciudad que no puede pagar ya está perdida, y yo '
+                                   'llevo sus cuentas.'),
+                    ('hero', 'La ciudad está viva y subiendo a las barcas. Apunta eso en '
+                             'tu libro, junto a la fecha.'),
+                ]),
+                ('village captured', [
+                    ('antagonist', 'Todo lo que salga por esta playa queda escrito a '
+                                   'vuestra cuenta. Mañana el concejo leerá mi libro y '
+                                   'sabrá quién huyó sin pagar.'),
+                    ('narrator', 'La marea cubre la senda de las dunas y solo queda seco '
+                                 'el muelle estrecho. Sarel lo cierra con sus últimos '
+                                 'hombres: decidid si lo forzáis o rodeáis por el agua.'),
+                ]),
                 ('turn 4', [
                     ('Sarel, el cobrador', 'He mandado abrir las compuertas del arrecife. '
                                            'Si no me pagáis, el agua hará mi trabajo.'),
@@ -77,10 +101,26 @@ CAMPAIGN = dict(
                     ('hero', 'La bandera está a un tiro de piedra. Apóyate en mi hombro '
                              'y la alcanzamos.'),
                 ]),
+                ('turn 6', [
+                    ('antagonist', 'Sin mi libro esta plaza sería una pelea por los bancos '
+                                   'de las barcas. El orden que os molesta es lo único que '
+                                   'frena al más fuerte.'),
+                    ('companion', 'Ese orden encerró a mi hermana tres días sin ver el '
+                                  'mar.'),
+                ]),
                 ('turn 8', [
                     ('Sarel, el cobrador', 'Mis hombres no cobran por gusto. Cobran porque '
                                            'alguien tiene que decidir quién queda.'),
                     ('hero', 'Decide tú, entonces. Yo solo voy a sacar a los que quepan.'),
+                ]),
+                ('turn 10', [
+                    ('Sarel, el cobrador', 'Cobraré la salida de cada nombre, aunque '
+                                           'tenga que seguirla mar adentro. La deuda '
+                                           'viaja con el deudor.'),
+                    ('narrator', 'La pleamar ha borrado los muelles bajos y el agua llega '
+                                 'ya a la cintura junto a la aduana. Sarel gana esperando: '
+                                 'decidid si forzáis la bandera ahora o arriesgáis la '
+                                 'subida completa.'),
                 ]),
                 ('enemy leader defeated', [
                     ('narrator', 'El libro de cuentas quedó abierto en el suelo del muelle. '
@@ -100,7 +140,13 @@ CAMPAIGN = dict(
             resolution='La cautiva llevaba una tablilla robada: la marea subiría antes del '
                        'amanecer. No era una profecía; alguien había abierto las compuertas '
                        'del arrecife. Alba mandó encender el faro sin badajo y comprendió '
-                       'que ya no defendía una muralla, sino una lista de nombres.',
+                       'que ya no defendía una muralla, sino una lista de nombres. El libro '
+                       'de Sarel se quedó abierto en el muelle y la marea lo firmó hoja por '
+                       'hoja. Bajo la lámpara de la torre, la tinta de la tablilla era la '
+                       'misma que Alba había visto en los bancos de las barcas. Antes del '
+                       'alba, la niebla subió desde el agua y dejó mar adentro familias '
+                       'remando a ciegas: solo tres luces juntas les enseñarían el camino '
+                       'de vuelta.',
         ),
         dict(
             title='Tres fuegos en la niebla',
@@ -112,7 +158,15 @@ CAMPAIGN = dict(
                     'el aceite del faro y ahora perseguía a los testigos de su trato. Las '
                     'tres hogueras debían arder a la vez: una sola luz se confunde con un '
                     'reflejo, y dos parecen un incendio. Los barcos esperaban mar adentro, '
-                    'remando a ciegas, guiándose por el ruido de la resaca.',
+                    'remando a ciegas, guiándose por el ruido de la resaca. Alba subió al '
+                    'primer acantilado con la última jarra de aceite y Oren contó los pasos '
+                    'en la niebla: al vigésimo dejaron de verse las manos. La mecha del '
+                    'primer brasero estaba cortada en seco, con hoja de cuchillo, no '
+                    'gastada por la humedad. Si Velkan vendía la luz que nadie le había '
+                    'pagado, Alba iba a encender la que la ciudad todavía debía a los '
+                    'suyos. Al pie del acantilado el agua lamía ya el primer escalón de la '
+                    'plaza, y por la calzada del norte venían antorchas a caballo: alguien '
+                    'iba a cobrar antes de que la ciudad se hundiera.',
             intro=[
                 ('companion', 'El aceite alcanza para tres fuegos pequeños. No para una '
                               'hoguera que vean los señores desde sus torres.'),
@@ -143,9 +197,19 @@ CAMPAIGN = dict(
                               'perderse.'),
             ],
             events=[
+                ('turn 2', [
+                    ('antagonist', 'Nadie pagó nunca por esa luz que vendí al mar: ni el '
+                                   'concejo, ni los pescadores, ni vosotros. El aceite era '
+                                   'lo único mío que quedaba dentro del faro.'),
+                    ('hero', 'Esta noche la luz se paga con vecinos. Apúntalo en tu '
+                             'cuaderno.'),
+                ]),
                 ('beacon lit 1', [
                     ('narrator', 'Primer fuego encendido. La niebla se tiñe de naranja y '
                                  'alguien responde desde el agua con dos golpes de remo.'),
+                    ('antagonist', 'Apagad ese primer fuego y todavía podemos hablar. '
+                                   'Puedo jurar que fue un incendio y ahorraros la cuenta '
+                                   'del aceite.'),
                 ]),
                 ('beacon lit 2', [
                     ('Velkan, guardacostas', 'Dos luces son un incendio. Los señores '
@@ -155,10 +219,27 @@ CAMPAIGN = dict(
                 ('turn 6', [
                     ('companion', 'Los guardacostas han cortado el sendero alto. Habrá que '
                                   'volver a bajar por la cala.'),
+                    ('narrator', 'La cala queda a la vista del acantilado y el sendero alto '
+                                 'ya no existe. Velkan os quiere separados para apagar un '
+                                 'fuego cada vez: decidid si bajáis juntos o repartís '
+                                 'unidades.'),
+                ]),
+                ('turn 8', [
+                    ('antagonist', 'Cuando se levante la niebla recorreré las tres calas '
+                                   'con mi cuaderno. Quien haya tocado el aceite firmará '
+                                   'un pago, porque esta luz por fin se cobra.'),
+                    ('narrator', 'El tercer acantilado solo se sube por una escalera '
+                                 'estrecha y la niebla la borra a media altura. Velkan la '
+                                 'defiende con sus últimos guardacostas: decidid quién '
+                                 'sube y quién cubre la retirada.'),
                 ]),
                 ('turn 10', [
                     ('narrator', 'La niebla empieza a cerrarse sobre el tercer acantilado. '
                                  'Queda poco para que el puerto quede ciego.'),
+                    ('Velkan, guardacostas', 'El faro ardió catorce años con mi aceite y '
+                                             'mi sueldo. ¿Cuántas barcas se habrían '
+                                             'salvado si alguien me hubiera pagado por '
+                                             'encenderlo?'),
                 ]),
                 ('enemy leader defeated', [
                     ('Velkan, guardacostas', 'No vendí el aceite para huir. Lo vendí para '
@@ -179,7 +260,13 @@ CAMPAIGN = dict(
             resolution='Tres luces respondieron desde el mar. Oren reconoció el ritmo de los '
                        'golpes de remo de su familia. Quedaba una última noche que '
                        'comprarles, y Alba ya había decidido con qué iba a pagarla: con la '
-                       'única cosa que la ciudad no había vendido todavía, su faro apagado.',
+                       'única cosa que la ciudad no había vendido todavía, su faro apagado. '
+                       'En la arena del tercer acantilado apareció el cuaderno de '
+                       'guardacostas de Velkan, con cada servicio anotado y ni un pago '
+                       'firmado. Los braseros se consumieron antes del alba y la niebla se '
+                       'los tragó sin dejar rescoldo. Antes de bajar a la plaza, Alba vio '
+                       'antorchas avanzando por la calzada del norte: alguien venía a '
+                       'cobrar lo suyo antes de que el agua cubriera el último escalón.',
         ),
         dict(
             title='El amanecer prestado',
@@ -191,7 +278,12 @@ CAMPAIGN = dict(
                     'Alba instaló su última defensa junto a las barcas cargadas. No había '
                     'muralla que sostener, solo una fila de embarcaciones, doscientos '
                     'vecinos cargando cofres y una lámpara grande que ya nadie tenía fuerzas '
-                    'para subir al acantilado.',
+                    'para subir al acantilado. Alba seguía siendo la farera de Valdara, '
+                    'aunque ya no quedara torre que encender: esta vez la luz tendría que '
+                    'flotar. El badajo que había quitado de la campana colgaba del asa de '
+                    'la lámpara, y con él tocaba la llamada cada vez que una barca quedaba '
+                    'cargada. Antes del amanecer había que decidir qué se quedaba en la '
+                    'plaza: las piedras o la última luz.',
             intro=[
                 ('companion', 'Ya no queda sitio para la lámpara grande. Si la llevamos, '
                               'alguien tendrá que quedarse.'),
@@ -219,11 +311,32 @@ CAMPAIGN = dict(
                          'barcas.'),
             ],
             events=[
+                ('turn 2', [
+                    ('antagonist', 'No vengo por vuestras cabezas, vengo por mis pagarés. '
+                                   'Una ciudad que no puede pagar ya está perdida, y '
+                                   'vosotros la estáis cargando sin cerrar la cuenta.'),
+                    ('narrator', 'La rampa del mercado admite cuatro hombres de frente y '
+                                 'el callejón de las redes solo uno. Sarel empuja por '
+                                 'ambos para llegar a las barcas: decidid cuál tapáis y a '
+                                 'cuál dais la espalda.'),
+                ]),
                 ('turn 4', [
                     ('narrator', 'La mitad de las barcas están cargadas. La plaza ha perdido '
                                  'dos peldaños.'),
                     ('companion', 'Los mercenarios han encontrado el almacén de sal. Si lo '
                                   'prenden, arderá la rampa.'),
+                    ('antagonist', 'Mi libro era lo único que esta plaza hacía por orden. '
+                                   'Ahora cada cofre se carga por quien grita más alto, y '
+                                   'eso también se apunta.'),
+                ]),
+                ('turn 6', [
+                    ('Sarel, sin puerto', 'Cuando el agua llegue al arca, el mar se come '
+                                          'mis pagarés y esta ciudad se queda debiendo '
+                                          'para siempre. Llegaré antes que el agua.'),
+                    ('narrator', 'La plaza ha perdido tres peldaños y la última barca se '
+                                 'carga en marea alta. Sarel ataca donde la fila se rompe, '
+                                 'buscando el arca de la aduana: decidid si tapáis el '
+                                 'muelle o cubrís los últimos cofres.'),
                 ]),
                 ('turn 8', [
                     ('Sarel, sin puerto', 'Mis pagarés están en el arca de la aduana. '
@@ -234,6 +347,9 @@ CAMPAIGN = dict(
                     ('narrator', 'Última barca en el muelle. Los que se queden no volverán '
                                  'a pisar tierra firme.'),
                     ('companion', 'Nima cuenta las cabezas. Todavía falta una familia.'),
+                    ('antagonist', 'Os dejo las barcas y me llevo la cuenta entera. Mañana '
+                                   'esta ciudad flotará, pero deberá cada luz que hoy '
+                                   'regala.'),
                 ]),
                 ('enemy leader defeated', [
                     ('Sarel, sin puerto', 'Sin puerto no hay deuda. Sin deuda no hay '
@@ -255,7 +371,12 @@ CAMPAIGN = dict(
             resolution='Cuando la última barca salió, Alba apagó la lámpara con agua de mar. '
                        'Nadie le pidió que salvara las piedras. En la costa nueva nadie '
                        'conocía su nombre, y eso, por primera vez en su vida, no le pareció '
-                       'una derrota.',
+                       'una derrota. El badajo de la campana volvió al bolsillo de Alba: '
+                       'era lo único que la torre había dejado salir. En la arena '
+                       'encendieron una lámpara por cada persona que bajaba de una barca, y '
+                       'Alba las contó despacio, una por una, hasta que la costa parecía '
+                       'una constelación a ras del agua. Su oficio seguía siendo el mismo: '
+                       'encender una luz para que alguien encontrara tierra.',
         ),
     ],
 )

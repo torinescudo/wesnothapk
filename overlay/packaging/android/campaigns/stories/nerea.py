@@ -30,12 +30,18 @@ CAMPAIGN = dict(
             biome='harbor',
             antagonist='Recaudadora Vaska',
             opening=(
-                'Todos los nombres desaparecieron de las cartas del puerto. Vaska arrestó al único '
+                'Todos los nombres desaparecieron de las cartas del puerto. Nerea Vado es capitana de '
+                'puerto libre: gana la vida metiendo barcos dentro del paso cuando la marea los '
+                'deja a media mar, y quiere una sola cosa hoy: firmar el registro de salida con '
+                'el nombre de su calle todavía escrito. Vaska arrestó al único '
                 'piloto que aún recordaba la salida y vendió permisos de navegación imposibles de '
                 'usar. En el registro de la aduana cada isla figura como «sin designar» y cada barco '
                 'como carga de valor variable. Ciro está en la celda del muelle con las manos atadas '
                 'y una tablilla de precios colgada del cuello, sin una sola letra de su calle. Desde '
-                'la torre, la marea sube con una calma que no le corresponde.'),
+                'la torre, la marea sube con una calma que no le corresponde. La barca de Nerea también '
+                'está en ese libro, tasada por lo que rinde, y a cada marea tranquila se le caen '
+                'letras de la carta de navegación. Zarpar sin permiso sellado significa dejar la '
+                'barca en prenda, y sin barca se le acaba el oficio.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', (
@@ -63,6 +69,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Recaudadora Vaska', 'Sin mi libro, este puerto es una fila de barcos que nadie sabe cobrar. Firmad el precio y os firmo la salida antes de que cierre la pleamar.'),
+                    ('narrator', 'La aduana da a un canal de una sola boca y Vaska ha tendido una cadena al ras del agua para que la pleamar haga de carcelero. Decide si cortas la cadena por dentro o sacas a Ciro por el tejado.'),
+                ]),
                 ('turn 4', [
                     ('narrator', 'El agua cubre el primer escalón de la celda. Alguien ha abierto las compuertas del arrecife.'),
                     ('Recaudadora Vaska', 'No he sido yo. La máquina mantiene el mar quieto y cobra lo que nadie usa.'),
@@ -70,6 +80,11 @@ CAMPAIGN = dict(
                 ('half strength', [
                     ('protected', 'No puedo correr. Dejadme con la tablilla y salid vosotros.'),
                     ('hero', 'La tablilla pesa menos que tú. Camina y no discutas con quien te saca de una celda.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'En un turno la escalera de servicio queda inundada y solo quedará la puerta encadenada. Elige el paso ahora: el agua sube más rápido que tus hombres.'),
+                    ('Recaudadora Vaska', 'Detrás de cada precio hay un nombre guardado. Quitadme el libro y esos nombres se los come el canal, no yo.'),
+                    ('hero', 'Los nombres viven en las calles, no en tus renglones.'),
                 ]),
                 ('turn 8', [
                     ('Recaudadora Vaska', (
@@ -94,7 +109,10 @@ CAMPAIGN = dict(
                 'El piloto recordó una isla que había desaparecido de los registros tres años antes '
                 'de hundirse. La dibujó con brea en la puerta de la aduana y escribió debajo el '
                 'nombre de su calle, que nadie le había devuelto. Vaska pagó la multa de su propio '
-                'libro y se marchó del puerto sin que nadie le pidiera el permiso.'),
+                'libro y se marchó del puerto sin que nadie le pidiera el permiso. Nerea firmó el registro con el nombre '
+                'de su calle, y la marea le devolvió dos letras de su carta. Al amanecer, la '
+                'corriente sin nombre tiraba hacia el paso exterior, donde dos filas de lanzas '
+                'guardaban la única salida del archipiélago.'),
         ),
         dict(
             title='Los dientes del arrecife',
@@ -107,7 +125,10 @@ CAMPAIGN = dict(
                 'golpea un caracol tres veces y las filas se cierran. En el cordel de cada lanza hay '
                 'nudos atados por manos que ya no recuerdan a quién los ataron. La corriente que '
                 'buscamos pasa por debajo de esas líneas. Solo hay una salida y está al otro lado, '
-                'marcada con una bandera.'),
+                'marcada con una bandera. El hueco entre las dos filas se abre con la resaca '
+                'y se cierra cuando el agua se calma, y esta resaca dura lo que dura la luz. Cada '
+                'paso que Nerea abre por una corriente sin nombre le borra una letra de su carta; '
+                'quedarse en la orilla le borra el paso entero.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: cruza el arrecife y alcanza la bandera del paso exterior antes de que cierre la marea.'),
@@ -129,6 +150,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Naga Kess', 'Nuestra ley dice que quien nombra una cosa la posee. Vosotros nombráis bancos y calas y por eso os parece que el mar os debe algo.'),
+                    ('narrator', 'Dos filas de lanzas flanquean el hueco del arrecife y la resaca lo ensancha a cada ronda. Pasa ahora por el centro o rodea por la poza honda, que te costará dos turnos.'),
+                ]),
                 ('turn 4', [
                     ('companion', 'Sus lanzas se mueven con la resaca, no contra ella. Están dejando pasar el agua.'),
                     ('hero', 'Aprovecha el hueco. Cuenta hasta tres y corre.'),
@@ -136,6 +161,11 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('narrator', 'En la cala hay una pizarra de pescadores con seis nombres y un séptimo borrado a mano.'),
                     ('companion', 'El séptimo nudo. Aquí también les falta alguien.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Cuando baje la resaca, las filas cerrarán el hueco como una boca. Decide si empujas por el centro con todos o mandas delante a los rápidos para que marquen el paso desde el otro lado.'),
+                    ('Naga Kess', 'Yo no poseo este paso, solo lo guardo, y mañana volveré a custodiarlo entero. Para eso estamos las de siempre: las primeras borradas.'),
+                    ('hero', 'Entonces lo cruzamos con nombre. Le pondremos el de tu hermana, si me lo dices.'),
                 ]),
                 ('turn 8', [
                     ('Naga Kess', 'Mi ley dice que un nombre robado vuelve al agua con quien lo robó.'),
@@ -161,7 +191,10 @@ CAMPAIGN = dict(
                 'Al otro lado del arrecife, el mar tenía el sabor del agua de lluvia. Luar nadó hasta '
                 'una roca y ató en su cordel un nudo nuevo con el nombre del paso que acababan de '
                 'cruzar. Kess lo vio desde lejos y no lo deshizo: era la primera vez en veinte años '
-                'que alguien ataba un nombre en lugar de cortarlo.'),
+                'que alguien ataba un nombre en lugar de cortarlo. Aquel sabor venía de '
+                'tres fuentes que manaban bajo la mar, y cada chorro bajaba con un nombre menos '
+                'para las islas del borde. Nerea guardó el rumbo de las luces que las señalaban, '
+                'sabiendo que encenderlas costaba apellidos ajenos.'),
         ),
         dict(
             title='Agua dulce en mar abierto',
@@ -174,7 +207,10 @@ CAMPAIGN = dict(
                 'mecanismos. El custodio no defiende un secreto: administra una deuda. Cada chorro '
                 'que mana descuenta años de memoria a las islas del borde, y él lleva la cuenta en '
                 'tres piedras. Los nombres grabados en la calzada están tachados con sal, no con '
-                'tinta, y alguno tiene la marca de un pulgar reciente.'),
+                'tinta, y alguno tiene la marca de un pulgar reciente. La tercera piedra, la de '
+                'los nombres que nadie reclamó, está tibia debajo del agua. Nerea sabe lo que '
+                'cuesta accionar estas balizas: cada luz encendida le ha costado hasta ahora una '
+                'letra de su carta, y delante quedan tres luces y tres apellidos de más.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: activa las tres balizas sumergidas llevando una unidad a cada una.'),
@@ -193,6 +229,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Custodio Issar', 'Mi gente bebió de esta agua antes que nadie y la máquina nos pidió los nombres como fianza. Todavía los estamos pagando.'),
+                    ('narrator', 'La calzada queda a media agua y solo se pasa por sus tres tramos de piedra. Los guardias de Issar cortan el tramo central: decide si repartes una unidad por baliza o abres el tramo de en medio primero.'),
+                ]),
                 ('beacon lit 1', [
                     ('narrator', 'Primera baliza encendida. El agua dulce se enturbia un instante y vuelve a estar clara.'),
                     ('companion', 'Ha pasado algo por debajo. No era un pez.'),
@@ -204,6 +244,11 @@ CAMPAIGN = dict(
                 ('beacon lit 3', [
                     ('narrator', 'La tercera baliza abre la calzada. En el centro hay una piedra con un nombre a medio raspar.'),
                     ('companion', 'Está empezado por la mitad. Alguien se arrepintió.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'El chorro dulce empuja hacia el norte y resbala a quien nada contra él. Los de Issar atacan a favor de corriente: rema con ella y no de frente.'),
+                    ('Custodio Issar', 'No guardo estas balizas por gusto: las guardo porque fuimos los primeros en pagarlas. Si encendéis las tres, mi deuda crece, y una deuda sin nombre se cobra en la primera casa que encuentre.'),
+                    ('hero', 'Tu deuda la apuntamos con nosotros. Pero hoy encendemos las tres.'),
                 ]),
                 ('turn 8', [
                     ('narrator', 'Un bote sin remos aparece a la deriva con dos isleños dentro y ninguna carta a bordo.'),
@@ -226,7 +271,10 @@ CAMPAIGN = dict(
                 'Las balizas revelaron una calzada bajo la superficie. Sobre sus piedras estaban '
                 'grabados nombres tachados. Nerea raspó la sal con la uña en uno de ellos y encontró '
                 'una letra debajo. Luar la copió en su cordel con un nudo, antes de que la marea '
-                'volviera a cubrirla; Issar lo miró hacerlo y no lo impidió.'),
+                'volviera a cubrirla; Issar lo miró hacerlo y no lo impidió. Alguien había '
+                'empezado a raspar aquellos nombres y no llegó a terminar la faena. Del último '
+                'tramo de calzada partía un surco de anclas hacia una isla que no figuraba en '
+                'carta alguna, y hacia allí tiraba la corriente.'),
         ),
         dict(
             title='La isla borrada',
@@ -239,7 +287,11 @@ CAMPAIGN = dict(
                 'esconde la isla: la ha sacado de todos los mapas para que nadie reclame a los suyos. '
                 'En los almacenes hay baúles con etiqueta de destino y sin remitente, y en la pared '
                 'del faro alguien escribió el nombre de cada preso y raspó el suyo propio hasta '
-                'levantar la cal.'),
+                'levantar la cal. La marea entra por la '
+                'calzada del este dos veces al día y deja el almacén aislado un rato: es el único '
+                'momento en que sus guardias no se oyen entre sí. Nerea ataca esa franja sabiendo '
+                'que cada hora de asalto es un flete que no cobrará nunca, porque las islas sin '
+                'nombre no pagan rescates.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: derrota al almirante Serkos y abre los almacenes del fuerte.'),
@@ -259,6 +311,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Almirante Serkos', 'Cada preso que guardo come y duerme. Fuera, nadie los buscaba ni para enterrarlos: aquí tienen lista, tejado y número de baúl.'),
+                    ('narrator', 'El fuerte tiene dos puertas y una torre entre las dos. Serkos refuerza la torre a cada turno: decide si cierras las puertas a la vez o la primera se te llena de heridos.'),
+                ]),
                 ('turn 4', [
                     ('narrator', 'Refuerzos por el embarcadero. Serkos ha mandado abrir el almacén de armas.'),
                     ('companion', 'Dos barcas con gente armada. Cuento veinte remos.'),
@@ -266,6 +322,11 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('narrator', 'En la caseta del muelle hay una etiqueta de equipaje con un precio y ninguna letra de nombre.'),
                     ('hero', 'La guardamos. Servirá de prueba cuando alguien pregunte por los baúles.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Al caer la tarde el agua cubre la calzada del este y corta la retirada de ese lado. Decide qué puerta cierras antes: la del almacén de armas o la de la torre.'),
+                    ('Almirante Serkos', 'No borré esta isla para quedármela: la borré para que no vinieran a repartirla. Mañana firmaré su nombre de nuevo, y será el que yo elija.'),
+                    ('hero', 'Mañana firmará quien la habite. Y ya somos demasiados para tu firma.'),
                 ]),
                 ('turn 8', [
                     ('Almirante Serkos', 'Podéis llevaros a los presos. Los barcos os los quedaréis también. Solo quiero la isla sin nombre.'),
@@ -292,7 +353,10 @@ CAMPAIGN = dict(
                 'Una niña reconoció a Nerea en un retrato viejo. La capitana no recordaba haber '
                 'visitado aquella isla. En la imagen salía junto a su madre, con un cuaderno bajo el '
                 'brazo, delante del mismo almacén que acababa de cruzar. La niña le preguntó si el '
-                'cuaderno seguía existiendo; Nerea tardó en contestar.'),
+                'cuaderno seguía existiendo; Nerea tardó en contestar. La niña '
+                'llevaba atada a la cintura una bolsa de cuero con un nudo que nadie sabía '
+                'deshacer. Dentro esperaba un cuaderno escrito por su madre, y con él el camino '
+                'hasta la única lectora que aún descifraba la tinta que aparece al anochecer.'),
         ),
         dict(
             title='El cuaderno de otra vida',
@@ -305,7 +369,10 @@ CAMPAIGN = dict(
                 'al anochecer. Olss rastrea por el olor del papel mojado y ha marcado los árboles del '
                 'camino con brea. Cada vez que el cuaderno se abre, alguien de la comarca pierde el '
                 'nombre de un árbol. Talia lo lleva en una bolsa de cuero atada con un nudo que no '
-                'sabe deshacer.'),
+                'sabe deshacer. Para Nerea, abrir el '
+                'cuaderno cuesta a la comarca un nombre; no abrirlo, no volver a leer a su madre. '
+                'El anochecer cae dentro de dos jornadas, y la bolsa de Talia no puede caerse ni '
+                'una vez por el camino.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: escolta a Talia y el cuaderno hasta la bandera, al final del bosque.'),
@@ -326,6 +393,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Rastreadora Olss', 'No persigo a la niña: persigo el papel. Un papel que solo se lee al anochecer ya ha borrado a más gente que yo, y alguien tiene que cerrarlo.'),
+                    ('narrator', 'Olss ha marcado los árboles con brea para que el camino se estreche a cada tramo. Decide si sigues el arroyo, más lento pero sin marcas, o cortas por el soto y aguantas la emboscada.'),
+                ]),
                 ('turn 4', [
                     ('protected', 'El nudo de la bolsa sigue apretado. Si se afloja, avisadme.'),
                     ('companion', 'Yo llevo el extremo de la cuerda. Si tiras, lo noto.'),
@@ -337,6 +408,11 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('narrator', 'En la carbonera hay una pizarra con los nombres de los árboles del término. Dos están borrados.'),
                     ('protected', 'El del sauce está borrado. Yo lo recuerdo: sauce.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'La ciénaga frena a quien carga peso y derriba a quien corre, y Olss ataca justo donde carga el peso. Decide quién abre paso y quién cierra la fila con Talia.'),
+                    ('Rastreadora Olss', 'Detrás de mí hay una comarca que duerme sin nombres, y esa calma también es orden. Si antes de la noche no soltáis el papel, quemaré el soto entero.'),
+                    ('hero', 'Luego el soto se quedará sin árboles y tú sin encargo. Escoge.'),
                 ]),
                 ('turn 8', [
                     ('Rastreadora Olss', 'Habéis llegado lejos para gente que no lleva mapa.'),
@@ -360,7 +436,11 @@ CAMPAIGN = dict(
                 'ruta para detener una invasión. Debajo de la orden había una cuenta de lo que la '
                 'máquina cobraba por cada isla, un año de memoria por cada marea tranquila. En la '
                 'última página, Aldara Vado había repetido su propio nombre siete veces, como si '
-                'temiera perderlo antes de terminar de escribir.'),
+                'temiera perderlo antes de terminar de escribir. Antes '
+                'del alba apareció en la puerta un caracol con muescas, una de ellas borrada: el '
+                'arrecife venía a cobrar el cuaderno en nombre de todos los que faltaban. Y con '
+                'el caracol llegaba la primera lanza, que no venía a discutir el precio, sino a '
+                'fijarlo.'),
         ),
         dict(
             title='Quienes pagan la calma',
@@ -373,7 +453,11 @@ CAMPAIGN = dict(
                 'de Nerea había intentado detenerla. Uss viene a cobrar en nombre del arrecife: el '
                 'cuaderno es la prueba de la deuda. En las islas del borde los pescadores ya salen a '
                 'la mar sin recordar su cala y vuelven guiándose por las estrellas. La aldea tiene '
-                'hasta el alba para embarcar a todos.'),
+                'hasta el alba para embarcar a todos. Uss viene con '
+                'la ley del arrecife anudada en el brazo, un nudo por cada generación que la '
+                'calma del puerto costó a los nagas. Aguantar una noche más cuesta otra tanda de '
+                'nombres en las islas del borde; entregar el cuaderno cuesta la única letra que '
+                'Nerea conserva de su madre. Con el alba zarpan todas las barcas.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: mantén a Nerea con vida hasta el comienzo del turno doce. A esa hora las barcas estarán cargadas.'),
@@ -395,9 +479,18 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Primera Lanza Uss', 'El arrecife lleva veinte años pagando vuestras mareas quietas. Yo cobro lo firmado: un cuaderno por cada generación que nos falta.'),
+                    ('narrator', 'Uss ataca por el muelle y por el agua, y las redes del embarcadero aguantan a los nadadores un turno. Decide si cierras el muelle con dos unidades o dejas que la cala se cubra sola.'),
+                ]),
                 ('turn 4', [
                     ('narrator', 'Tres familias a bordo y la cala ya huele a humo. Uss ha cortado las redes del muelle.'),
                     ('companion', 'Sin redes no hay excusa para quedarse. Empujad las barcas.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Cada barca cargada tarda un turno entero en salir de la rompiente. Decide cuántas escoltas se quedan en tierra: las que acompañen esta noche no nadarán.'),
+                    ('Primera Lanza Uss', 'No quiero vuestra gente: quiero el papel que dejó firmado quien construyó la máquina. Si me lo dais, me marcho contando a los vuestros uno por uno y sin tachar ninguno.'),
+                    ('hero', 'El papel se queda donde está. Cuenta a los que se van, que hoy suman más.'),
                 ]),
                 ('turn 8', [
                     ('companion', 'La mujer de la canción lleva en la mano un caracol con muescas. Una está borrada.'),
@@ -424,7 +517,10 @@ CAMPAIGN = dict(
                 'Los isleños huyeron con canciones repetidas en voz alta para no olvidar a quienes '
                 'viajaban en la barca de al lado. Uss apuntó en el brazo la lista de los que se '
                 'quedaban y se ató un nudo por cada uno. Llevaba cinco nudos cuando amaneció, y '
-                'ninguno tenía nombre, porque ya nadie recordaba cómo se llamaba la cala.'),
+                'ninguno tenía nombre, porque ya nadie recordaba cómo se llamaba la cala. En el '
+                'puerto al que remaban ya había puestos que vendían lo que la marea robaba: '
+                'recuerdos en tablillas y nombres con precio. Nerea miró el cuaderno de su madre '
+                'y pensó en lo que alguien estaría dispuesto a pagarlo.'),
         ),
         dict(
             title='El mercado de los nombres',
@@ -437,7 +533,11 @@ CAMPAIGN = dict(
                 'de su familia. Las tablillas guardan un recuerdo durante un año y un nombre durante '
                 'tres, y se pagan en objetos: una carta náutica, un diente de ballena, la letra de '
                 'una canción. El puesto ocupa el muelle viejo, entre cajas de sal y unos grilletes '
-                'que él llama fianzas.'),
+                'que él llama fianzas. Yara lleva seis '
+                'años pagando una fianza que nadie firmó, y Dorven conserva su apellido como '
+                'garantía. Llevarse la buceadora sin pagar cuesta la carta de navegación que el '
+                'mercader ya ha pedido ver; pagarla cuesta firmar que hasta un apellido tiene '
+                'precio. Con el alba, Dorven cierra trato y la jaula cambia de puerto.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: llega a la jaula del muelle, libera a la buceadora y escóltala hasta la bandera.'),
@@ -457,6 +557,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Mercader Dorven', 'Una tablilla guarda un recuerdo un año y un nombre tres. Yo no robo nada: lo cuido hasta que alguien paga lo que vale cuidarlo.'),
+                    ('narrator', 'La jaula de Yara da al canal por un fondo de rejilla, y Dorven ha dejado al perro en el muelle seco. Decide si entras por el agua con una unidad o lo distraes fingiendo una compra en el puesto.'),
+                ]),
                 ('turn 4', [
                     ('Mercader Dorven', 'El precio ha subido. Ahora quiero también la carta de navegación que lleváis.'),
                     ('hero', 'La carta es nuestra. Sube lo que quieras, pero no te la voy a enseñar.'),
@@ -468,6 +572,11 @@ CAMPAIGN = dict(
                 ('half strength', [
                     ('protected', 'No puedo correr. Dadme la mano y salimos juntas.'),
                     ('hero', 'La mano y el hombro. Tú marca el paso.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Los cajones de sal estrechan el paso hasta la larga de una lanza, y el perro huele el canal por dentro. Decide si abres la jaula por la rejilla o la rompes por el canto con el perro encima.'),
+                    ('Mercader Dorven', 'La familia de la buceadora lleva seis años pagando una fianza que nadie firmó. Si os la lleváis sin pagar, esos seis años valen nada, y mañana media ciudad vendrá a por lo suyo.'),
+                    ('hero', 'Mañana media ciudad tendrá lo suyo. Ese es el trato.'),
                 ]),
                 ('turn 8', [
                     ('companion', 'El perro no ladra a quien huele a sal. Eso nos deja una puerta abierta.'),
@@ -490,7 +599,10 @@ CAMPAIGN = dict(
                 'La buceadora enseñó a Luar una ruta por las cámaras inundadas. A cambio pidió que '
                 'nadie volviera a escribir un precio junto a su nombre. Antes de bajar marcó con '
                 'brea la entrada del canal en la pared del muelle y escribió debajo una sola '
-                'palabra: libre. La palabra duró hasta la siguiente pleamar.'),
+                'palabra: libre. La palabra duró hasta la siguiente pleamar. La ruta '
+                'de Yara terminaba bajo la roca, ante tres compuertas que repartían la memoria '
+                'robada del mar. Detrás de ellas aguardaban los centinelas que la máquina '
+                'alimentaba, y abrirlas devolvería los nombres mezclados como sal.'),
         ),
         dict(
             title='Las compuertas del olvido',
@@ -503,7 +615,11 @@ CAMPAIGN = dict(
                 'Están talladas en la roca y se abren con palancas de hueso. La primera guarda los '
                 'nombres de los vivos, la segunda los de los muertos recientes y la tercera los que '
                 'nadie reclamó. Los centinelas no atacan por orden: atacan porque la máquina los '
-                'alimenta con lo que las compuertas sueltan.'),
+                'alimenta con lo que las compuertas sueltan. La primera '
+                'palanca está al alcance de una mano; la tercera se abre desde el fondo de un pozo '
+                'que se llena con la marea. Luar lleva el cordel todavía liso, sin un nudo puesto, '
+                'y copiar los nombres cuesta tiempo de marea: abrir sin copiar cuesta perderlos '
+                'todos, mezclados.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: abre las tres compuertas llevando una unidad a cada palanca.'),
@@ -522,6 +638,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Guardián de la Sal', 'Detrás de estas compuertas no hay tesoros: hay nombres que nadie reclamó. Yo soy el último que los recuerda sin cuerda y sin nudos.'),
+                    ('narrator', 'La cueva se inunda por el túnel de entrada y las tres palancas están en salas distintas. Decide si mandas una unidad por palanca o abres camino con todo el grupo.'),
+                ]),
                 ('beacon lit 1', [
                     ('narrator', 'La primera compuerta cede. El agua sube un palmo y arrastra una lista escrita con sal.'),
                     ('companion', 'Esa era la lista de los vivos. Ahora está en el suelo.'),
@@ -533,6 +653,11 @@ CAMPAIGN = dict(
                 ('beacon lit 3', [
                     ('narrator', 'La tercera compuerta se abre y miles de nombres salen con el agua hacia el túnel.'),
                     ('Guardián de la Sal', 'Ya no puedo cerrarlas. Ahora decide el mar.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Los centinelas empujan hacia el túnel que se inunda y el agua salada ya moja las listas de la pared. Decide si copias antes de abrir o abres antes de que suba.'),
+                    ('Guardián de la Sal', 'Abrir las tres de golpe devuelve los nombres mezclados, y un nombre mezclado es como no tenerlo. Prefiero guardarlos mojados y a salvo a devolverlos perdidos.'),
+                    ('hero', 'Los mezclados los ordenamos juntos. Primero los tuyos.'),
                 ]),
                 ('turn 8', [
                     ('Guardián de la Sal', 'Vuestra madre bajó aquí tres veces. La última traía un cuaderno y una cuerda.'),
@@ -555,7 +680,10 @@ CAMPAIGN = dict(
                 'Miles de nombres salieron con el agua. Nerea recordó unas manos enseñándole a hacer '
                 'un nudo. Las manos estaban bajo la superficie y el nudo era el mismo que llevaba el '
                 'cuaderno. Comprendió que su madre había bajado hasta allí más de una vez y que había '
-                'dejado cordeles en las paredes para que alguien, algún día, pudiera deshacerlos.'),
+                'dejado cordeles en las paredes para que alguien, algún día, pudiera deshacerlos. Arriba, sobre esa misma '
+                'agua que ya devolvía nombres, Serkos amarraba los barcos que el mundo daba por '
+                'perdidos. La única bandera que decía algo en todo el estrecho era la suya, y '
+                'navegaba hacia el paso antes de que la marea cambiara.'),
         ),
         dict(
             title='La flota de nadie',
