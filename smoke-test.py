@@ -97,7 +97,11 @@ try:
     tap(find(ui(), resource='phone_campaigns'))
     wait_for(lambda: find(ui(), text='La última luz de Valdara'), 15, label='the campaign picker rows')
     screen('01b-campaign-picker')
-    adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
+    # Close with the dialog's own cancel button: BACK is the game's key, and the
+    # launcher window must not be the thing that goes away.
+    cancel = wait_for(lambda: next((n for n in ui() if n.get('resource-id') == 'android:id/button2'), None),
+                      10, label='the campaign picker cancel button')
+    tap(cancel)
     wait_for(lambda: find(ui(), resource='phone_tutorial'), 15, label='the launcher after closing the picker')
     print('Launcher and campaign picker shown', flush=True)
     for attempt in range(4):

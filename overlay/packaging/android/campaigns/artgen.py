@@ -43,16 +43,17 @@ SCENE_SIZE = (1024, 512)
 # Style clauses shared by every request, worded the way the existing, proven
 # entries in ART_PROMPTS.json are.
 PORTRAIT_STYLE = ('Original hand-painted high-fantasy game portrait. {subject} One single character, '
-                  'head to below the knees, standing calmly with hands relaxed at their sides, at most '
-                  'one simple prop and no weapon held up. Generous margin above the head so nothing is '
-                  'cropped, flat simple gradient background. Clean dark contours, rich muted natural '
-                  'colours, readable silhouette compatible with traditional Battle for Wesnoth '
-                  'illustration. Genuinely transparent PNG background, no scenery, no text, no border '
-                  'or logo.')
+                  'head to below the knees, standing calmly with empty hands relaxed at their sides: '
+                  'no weapon, no prop, no staff, nothing held. Generous margin above the head so '
+                  'nothing is cropped, flat simple gradient background. Clean dark contours, rich '
+                  'muted natural colours, readable silhouette compatible with traditional Battle for '
+                  'Wesnoth illustration. Genuinely transparent PNG background, no scenery, no text, '
+                  'no border or logo.')
 SCENE_STYLE = ('Original hand-painted wide illustration for a Battle for Wesnoth story screen. '
-               '{subject} No lettering of any kind. Muted natural colours, clean readable shapes, '
-               'clear foreground, midground and background layers, consistent with the same '
-               'campaign character art.')
+               '{subject} An empty landscape: no people, no creatures, no vehicles, no banners. '
+               'No lettering of any kind. Muted natural colours, clean readable shapes, clear '
+               'foreground, midground and background layers, consistent with the same campaign '
+               'character art.')
 SPRITE_STYLE = ('Production game asset: ONE single isolated 2D pixel-art unit sprite for a '
                 'hexagonal tactical fantasy game like Battle for Wesnoth. {subject} Three-quarter '
                 'overhead battlefield view facing down-right, compact heroic proportions, strong '
@@ -228,8 +229,9 @@ PORTRAIT_SIZE_GEN = (832, 1216)
 SCENE_SIZE_GEN = (1344, 768)
 NEGATIVE = ('text, letters, signature, watermark, logo, border, frame, collage, scenery, '
             'two figures, extra limbs, extra fingers, fused fingers, deformed hands, hands holding '
-            'an object, raised weapon, wispy hair, fuzzy edges, halo, tight crop, cropped hair, '
-            'busy straps, smudged detail, blurry, lowres')
+            'an object, weapon, prop, staff, raised weapon, wispy hair, fuzzy edges, halo, tight '
+            'crop, cropped hair, busy straps, smudged detail, blurry, lowres, people, crowd, '
+            'silhouette figures, animals, creatures, vehicles, banners')
 
 
 def workflow(prompt, key, size, lora, seed):
@@ -254,10 +256,13 @@ def workflow(prompt, key, size, lora, seed):
 
 
 def cutout(path):
-    """Remove the background of a portrait, the way the existing art does."""
-    from rembg import remove
-    from PIL import Image as PILImage
-    result = remove(PILImage.open(path).convert('RGBA'), alpha_matting=False)
+    """Remove the background of a portrait, the way the existing art does.
+
+    u2net is the model already cached on this machine: rembg's current default
+    would download a 1 GB model first, at dial-up speed.
+    """
+    from rembg import new_session, remove
+    result = remove(Image.open(path).convert('RGBA'), session=new_session('u2net'))
     result.save(path, 'PNG')
 
 

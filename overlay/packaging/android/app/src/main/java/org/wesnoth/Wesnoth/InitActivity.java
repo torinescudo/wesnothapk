@@ -351,13 +351,15 @@ public class InitActivity extends Activity {
 
 		ScrollView scroll = new ScrollView(this);
 		scroll.addView(list);
-		dialog = new AlertDialog.Builder(this)
-			.setTitle(R.string.phone_campaigns_title)
-			.setView(scroll)
-			.setNegativeButton(android.R.string.cancel, null)
-			.create();
-		dialog.show();
-		stretchToScreen(dialog);
+        dialog = new AlertDialog.Builder(this)
+            .setTitle(R.string.phone_campaigns_title)
+            .setView(scroll)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create();
+        dialog.setCancelable(true);
+        dialog.setOnDismissListener(d -> dialog = null);
+        dialog.show();
+        stretchToScreen(dialog);
 	}
 
 	private String entry(String[] values, int index) {
