@@ -163,6 +163,15 @@ class MapBuilder:
         self.rng = random.Random(seed)
         self.noise = Noise(seed)
         self.spec = BIOMES[biome]
+        # The ground serves the fight: a stand wants relief you can hold, a
+        # flight wants ground you can cross. Relief is how broken the field is.
+        relief_for_goal = {
+            'survive': 1.3, 'beacons': 1.3,
+            'escape': 0.75, 'escort': 0.8,
+            'rescue': 0.9, 'conquer': 1.0,
+        }.get(goal, 1.0)
+        self.spec = dict(self.spec,
+                         relief=round(self.spec['relief'] * relief_for_goal, 2))
         # A skirmish is read at a glance, a siege needs room to manoeuvre.
         base_width, base_height = {'skirmish': (32, 24), 'battle': (40, 30),
                                    'siege': (46, 34)}.get(size, (40, 30))
