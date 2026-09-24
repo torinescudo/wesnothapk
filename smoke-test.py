@@ -55,23 +55,26 @@ def tap(node):
     adb('shell', 'input', 'tap', str((left + right) // 2), str((top + bottom) // 2))
 
 
-def wait_for(predicate, timeout):
+def wait_for(predicate, timeout, label='the native game or UI'):
     end = time.monotonic() + timeout
     while time.monotonic() < end:
         value = predicate()
         if value is not None and value is not False:
             return value
         time.sleep(2)
-    raise AssertionError('Timed out waiting for the native game or UI')
+    raise AssertionError('Timed out waiting for %s' % label)
 
 
 def annotate(error):
     """Surface the failure as a CI annotation: logs are long, the reason is short."""
+    import traceback
     tail = ''
     latest = OUTPUT / 'latest-ui.xml'
     if latest.is_file():
         tail = latest.read_text(errors='replace').replace('\n', ' ')[-300:]
-    print('::error title=smoke failure::%s' % str(error).replace('\n', ' ')[:300], flush=True)
+    detail = traceback.format_exc().replace('\n', ' | ')[:1200]
+    print('::error title=smoke failure::%s :: %s' % (str(error).replace('\n', ' ')[:200], detail),
+          flush=True)
     if tail:
         print('::error title=smoke UI tail::%s' % tail, flush=True)
 
@@ -88,17 +91,17 @@ try:
     adb('shell', 'svc', 'wifi', 'disable')
     adb('shell', 'svc', 'data', 'disable')
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
-    wait_for(lambda: find(ui(), resource='phone_tutorial'), 40)
+    wait_for(lambda: find(ui(), resource='phone_tutorial'), 40, label='the launcher screen')
     screen('01-launcher')
     # The picker has to describe every bundled story before one is chosen.
     tap(find(ui(), resource='phone_campaigns'))
-    wait_for(lambda: find(ui(), text='La última luz de Valdara'), 15)
+    wait_for(lambda: find(ui(), text='La última luz de Valdara'), 15, label='the campaign picker rows')
     screen('01b-campaign-picker')
     adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
-    wait_for(lambda: find(ui(), resource='phone_tutorial'), 15)
+    wait_for(lambda: find(ui(), resource='phone_tutorial'), 15, label='the launcher after closing the picker')
     print('Launcher and campaign picker shown', flush=True)
     for attempt in range(4):
-        tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15))
+        tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15, label='the enabled tutorial button'))
         time.sleep(2)
         if 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'):
             break
@@ -108,7 +111,7 @@ try:
         raise AssertionError('Tutorial button did not start data preparation')
     print('Launcher started bundled-data preparation', flush=True)
     # Installation, native startup, and initial scenario loading are real here.
-    wait_for(lambda: 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'), 600)
+    wait_for(lambda: 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'), 600, label='the native game activity')
     screen('02-tutorial-loaded')
     for step in range(90):
         nodes = ui()
@@ -121,23 +124,23 @@ try:
     screen('03-interactive-game')
     print('Native tutorial reached an interactive turn', flush=True)
     tap(find(ui(), resource='phone_action_more'))
-    wait_for(in_bar('phone_action_objectives', enabled=False), 15)
+    wait_for(in_bar('phone_action_objectives', enabled=False), 15, label='the More sheet')
     screen('04-touch-menu')
     tap(find(ui(), resource='phone_action_objectives', enabled=True))
     wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None
-             and find(ui(), resource='phone_action_cycle', enabled=True) is None, 20)
+             and find(ui(), resource='phone_action_cycle', enabled=True) is None, 20, label='the objectives dialog to disable the bar')
     screen('04b-native-objectives')
     adb('shell', 'input', 'keyevent', 'KEYCODE_ENTER')
-    wait_for(in_bar('phone_action_cycle'), 20)
+    wait_for(in_bar('phone_action_cycle'), 20, label='the bar to re-enable after the objectives dialog')
     tap(find(ui(), resource='phone_bar_toggle'))
-    wait_for(lambda: find(ui(), resource='phone_action_cycle') is None, 15)
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is None, 15, label='the bar to collapse')
     screen('05-collapsed-controls')
     tap(find(ui(), resource='phone_bar_toggle'))
-    wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None, 15)
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None, 15, label='the bar to expand again')
     adb('shell', 'am', 'force-stop', PACKAGE)
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
-    tap(wait_for(lambda: find(ui(), resource='tap_label'), 30))
-    wait_for(lambda: 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'), 120)
+    tap(wait_for(lambda: find(ui(), resource='tap_label'), 30, label='the play button after relaunch'))
+    wait_for(lambda: 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'), 120, label='the native game activity after relaunch')
     time.sleep(20)
     if not adb('shell', 'pidof', PACKAGE).strip():
         raise AssertionError('Game process exited after relaunch')
