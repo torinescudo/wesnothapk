@@ -506,6 +506,10 @@ def scenario(c, index, chapter, manifest):
                     'story', {'text': 'Por %s ganaste terreno y perdiste lo otro. Aquí se '
                                       'empieza a notar.' % second})))
                 + tag('gold', {'side': 1, 'amount': 60})))))
+    # A shared place, told by the campaign that is standing in it now.
+    if place and WORLD.SHARED_ACCOUNTS.get(place, {}).get(key):
+        pre += tag('story', {}, body=tag('part', {}, body=tag(
+            'story', {'text': WORLD.SHARED_ACCOUNTS[place][key]})))
     body += event('prestart', pre)
     for n, (question, keys) in enumerate(WORLD.BRANCHES.get(key, {}).get(index, []), start=1):
         var = 'cbm_decide_%s_%02d_%d' % (key, index, n)

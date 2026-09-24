@@ -79,6 +79,41 @@ BRANCHES = {
     },
 }
 
+# A shared place is fought over twice. Each campaign brings its own account of
+# what that place is and what it costs to be there.
+SHARED_ACCOUNTS = {
+    'valdara-harbor': {
+        'alba': 'El puerto de Valdara, sin murallas: las barcas de Alba están varadas '
+                'y los nombres de sus vecinos siguen en los bancos.',
+        'darian': 'El mismo puerto, otro año: Darian cruza el agua con la firma a medio '
+                  'hacer y los velarios ya se llevan las piedras.',
+    },
+    'velario-city': {
+        'iria': 'La ciudad velaria a punto de descender: Iria lleva el mapa que decide '
+                'por dónde baja, y por dónde no.',
+        'darian': 'La misma ciudad antes del descenso: Darian llega a tiempo de ver '
+                  'cómo se aflojan los anclajes.',
+    },
+    'litario-door': {
+        'sira': 'La puerta que escucha: Sira llegó con siete memorias y solo una voz, '
+                'y las cámaras litarias saben la diferencia.',
+        'darian': 'La misma puerta desde el otro lado: Darian trae un recado que nadie '
+                  'quiere oír y un plazo que nadie cumplirá.',
+    },
+    'ember-fields': {
+        'darian': 'Los campos de brasa, donde la tierra todavía guarda el calor de la '
+                  'primera de las siete brasas.',
+    },
+    'capital-maura': {
+        'darian': 'La capital de Maura: Darian entra con una sentencia en el bolsillo '
+                  'que no se ha atrevido a leer.',
+    },
+    'reef-machine': {
+        'nerea': 'La máquina del arrecife, apagada o no: Nerea viene a devolver los '
+                 'nombres al mar y no sabe a cuál de los dos.',
+    },
+}
+
 # The closing scene the campaign reaches when the player kept choosing the
 # other way through. Written apart from the main ending so it can disagree
 # with it: this is what a second playthrough is for.
