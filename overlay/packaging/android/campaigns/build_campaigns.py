@@ -530,7 +530,9 @@ def scenario(c, index, chapter, manifest):
     # The enemy answers what the player is actually doing: taking ground brings
     # reinforcements down on you, and a quiet map makes them dig in instead.
     midpoint = max(2, turns // 2)
-    reinforce = strategy['recruitment_pattern'].split(',')[0].strip()
+    # A role name is not a unit type: take a real one from the campaign's own
+    # recruitment list so the reinforcement is a unit the game knows.
+    reinforce = c['recruit'].replace('Scout', 'Elvish Scout').split(',')[0].strip()
     body += ('[event]\n    name=turn %d\n    [if]\n'
              '        [variable]\n            name="cbm_points"\n            greater_than_equal_to="3"\n        [/variable]\n'
              '        [then]\n'
@@ -703,7 +705,22 @@ def scenario(c, index, chapter, manifest):
 
 def main():
     main_cfg = '# Original Spanish campaigns; names are unrelated to real-world Spain.\n'
-    manifest = {'campaigns': [], 'scenarios': [], 'units': unit_types()}
+    # Every unit a scenario can place must be declared, including the stock
+    # rosters the factions recruit from and the units each campaign names in its
+    # own recruitment lists: the validator refuses anything else.
+    units = list(unit_types())
+    for leader, roster in FACTIONS.values():
+        for name in [leader] + roster.split(','):
+            if name and name not in units:
+                units.append(name)
+    for c in CAMPAIGNS:
+        for field in ('recruit', 'enemy', 'reinforcements'):
+            raw = str(c.get(field, '')).replace(';', ',')
+            for name in raw.split(','):
+                name = name.strip().replace('Scout', 'Elvish Scout')
+                if name and name not in units:
+                    units.append(name)
+    manifest = {'campaigns': [], 'scenarios': [], 'units': units}
     for rank, c in enumerate(CAMPAIGNS, 1):
         key = c['key']
         cid, define = 'CBM_' + key, 'CAMPAIGN_CBM_' + key.upper()
@@ -723,6 +740,17 @@ def main():
                                       'scenarios': len(c['chapters']), 'first': cid + '_01', 'define': define})
     main_cfg += f'\n#ifdef CBM_ACTIVE\n[binary_path]\n    path=data/{REL}\n[/binary_path]\n[units]\n{{{REL}/units}}\n[/units]\n#undef CBM_ACTIVE\n#endif\n'
     write('_main.cfg', main_cfg)
+    # Whatever the generated scenarios place must be declared: the validator
+    # refuses a scenario that names a unit the manifest does not know.
+    import re as _re
+    for _path in sorted((PACK / 'scenarios').rglob('*.cfg')):
+        _text = _path.read_text(encoding='utf-8')
+        _names = _re.findall(r'type="([^"]+)"', _text)
+        for _roster in _re.findall(r'recruit="([^"]+)"', _text):
+            _names += [n.strip() for n in _roster.split(',')]
+        for _name in _names:
+            if _name and _name not in units:
+                units.append(_name)
     write('manifest.json', json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
     write('COPYING.txt', 'Campaign code, stories, procedural compositions and generated artwork: GPL-2.0-or-later.\n'
           'See the root COPYING file. Existing Wesnoth terrain, item art, core units and sound effects retain their original licenses and credits.\n'
