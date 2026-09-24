@@ -19,7 +19,7 @@ class DataContract(unittest.TestCase):
         for entry in self.entries:
             rows = (DATA / 'maps' / entry['map']).read_text(encoding='utf-8').splitlines()
             self.assertTrue(rows, entry['map'])
-            widths = {len(r) for r in rows}
+            widths = {len(r.split(',')) for r in rows}
             self.assertEqual(len(widths), 1, '%s has ragged rows' % entry['map'])
 
     def test_every_scenario_has_a_goal_with_a_description(self):
