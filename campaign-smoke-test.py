@@ -171,6 +171,17 @@ def check_logs(text):
         raise AssertionError('Android/native crash; see logcat')
 
 
+def annotate(error):
+    """Surface the failure as a CI annotation: logs are long, the reason is short."""
+    tail = ''
+    latest = OUT / 'last-ui.xml'
+    if latest.is_file():
+        tail = latest.read_text(errors='replace').replace('\n', ' ')[-300:]
+    print('::error title=campaign failure::%s' % str(error).replace('\n', ' ')[:300], flush=True)
+    if tail:
+        print('::error title=campaign UI tail::%s' % tail, flush=True)
+
+
 try:
     manifest = json.loads((PACK/'manifest.json').read_text())
     # smoke-test.py has already installed and initialized this exact APK.
@@ -254,6 +265,9 @@ try:
     assert len(passed) == 52
     (OUT/'result.json').write_text(json.dumps({'unmodified_openings':6,'objective_transitions':sorted(passed),
         'scope':'Native Android WML objectives and transitions with injected test events; balance not measured'},indent=2))
+except Exception as error:
+    annotate(error)
+    raise
 finally:
     screen('last-screen')
     (OUT/'logcat.txt').write_text(logs())

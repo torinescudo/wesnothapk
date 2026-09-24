@@ -27,10 +27,6 @@ def tag(name, attrs=None, body=''):
     return '\n'.join(lines) + '\n'
 
 
-def message(who, text):
-    return tag('message', {'speaker': who, 'message': text})
-
-
 def event(name, body, attrs=None):
     return tag('event', {'name': name, **(attrs or {})}, body)
 

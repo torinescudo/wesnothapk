@@ -19,6 +19,7 @@ from pathlib import Path
 import argparse
 import json
 import sys
+import zlib
 
 from PIL import Image
 
@@ -31,9 +32,13 @@ IMAGES = PACK / 'images/cbm'
 PROMPTS = PACK / 'ART_PROMPTS.json'
 SCENES_PER_CHAPTER = 2
 
+
+def seed_for(*parts):
+    """Deterministic seed per asset: regenerating reproduces the same image."""
+    return zlib.crc32('|'.join(str(p) for p in parts).encode('utf-8'))
+
 PORTRAIT_SIZE = (512, 768)
 SCENE_SIZE = (1024, 512)
-SPRITE_SIZE = (72, 72)
 
 # Style clauses shared by every request, worded the way the existing, proven
 # entries in ART_PROMPTS.json are.
@@ -209,6 +214,103 @@ def fit(image, size):
     return scaled.crop((left, top, left + size[0], top + size[1]))
 
 
+# --- generation through the local ComfyUI server ---------------------------
+CHECKPOINT = 'sd_xl_base_1.0.safetensors'
+PORTRAIT_LORA = 'daggerfall-000001.safetensors'
+PORTRAIT_SIZE_GEN = (832, 1216)
+SCENE_SIZE_GEN = (1344, 768)
+NEGATIVE = ('text, letters, signature, watermark, logo, border, frame, collage, '
+            'two figures, extra limbs, extra fingers, deformed hands, blurry, lowres')
+
+
+def workflow(prompt, key, size, lora, seed):
+    return {
+        '4': {'class_type': 'CheckpointLoaderSimple',
+              'inputs': {'ckpt_name': CHECKPOINT}},
+        '10': {'class_type': 'LoraLoader',
+               'inputs': {'lora_name': lora, 'strength_model': 0.75, 'strength_clip': 0.75,
+                          'model': ['4', 0], 'clip': ['4', 1]}},
+        '5': {'class_type': 'EmptyLatentImage',
+              'inputs': {'width': size[0], 'height': size[1], 'batch_size': 1}},
+        '6': {'class_type': 'CLIPTextEncode', 'inputs': {'text': prompt, 'clip': ['10', 1]}},
+        '7': {'class_type': 'CLIPTextEncode', 'inputs': {'text': NEGATIVE, 'clip': ['10', 1]}},
+        '3': {'class_type': 'KSampler',
+              'inputs': {'seed': seed, 'steps': 28, 'cfg': 6.0, 'sampler_name': 'dpmpp_2m',
+                         'scheduler': 'karras', 'denoise': 1.0, 'model': ['10', 0],
+                         'positive': ['6', 0], 'negative': ['7', 0], 'latent_image': ['5', 0]}},
+        '8': {'class_type': 'VAEDecode', 'inputs': {'samples': ['3', 0], 'vae': ['4', 2]}},
+        '9': {'class_type': 'SaveImage',
+              'inputs': {'filename_prefix': 'cbm-' + key, 'images': ['8', 0]}},
+    }
+
+
+def cutout(path):
+    """Remove the background of a portrait, the way the existing art does."""
+    from rembg import remove
+    from PIL import Image as PILImage
+    result = remove(PILImage.open(path).convert('RGBA'), alpha_matting=False)
+    result.save(path, 'PNG')
+
+
+def generate(server, kinds, limit, staging):
+    """Draw the pending prompts through the local ComfyUI server and install them."""
+    import time
+    import urllib.parse
+    import urllib.request
+    prompts = json.loads(PROMPTS.read_text(encoding='utf-8'))
+    pending = [(kind, key) for kind, key in required() if not target(kind, key).is_file()]
+    if kinds != 'all':
+        pending = [row for row in pending if row[0] in kinds.split(',')]
+    if limit:
+        pending = pending[:limit]
+    staging.mkdir(parents=True, exist_ok=True)
+    print('generating %d images with %s' % (len(pending), server))
+    for number, (kind, key) in enumerate(pending, 1):
+        section = 'chapter_scenes' if kind == 'scene' else 'portraits'
+        prompt = prompts.get(section, {}).get(key)
+        if not prompt:
+            print('  [%d/%d] %s: no prompt in ART_PROMPTS.json' % (number, len(pending), key))
+            continue
+        size = SCENE_SIZE_GEN if kind == 'scene' else PORTRAIT_SIZE_GEN
+        # '@' separates the key from ComfyUI's own counter, so 'alba' can never
+        # pick up the files of 'alba_01_1'.
+        graph = workflow(prompt, 'cbm@%s@' % key, size, PORTRAIT_LORA, seed_for('draw', key))
+        body = json.dumps({'prompt': graph, 'client_id': 'wesnoth-phone'}).encode('utf-8')
+        request = urllib.request.Request(server + '/prompt', data=body,
+                                         headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(request, timeout=120) as response:
+            prompt_id = json.load(response)['prompt_id']
+        produced = []
+        deadline = time.time() + 900
+        while time.time() < deadline and not produced:
+            with urllib.request.urlopen(server + '/history/' + prompt_id, timeout=60) as response:
+                history = json.load(response).get(prompt_id)
+            if history and history.get('outputs'):
+                produced = [node['images'] for node in history['outputs'].values()
+                            if node.get('images')][-1]
+            if not produced:
+                time.sleep(2)
+        if not produced:
+            print('  [%d/%d] %s: no image produced' % (number, len(pending), key))
+            continue
+        image = produced[-1]
+        query = urllib.parse.urlencode({'filename': image['filename'],
+                                        'subfolder': image.get('subfolder', ''),
+                                        'type': image.get('type', 'output')})
+        raw = staging / ('cbm@%s@.png' % key)
+        with urllib.request.urlopen(server + '/view?' + query, timeout=120) as response:
+            raw.write_bytes(response.read())
+        destination = target(kind, key)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        fit(Image.open(raw),
+            PORTRAIT_SIZE if kind == 'portrait' else SCENE_SIZE).save(destination, 'PNG', optimize=True)
+        if kind == 'portrait':
+            cutout(destination)
+        print('  [%d/%d] %s -> %s' % (number, len(pending), key, destination.name))
+    return len(pending)
+
+
+
 def install(source_dir):
     """Install generated files by prompt key, cropping and scaling them into place."""
     installed = 0
@@ -228,13 +330,20 @@ def install(source_dir):
 
 def main(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=('plan', 'status', 'install'))
+    parser.add_argument('action', choices=('plan', 'status', 'install', 'generate'))
     parser.add_argument('directory', nargs='?', type=Path)
+    parser.add_argument('--server', default='http://127.0.0.1:8188')
+    parser.add_argument('--kinds', default='all')
+    parser.add_argument('--limit', type=int, default=0)
+    parser.add_argument('--staging', type=Path,
+                        default=Path.home() / 'AppData/Local/Temp/phone-ui/art-out')
     args = parser.parse_args(argv)
     if args.action == 'plan':
         plan()
     elif args.action == 'status':
         return 1 if status() else 0
+    elif args.action == 'generate':
+        generate(args.server, args.kinds, args.limit, args.staging)
     else:
         if not args.directory or not args.directory.is_dir():
             print('install needs a directory of generated images')

@@ -65,6 +65,17 @@ def wait_for(predicate, timeout):
     raise AssertionError('Timed out waiting for the native game or UI')
 
 
+def annotate(error):
+    """Surface the failure as a CI annotation: logs are long, the reason is short."""
+    tail = ''
+    latest = OUTPUT / 'latest-ui.xml'
+    if latest.is_file():
+        tail = latest.read_text(errors='replace').replace('\n', ' ')[-300:]
+    print('::error title=smoke failure::%s' % str(error).replace('\n', ' ')[:300], flush=True)
+    if tail:
+        print('::error title=smoke UI tail::%s' % tail, flush=True)
+
+
 def in_bar(resource, enabled=True):
     return lambda: find(ui(), resource=resource, enabled=enabled)
 
@@ -132,6 +143,9 @@ try:
         raise AssertionError('Game process exited after relaunch')
     screen('06-main-menu-relaunch')
     (OUTPUT / 'result.txt').write_text('PASS: offline install, tutorial, interactive controls, menu, collapse, relaunch\n')
+except Exception as error:
+    annotate(error)
+    raise
 finally:
     screen('last-screen')
     (OUTPUT / 'logcat.txt').write_text(adb('logcat', '-d', check=False))
