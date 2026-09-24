@@ -137,6 +137,17 @@ try:
     screen('05-collapsed-controls')
     tap(find(ui(), resource='phone_bar_toggle'))
     wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None, 15, label='the bar to expand again')
+    screen('05b-expanded-controls')
+    # Dialog-driven sends are the path a stale action mask used to refuse, so the
+    # confirm on End turn has to keep working: it queues after the dialog closes.
+    tap(find(ui(), resource='phone_action_endturn'))
+    confirmation = wait_for(
+        lambda: next((n for n in ui() if n.get('resource-id') == 'android:id/button1'), None),
+        10, label='the end turn confirmation dialog')
+    tap(confirmation)
+    wait_for(in_bar('phone_action_cycle'), 90,
+             label='the next player turn after confirming the end of one')
+    screen('05c-end-turn-confirmed')
     adb('shell', 'am', 'force-stop', PACKAGE)
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
     tap(wait_for(lambda: find(ui(), resource='tap_label'), 30, label='the play button after relaunch'))
