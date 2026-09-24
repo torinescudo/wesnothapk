@@ -1,5 +1,31 @@
 # Validation record
 
+## Phone interface and campaigns on the Android 15 emulator — 2026-09-24
+
+`Test latest emulator APK` passed
+(https://github.com/torinescudo/wesnothapk/actions/runs/35991136417, commit
+018c397): the harness drove the launcher, the campaign picker, More >
+Objectives, the collapse/expand chevron and the End turn confirmation on a real
+Android 15 emulator, then opened all six campaigns and exercised all 52
+objective transitions and campaign endings.
+
+The way to that pass is what the harness now guards, and the record belongs
+here because each failure was a real defect:
+
+- a stale JNI action mask refused dialog-driven taps (End turn, Quit, and the
+  More sheet), because "snapshot older than 500 ms" was folded into "nothing is
+  available". `nativeGetPhoneActions` now reports `phone::stale_mask`, and the
+  Java side keeps the last state and waits instead of refusing;
+- the campaign picker was closed with the game's own BACK key, so the launcher
+  window went away behind it;
+- two waits measured things the interface does not control: a full AI turn over
+  a 1300-tile map (now asserted as "the player turn ended", not "the AI came
+  back") and a launcher race when the game starts in under two seconds.
+
+Failures are surfaced as CI annotations with the traceback and the tail of the
+last UI dump, which is what turned each of those into a diagnosis instead of a
+guess.
+
 ## Map design pass — 2026-09-24
 
 `packaging/android/campaigns/MAP_DESIGN.md` is the breakdown of what a quality
