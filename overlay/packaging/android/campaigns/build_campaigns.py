@@ -741,7 +741,8 @@ def main():
     main_cfg += f'\n#ifdef CBM_ACTIVE\n[binary_path]\n    path=data/{REL}\n[/binary_path]\n[units]\n{{{REL}/units}}\n[/units]\n#undef CBM_ACTIVE\n#endif\n'
     write('_main.cfg', main_cfg)
     # Whatever the generated scenarios place must be declared: the validator
-    # refuses a scenario that names a unit the manifest does not know.
+    # refuses a scenario that names a unit the manifest does not know. The same
+    # manifest is what the emulator driver reads to force each objective.
     import re as _re
     for _path in sorted((PACK / 'scenarios').rglob('*.cfg')):
         _text = _path.read_text(encoding='utf-8')
