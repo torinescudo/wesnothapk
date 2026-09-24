@@ -6,11 +6,9 @@ separate from the shared, testable objective implementations.
 SPDX-License-Identifier: GPL-2.0-or-later
 """
 from pathlib import Path
-import hashlib
 import json
-import math
-import random
-from stories import CAMPAIGNS
+from mapgen import generate as generate_map
+from stories import CAMPAIGNS, portrait_key
 
 ROOT = Path(__file__).resolve().parents[3]
 PACK = ROOT / 'data/campaigns/Brasa_y_Marea'
@@ -180,93 +178,9 @@ def unit_types():
     return manifest
 
 
-def make_map(key, index, biome, goal):
-    rng = random.Random(f'brasa-marea:{key}:{index}:{biome}')
-    width, height = 22 + (index % 4) * 2, 16 + (index % 3) * 2
-    tiles = [['Gg' for _ in range(width)] for _ in range(height)]
-    choices = {
-        'forest': ['Gg'] * 5 + ['Gs^Fp'] * 4 + ['Hh'],
-        'coast': ['Gg'] * 6 + ['Ds'] * 2 + ['Hh', 'Gs^Fp'],
-        'harbor': ['Gg'] * 5 + ['Rr'] * 3 + ['Ds', 'Hh'],
-        'cave': ['Uu'] * 7 + ['Uh'] * 2 + ['Xu'],
-        'quarry': ['Hh'] * 4 + ['Gg'] * 4 + ['Mm'] * 2,
-        'plains': ['Gg'] * 7 + ['Gs^Fp', 'Hh', 'Ss'],
-        'mountain': ['Hh'] * 4 + ['Mm'] * 3 + ['Gg'] * 3,
-        'ruins': ['Gg'] * 5 + ['Rr'] * 3 + ['Hh', 'Gs^Fp'],
-        'islands': ['Ww'] * 5 + ['Ds'] * 3 + ['Gg'] * 2,
-    }[biome]
-    for y in range(height):
-        for x in range(width):
-            tiles[y][x] = rng.choice(choices)
-            field = math.sin(x*.47+index) + math.cos(y*.59-index*.3)
-            if biome == 'forest':
-                tiles[y][x] = 'Gs^Fp' if field > .05 else ('Hh' if field < -1.3 else 'Gg')
-            elif biome == 'mountain':
-                tiles[y][x] = 'Mm' if field > .75 else ('Hh' if field > -.8 else 'Gg')
-            elif biome == 'cave':
-                tiles[y][x] = 'Xu' if field > 1.1 else ('Uh' if field > .35 else 'Uu')
-            elif biome == 'islands':
-                centers = [(4,height//2),(width//2,4),(width-5,height//2),(width//2,height-4)]
-                distance = min(((x-a)/4)**2+((y-b)/3)**2 for a,b in centers)
-                tiles[y][x] = 'Gg' if distance < .55 else ('Ds' if distance < 1.1 else 'Ww')
-            if biome in ('coast', 'harbor') and y > height - 5:
-                tiles[y][x] = 'Ww' if y < height - 2 else 'Wo'
-    start, enemy = (3, height // 2), (width - 3, height // 2)
-    exithex = (width - 2, height - 4)
-    prison = (width // 2, 4)
-    points = [(width // 3, 4), (width // 2, height - 4), (width - 5, 5)]
-    if index % 4 == 0:
-        start, enemy = (3,4), (width-3,height-4)
-        exithex = (width-2,height-2)
-    elif index % 4 == 2:
-        start, enemy = (3,height-4), (width-3,4)
-        exithex = (width-2,3)
-    elif index % 4 == 3:
-        start, enemy = (width//2,height-3), (width//2,3)
-        exithex, prison = (width-3,2), (width//3,4)
-        points = [(width//3,4),(width-5,height//2),(5,height//2)]
-    road = 'Uu' if biome == 'cave' else 'Rr'
-
-    def set_tile(p, terrain):
-        x, y = p
-        tiles[y-1][x-1] = terrain
-
-    # Connected two-hex-wide land routes make every required destination
-    # reachable by all recruit types, including the escort, in every biome.
-    for target in [enemy, exithex, prison, *points]:
-        x, y = start
-        while (x, y) != target:
-            set_tile((x, y), road)
-            if y + 1 <= height:
-                set_tile((x, y + 1), road)
-            if x != target[0] and (y == target[1] or rng.random() < .65):
-                x += 1 if x < target[0] else -1
-            else:
-                y += 1 if y < target[1] else -1
-        set_tile(target, road)
-    # Villages in bands reward movement and provide healing for each army.
-    for x in range(4, width - 2, 4):
-        for y in (6, height - 5):
-            village = {'cave':'Uu^Vud','ruins':'Gg^Vhr','harbor':'Gg^Vhc'}.get(biome,'Gg^Vh')
-            set_tile((x, y), village)
-    for number, keep in [(1, start), (2, enemy)]:
-        x, y = keep
-        for dx, dy in [(0,-1),(0,1),(-1,0),(1,0),(-1,1),(1,1)]:
-            castle = {'cave':'Cud','ruins':'Chr','harbor':'Ch'}.get(biome,'Ce')
-            set_tile((x+dx, y+dy), castle)
-        keep_terrain = {'cave':'Kud','ruins':'Khr','harbor':'Kh'}.get(biome,'Ke')
-        set_tile(keep, f'{number} ' + keep_terrain)
-    for p in [exithex, prison, *points]:
-        set_tile(p, road)
-    set_tile((prison[0], prison[1]+1), road)
-    # .map files include the off-board border. WML (1,1) is file cell [1][1],
-    # not [0][0] (gamemap::read applies border_size()). Keep authored coordinates
-    # in the playable interior and surround it with one decorative terrain ring.
-    bordered = [[row[0].split()[-1], *row, row[-1].split()[-1]] for row in tiles]
-    bordered.insert(0, [cell.split()[-1] for cell in bordered[0]])
-    bordered.append([cell.split()[-1] for cell in bordered[-1]])
-    return '\n'.join(', '.join(row) for row in bordered) + '\n', start, enemy, exithex, prison, points
-
+BIOME_LABEL = {'forest': 'bosque', 'coast': 'costa', 'harbor': 'puerto', 'cave': 'caverna',
+               'quarry': 'cantera', 'plains': 'llanura', 'mountain': 'montaña',
+               'ruins': 'ruinas', 'islands': 'archipiélago'}
 
 GOALS = {
     'conquer': 'Derrota al líder enemigo.',
@@ -276,15 +190,96 @@ GOALS = {
     'rescue': 'Llega con cualquier unidad a la prisión y escolta a la persona liberada hasta la bandera.',
     'beacons': 'Activa los tres puntos señalados llevando una unidad a cada uno.',
 }
+# Chapter scenes are named after the chapter, so the art generator and the WML
+# agree on one file per scene without either hard-coding the other's list.
+STORY_SCENES = 2
 
 
-def scenario(c, index, row, manifest):
-    title, goal, biome, antagonist, opening, ally, hero_line, resolution = row
+def scene_art(key, index, scene):
+    """The chapter scene if the art exists, otherwise the portrait that does.
+
+    Generated art arrives in a separate pass (see ART_PROMPTS.json and
+    artgen.py); until then a chapter still runs with the art it has, instead of
+    pointing the engine at a file nobody has drawn.
+    """
+    scene_path = PACK / ('images/cbm/story/%s_%02d_%d.png' % (key, index, scene))
+    if scene_path.is_file():
+        return 'cbm/story/%s_%02d_%d.png' % (key, index, scene)
+    return 'cbm/portraits/%s.png~SCALE(1024,512)' % key
+
+
+def portrait_ref(speaker):
+    name = '%s.png' % portrait_key(speaker)
+    path = PACK / 'images/cbm/portraits' / name
+    return 'cbm/portraits/%s' % name if path.is_file() else None
+
+
+def objective_line(chapter, turns):
+    return 'Objetivo: ' + GOALS[chapter['goal']] + ' Turnos disponibles: %d.' % turns
+
+
+def situation_line(chapter):
+    return 'Terreno de %s. Al frente: %s.' % (BIOME_LABEL[chapter['biome']], chapter['antagonist'])
+
+
+def dialogue(beats, ids, chapter):
+    """One [message] per authored beat, with a portrait for named side characters."""
+    out = ''
+    for speaker, line in beats:
+        attrs = {'message': line}
+        if speaker == 'narrator':
+            attrs['speaker'] = 'narrator'
+        elif speaker in ('hero', 'companion', 'antagonist'):
+            attrs['speaker'] = ids[speaker]
+        elif speaker == 'protected':
+            if not chapter['protected']:
+                raise AssertionError('%s speaks as protected without one' % chapter['title'])
+            attrs['speaker'] = ids['protected']
+        else:
+            attrs['speaker'] = 'narrator'
+            attrs['caption'] = speaker
+            portrait = portrait_ref(speaker)
+            if portrait:
+                attrs['image'] = portrait
+        out += tag('message', attrs)
+    return out
+
+
+def triggered_event(trigger, beats, ids, chapter, turns, extra=''):
+    """Map an authored trigger onto the engine event that fires it."""
+    body = dialogue(beats, ids, chapter) + extra
+    if trigger == 'time limit':
+        return tag('event', {'name': 'turn %d' % max(1, turns - 2)}, body)
+    if trigger == 'enemy leader defeated':
+        return tag('event', {'name': 'die'},
+                   tag('filter', {'side': 2, 'canrecruit': 'yes'}) + body)
+    if trigger == 'village captured':
+        return tag('event', {'name': 'capture'}, tag('filter', {'side': 1}) + body)
+    if trigger == 'half strength':
+        # The protected character matters most, but a chapter may wound the hero instead.
+        who = ids['protected'] if chapter['protected'] else ids['hero']
+        return tag('event', {'name': 'attack end'},
+                   tag('filter', {'id': who, 'hitpoints_percentage_less': 50}) + body)
+    if trigger.startswith('beacon lit '):
+        return ''  # emitted next to the objective handler that counts the points
+    return tag('event', {'name': trigger}, body)
+
+
+def scenario(c, index, chapter, manifest):
+    title = chapter['title']
     key, cid = c['key'], 'CBM_' + c['key']
-    sid = f'{cid}_{index:02d}'
-    following = f'{cid}_{index+1:02d}' if index < len(c['chapters']) else 'null'
-    mapdata, start, enemy, destination, prison, points = make_map(key, index, biome, goal)
-    write(f'maps/{key}_{index:02d}.map', mapdata)
+    sid = '%s_%02d' % (cid, index)
+    following = '%s_%02d' % (cid, index + 1) if index < len(c['chapters']) else 'null'
+    turns = 12 if chapter['goal'] == 'survive' else 32
+    layout = generate_map(key, index, chapter['biome'], chapter['goal'])
+    write('maps/%s_%02d.map' % (key, index), layout['rows'])
+    start, enemy = layout['start'], layout['enemy']
+    destination, prison, points = layout['destination'], layout['prison'], layout['points']
+
+    escort_id = sid + '_protected'
+    ids = {'hero': cid + '_hero', 'companion': cid + '_companion',
+           'antagonist': sid + '_enemy', 'protected': escort_id}
+
     faction = c['enemy']
     if key == 'sira' and index == 3:
         faction = 'litarios'
@@ -293,123 +288,179 @@ def scenario(c, index, row, manifest):
         recruits += ',' + VETERANS[faction]
     if key == 'darian' and index == 15:
         leader = 'CBM Hero maura'
-    body = '{DEFAULT_SCHEDULE}\n'
-    body += tag('music', {'name': f'cbm/{key}-journey.ogg', 'ms_after': 2000})
-    body += tag('music', {'name': f'cbm/{key}-battle.ogg', 'append': 'yes', 'ms_after': 2000})
-    body += tag('story', body=tag('part', {'story': opening, 'background': f'cbm/portraits/{key}.png~SCALE(540,810)', 'scale_background': 'no'}))
     recruit = c['recruit'].replace('Scout', 'Elvish Scout')
     if key == 'darian' and index >= 4:
         recruit += ',CBM Litario Guardian,CBM Litario Tejedor'
     if key == 'darian' and index >= 6:
         recruit += ',CBM Velario Lancero,CBM Velario Cantor'
+
+    # --- scenario header, music and story screens ---
+    body = '{DEFAULT_SCHEDULE}\n'
+    body += tag('music', {'name': 'cbm/%s-journey.ogg' % key, 'ms_after': 2000})
+    body += tag('music', {'name': 'cbm/%s-battle.ogg' % key, 'append': 'yes', 'ms_after': 2000})
+    hero_portrait = 'cbm/portraits/%s.png~SCALE(540,810)' % key
+    body += tag('story', body=tag('part', {'story': chapter['opening'],
+                                           'background': hero_portrait, 'scale_background': 'no'}))
+    body += tag('story', body=tag('part', {'story': situation_line(chapter),
+                                           'background': scene_art(key, index, 1),
+                                           'scale_background': 'no'}))
+    body += tag('story', body=tag('part', {'story': objective_line(chapter, turns),
+                                           'background': scene_art(key, index, 2),
+                                           'scale_background': 'no'}))
+
+    # --- sides ---
     player = {'side': 1, 'controller': 'human', 'team_name': 'pacto', 'user_team_name': c['hero'],
-              'id': cid + '_hero', 'name': c['hero'], 'type': 'CBM Hero ' + key,
+              'id': ids['hero'], 'name': c['hero'], 'type': 'CBM Hero ' + key,
               'canrecruit': 'yes', 'unrenamable': 'yes', 'recruit': recruit,
               'gold': 150 + min(index * 8, 100), 'income': 3,
               'village_gold': 2, 'fog': 'no', 'shroud': 'no', 'save_id': cid + '_army'}
     body += tag('side', player)
-    enemy_gold = 100 + index * 6
     body += tag('side', {'side': 2, 'controller': 'ai', 'team_name': 'oposicion',
-                        'user_team_name': antagonist, 'type': leader, 'id': sid + '_enemy',
-                        'name': antagonist, 'canrecruit': 'yes', 'recruit': recruits,
-                        'gold': enemy_gold, 'income': 2, 'village_gold': 2},
+                        'user_team_name': chapter['antagonist'], 'type': leader,
+                        'id': ids['antagonist'], 'name': chapter['antagonist'],
+                        'canrecruit': 'yes', 'recruit': recruits,
+                        'gold': 100 + index * 6, 'income': 2, 'village_gold': 2},
                 tag('ai', {'aggression': .6, 'caution': .25, 'passive_leader': 'yes'}))
-    conditions = tag('objective', {'description': GOALS[goal], 'condition': 'win'})
+
+    # --- prestart: conditions, recruit list, markers ---
+    conditions = tag('objective', {'description': GOALS[chapter['goal']], 'condition': 'win'})
     conditions += tag('objective', {'description': 'Muerte de ' + c['hero'], 'condition': 'lose'})
     conditions += tag('objective', {'description': 'Muerte de ' + c['companion'], 'condition': 'lose'})
-    if goal in ('escort', 'rescue'):
-        conditions += tag('objective', {'description': 'Muerte de la persona protegida', 'condition': 'lose'})
-    if goal != 'survive':
+    if chapter['goal'] in ('escort', 'rescue'):
+        conditions += tag('objective', {'description': 'Muerte de la persona protegida',
+                                        'condition': 'lose'})
+    if chapter['goal'] != 'survive':
         conditions += tag('objective', {'description': 'Se agotan los turnos', 'condition': 'lose'})
     conditions += tag('gold_carryover', {'bonus': 'yes', 'carryover_percentage': 40})
-    conditions += tag('note', {'description': 'Toca una casilla para preparar el movimiento y pulsa Mover/atacar. Puedes revisar estos objetivos desde Más.'})
+    conditions += tag('note', {'description': 'Toca una casilla para preparar el movimiento y '
+                                              'pulsa Mover/atacar. Puedes revisar estos objetivos '
+                                              'desde Mas.'})
     pre = tag('objectives', {'side': 1}, conditions)
     pre += tag('allow_recruit', {'side': 1, 'type': recruit})
     pre += '{VARIABLE cbm_points 0}\n{VARIABLE cbm_rescued no}\n'
-    if goal in ('escort', 'rescue', 'escape'):
+    if chapter['goal'] in ('escort', 'rescue', 'escape'):
         pre += tag('item', {'x': destination[0], 'y': destination[1], 'image': 'items/gohere.png'})
         pre += tag('label', {'x': destination[0], 'y': destination[1], 'text': 'Destino'})
-    if goal == 'beacons':
-        for n, (x, y) in enumerate(points, 1):
-            pre += tag('item', {'x': x, 'y': y, 'image': 'items/brazier.png'})
-            pre += tag('label', {'x': x, 'y': y, 'text': f'Punto {n}'})
-    if goal == 'rescue':
+    for number, point in enumerate(points, 1):
+        pre += tag('item', {'x': point[0], 'y': point[1], 'image': 'items/brazier.png'})
+        pre += tag('label', {'x': point[0], 'y': point[1], 'text': 'Punto %d' % number})
+    if chapter['goal'] == 'rescue':
         pre += tag('item', {'x': prison[0], 'y': prison[1], 'image': 'items/cage.png'})
-        pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prisión'})
+        pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prision'})
     body += event('prestart', pre)
-    companion_id = cid + '_companion'
-    companion = tag('unit', {'type': c['companion_type'], 'id': companion_id,
-                            'name': c['companion'], 'side': 1, 'x': start[0], 'y': start[1]+1,
+
+    # --- start: companions, the protected character, and the opening dialogue ---
+    companion = tag('unit', {'type': c['companion_type'], 'id': ids['companion'],
+                            'name': c['companion'], 'side': 1, 'x': start[0], 'y': start[1] + 1,
                             'unrenamable': 'yes'}, '{IS_LOYAL}\n')
-    startbody = companion if index == 1 else tag('recall', {'id': companion_id, 'x': start[0], 'y': start[1]+1})
-    # Companions are essential characters and persist on the recall list.
-    # A debug jump into a later chapter supplies the missing companion too.
+    startbody = companion if index == 1 else tag('recall', {'id': ids['companion'],
+                                                           'x': start[0], 'y': start[1] + 1})
     if index > 1:
-        startbody += tag('if', body=tag('have_unit', {'id': companion_id}) + tag('else', body=companion))
-    startbody += message(companion_id, ally)
-    startbody += message(cid + '_hero', hero_line)
-    if index == 1:
-        startbody += message('narrator', 'Crónicas de la Brasa y la Marea. Historia original en español. Las decisiones tácticas, las bajas y la experiencia se conservan entre escenarios. Puedes guardar la partida en cualquier turno.')
-    escortid = sid + '_protected'
-    protected_name, protected_type = PROTECTED.get((key,index), ('Viajero', 'Peasant'))
-    def protected(x, y):
-        return tag('unit', {'type': protected_type, 'id': escortid, 'name': protected_name,
-                           'side': 1, 'x': x, 'y': y, 'random_traits': 'no',
-                           'max_hitpoints': 36, 'hitpoints': 36, 'max_moves': 5, 'moves': 5}, '{IS_LOYAL}\n')
-    if goal == 'escort':
-        startbody += protected(start[0]+1, start[1])
+        startbody += tag('if', body=tag('have_unit', {'id': ids['companion']}) +
+                         tag('else', body=companion))
+    protected_name, protected_type = chapter['protected'] or ('Viajero', 'Peasant')
+    if chapter['goal'] == 'escort':
+        startbody += tag('unit', {'type': protected_type, 'id': escort_id, 'name': protected_name,
+                                 'side': 1, 'x': start[0] + 1, 'y': start[1],
+                                 'random_traits': 'no', 'max_hitpoints': 36, 'hitpoints': 36,
+                                 'max_moves': 5, 'moves': 5}, '{IS_LOYAL}\n')
+    startbody += tag('scroll_to', {'x': start[0], 'y': start[1]})
+    startbody += dialogue(chapter['intro'], ids, chapter)
     body += event('start', startbody)
-    if goal == 'rescue':
+
+    # --- authored mid-scenario beats ---
+    beacon_beats = {}
+    for trigger, beats in chapter['events']:
+        if trigger.startswith('beacon lit '):
+            beacon_beats[int(trigger.rsplit(' ', 1)[1])] = beats
+            continue
+        body += triggered_event(trigger, beats, ids, chapter, turns)
+
+    # --- objective handlers ---
+    def protected_unit(x, y):
+        return tag('unit', {'type': protected_type, 'id': escort_id, 'name': protected_name,
+                           'side': 1, 'x': x, 'y': y, 'random_traits': 'no',
+                           'max_hitpoints': 36, 'hitpoints': 36, 'max_moves': 5, 'moves': 5},
+                   '{IS_LOYAL}\n')
+
+    if chapter['goal'] == 'rescue':
         body += event('moveto', tag('filter', {'side': 1, 'x': prison[0], 'y': prison[1]}) +
-                      tag('remove_item', {'x': prison[0], 'y': prison[1]}) + protected(prison[0], prison[1]+1) +
-                      '{VARIABLE cbm_rescued yes}\n' + message(escortid, 'La puerta está abierta. Acompañadme hasta la bandera; no podré llegar sin ayuda.'))
-    if goal in ('escape', 'escort', 'rescue'):
-        body += event('moveto', tag('filter', {'id': cid + '_hero' if goal == 'escape' else escortid,
-                                              'x': destination[0], 'y': destination[1]}) + endlevel('victory'))
-    elif goal == 'beacons':
-        for x, y in points:
-            body += event('moveto', tag('filter', {'side': 1, 'x': x, 'y': y}) +
-                          tag('remove_item', {'x': x, 'y': y}) +
-                          tag('item', {'x': x, 'y': y, 'image': 'items/brazier-lit1.png'}) +
-                          '{VARIABLE_OP cbm_points add 1}\n' +
-                          message('narrator', 'Punto activado. Progreso: $cbm_points|/3.') +
-                          tag('if', body=tag('variable', {'name': 'cbm_points', 'equals': 3}) +
-                              tag('then', body=endlevel('victory'))))
-    elif goal == 'survive':
-        body += event('turn 12', message(cid + '_hero', '¡Se ha cumplido el plazo! Podemos completar la retirada.') + endlevel('victory'))
+                      tag('remove_item', {'x': prison[0], 'y': prison[1]}) +
+                      protected_unit(prison[0], prison[1] + 1) +
+                      '{VARIABLE cbm_rescued yes}\n' +
+                      tag('sound', {'name': 'rumble.ogg'}) +
+                      dialogue([('protected', 'La puerta esta abierta. Acompanadme hasta la '
+                                             'bandera; no podre llegar sin ayuda.')], ids, chapter))
+    if chapter['goal'] in ('escape', 'escort', 'rescue'):
+        who = ids['hero'] if chapter['goal'] == 'escape' else escort_id
+        body += event('moveto', tag('filter', {'id': who, 'x': destination[0],
+                                              'y': destination[1]}) +
+                      tag('sound', {'name': 'gold.ogg'}) + endlevel('victory'))
+    elif chapter['goal'] == 'beacons':
+        for number, (px, py) in enumerate(points, 1):
+            handler = tag('remove_item', {'x': px, 'y': py})
+            handler += tag('item', {'x': px, 'y': py, 'image': 'items/brazier-lit%d.png' % min(number, 2)})
+            handler += '{VARIABLE_OP cbm_points add 1}\n'
+            handler += tag('scroll_to', {'x': px, 'y': py})
+            handler += tag('sound', {'name': 'fire.wav'})
+            handler += dialogue(beacon_beats.get(number, []), ids, chapter)
+            handler += tag('objectives', {'side': 1},
+                           tag('objective', {'description': GOALS[chapter['goal']], 'condition': 'win'}) +
+                           tag('note', {'description': 'Puntos activados: $cbm_points|/3.'}))
+            if number == len(points):
+                handler += endlevel('victory')
+            body += event('moveto', tag('filter', {'side': 1, 'x': px, 'y': py}) + handler)
+    elif chapter['goal'] == 'survive':
+        body += event('turn %d' % turns,
+                      dialogue([('hero', 'Se ha cumplido el plazo. Podemos completar la retirada.')],
+                               ids, chapter) + endlevel('victory'))
     else:
-        body += event('enemies defeated', endlevel('victory'))
-    # Limited reinforcements sustain pressure without infinite spawning or
-    # blocking a victory after the enemy leader has been defeated.
+        body += event('enemies defeated', dialogue([('narrator', 'La oposicion se ha roto.')],
+                                                  ids, chapter) + endlevel('victory'))
+
+    # --- pressure: two bounded reinforcements and an escalation, never infinite ---
     for turn in (4, 8):
         reinforcement = tag('unit', {'type': recruits.split(',')[turn % len(recruits.split(','))],
-                                    'side': 2, 'x': enemy[0]-1, 'y': enemy[1]-2})
-        body += event(f'turn {turn}', tag('if', body=tag('have_unit', {'id': sid + '_enemy'}) +
-                                       tag('then', body=reinforcement)))
-    body += event('last breath', tag('filter', {'id': cid + '_hero'}) +
-                  message('unit', 'No podré terminar este camino…') + endlevel('defeat'))
-    body += event('last breath', tag('filter', {'id': companion_id}) +
-                  message('unit', 'Hasta aquí puedo acompañarte…') + endlevel('defeat'))
-    if goal in ('escort', 'rescue'):
-        body += event('die', tag('filter', {'id': escortid}) +
-                      message('narrator', 'La persona que debías proteger ha muerto. La misión ha fracasado.') + endlevel('defeat'))
-    body += event('time over', message('narrator', 'El plazo se ha agotado antes de completar la misión.') + endlevel('defeat'))
-    victory = message('narrator', resolution)
+                                    'side': 2, 'x': enemy[0] - 1, 'y': enemy[1] - 2})
+        body += event('turn %d' % turn,
+                      tag('if', body=tag('have_unit', {'id': ids['antagonist']}) +
+                          tag('then', body=reinforcement)))
+    body += event('turn %d' % max(2, turns // 2),
+                  tag('modify_side', {'side': 2, 'income': 4},
+                      tag('ai', {'aggression': .8, 'caution': .15})))
+
+    # --- defeat and victory ---
+    body += event('last breath', tag('filter', {'id': ids['hero']}) +
+                  dialogue([('hero', 'No podre terminar este camino...')], ids, chapter) +
+                  endlevel('defeat'))
+    body += event('last breath', tag('filter', {'id': ids['companion']}) +
+                  dialogue([('companion', 'Hasta aqui puedo acompanarte...')], ids, chapter) +
+                  endlevel('defeat'))
+    if chapter['goal'] in ('escort', 'rescue'):
+        body += event('die', tag('filter', {'id': escort_id}) +
+                      dialogue([('narrator', 'La persona que debias proteger ha muerto. La mision '
+                                             'ha fracasado.')], ids, chapter) + endlevel('defeat'))
+    body += event('time over', dialogue([('narrator', 'El plazo se ha agotado antes de completar '
+                                                    'la mision.')], ids, chapter) + endlevel('defeat'))
+    victory = dialogue(chapter['victory'], ids, chapter)
+    victory += dialogue([('narrator', chapter['resolution'])], ids, chapter)
     if index == len(c['chapters']):
-        victory += message('narrator', c['ending'])
-    if goal in ('escort', 'rescue'):
-        victory += tag('kill', {'id': escortid, 'animate': 'no', 'fire_event': 'no'})
+        victory += dialogue([('narrator', c['ending'])], ids, chapter)
+    if chapter['goal'] in ('escort', 'rescue'):
+        victory += tag('kill', {'id': escort_id, 'animate': 'no', 'fire_event': 'no'})
     victory += '{CLEAR_VARIABLE cbm_points,cbm_rescued}\n'
     body += event('victory', victory)
+
     text = tag('scenario', {'id': sid, 'name': title, 'next_scenario': following,
-                           'map_file': f'{key}_{index:02d}.map', 'turns': 12 if goal == 'survive' else 32,
+                           'map_file': '%s_%02d.map' % (key, index), 'turns': turns,
                            'victory_when_enemies_defeated': 'no', 'experience_modifier': 85}, body)
-    write(f'scenarios/{key}/{index:02d}.cfg', text)
-    manifest.append({'id': sid, 'campaign': cid, 'title': title, 'goal': goal,
-                     'next': following, 'map': f'{key}_{index:02d}.map', 'biome': biome,
-                     'start': start, 'enemy': enemy, 'destination': destination,
-                     'prison': prison, 'points': points,
-                     'file': f'scenarios/{key}/{index:02d}.cfg'})
+    write('scenarios/%s/%02d.cfg' % (key, index), text)
+    manifest.append({'id': sid, 'campaign': cid, 'title': title, 'goal': chapter['goal'],
+                     'next': following, 'map': '%s_%02d.map' % (key, index),
+                     'biome': chapter['biome'], 'start': start, 'enemy': enemy,
+                     'destination': destination, 'prison': prison, 'points': points,
+                     'villages': layout['villages'], 'terrain': layout['stats'],
+                     'file': 'scenarios/%s/%02d.cfg' % (key, index)})
 
 
 def main():

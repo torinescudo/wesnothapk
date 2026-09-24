@@ -15,8 +15,15 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 PACK = ROOT / 'data/campaigns/Brasa_y_Marea'
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(ROOT / 'data/tools'))
+import mapgen
 from wesnoth.wmlparser3 import Parser
+
+# Quality gates the generated campaigns have to clear, all measured against
+# mainline campaigns by compare_with_mainline.py.
+GATES = {'min_terrain_codes': 30, 'min_villages': 12, 'min_area': 900,
+         'min_scenario_messages': 20}
 
 
 def parse(path):
@@ -35,20 +42,19 @@ def walk(node):
 
 
 def reachable(grid, start):
+    """Wesnoth staggered columns, judged walkable by the generator's own rules."""
     width, height = len(grid[0]), len(grid)
     found, queue = {tuple(start)}, deque([tuple(start)])
     while queue:
-        x,y = queue.popleft()
-        # Wesnoth staggered columns; using either diagonal in the road grid
-        # is unnecessary: both horizontal/vertical steps are legal neighbors.
-        offset = -1 if x % 2 else 1
-        neighbors = [(x,y-1),(x,y+1),(x-1,y),(x+1,y),(x-1,y+offset),(x+1,y+offset)]
-        for a,b in neighbors:
-            if 1 <= a <= width and 1 <= b <= height and (a,b) not in found:
-                terrain = grid[b-1][a-1].split()[-1].split('^')[0]
-                if terrain not in ('Xu','Xv','Wo','Qxu','Ql'):
-                    found.add((a,b))
-                    queue.append((a,b))
+        x, y = queue.popleft()
+        for a, b in mapgen.neighbours(x - 1, y - 1, width, height):
+            node = (a + 1, b + 1)
+            if node in found:
+                continue
+            if not mapgen.is_walkable(grid[b][a].split()[-1]):
+                continue
+            found.add(node)
+            queue.append(node)
     return found
 
 
@@ -112,10 +118,27 @@ def validate(allow_missing_art=False):
         assert sum(t.startswith('1 ') for row in grid for t in row) == 1
         assert sum(t.startswith('2 ') for row in grid for t in row) == 1
         reached = reachable(grid, chapter['start'])
-        for destination in [chapter['enemy'],chapter['destination'],chapter['prison'],*chapter['points']]:
+        for destination in [chapter['enemy'], chapter['destination'], chapter['prison'],
+                            *chapter['points']]:
+            if destination is None:
+                continue  # conquer and survive chapters have no marker to reach
             assert tuple(destination) in reached, (chapter['id'],'unreachable',destination)
-        for x, y in [chapter['destination'],chapter['prison'],*chapter['points']]:
-            assert grid[y-1][x-1] in ('Rr', 'Uu'), (chapter['id'], 'objective is not on its land route', x, y)
+        for x, y in [position for position in
+                     (chapter['destination'], chapter['prison'], *chapter['points'])
+                     if position is not None]:
+            assert mapgen.is_walkable(grid[y-1][x-1].split()[-1]), (
+                chapter['id'], 'objective is not on walkable ground', x, y)
+        codes = [cell.split()[-1] for row in grid for cell in row]
+        stats = chapter.get('terrain', {})
+        assert len(set(codes)) >= GATES['min_terrain_codes'], (
+            chapter['id'], 'too few distinct terrain codes', len(set(codes)))
+        villages = sum(1 for code in codes if '^V' in code)
+        assert villages >= GATES['min_villages'], (chapter['id'], 'too few villages', villages)
+        assert len(codes) >= GATES['min_area'], (chapter['id'], 'map too small', len(codes))
+        messages = sum(1 for node in walk(scenario) if node.name == b'message')
+        assert messages >= GATES['min_scenario_messages'], (
+            chapter['id'], 'too little dialogue', messages)
+        assert stats.get('villages', villages) > 0
         objective_counts[chapter['goal']] += 1
     units = parse(PACK/'units/units.cfg').get_all(tag='unit_type')
     assert len(units) == 22

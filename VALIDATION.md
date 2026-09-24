@@ -1,5 +1,45 @@
 # Validation record
 
+## Campaign rework — 2026-09-24
+
+The six campaigns were rebuilt from authored narrative and structured map
+synthesis, then measured against the mainline campaigns with the same parser
+(`packaging/android/campaigns/compare_with_mainline.py`, `--gate` in CI). Every
+gated metric now clears the 25th percentile of the mainline campaigns.
+
+| metric | before | after | mainline p25 | mainline median |
+| --- | ---: | ---: | ---: | ---: |
+| WML lines per scenario | 280 | 438 | 428 | 602 |
+| dialogue lines per scenario | 7 | 33 | 23 | 31.5 |
+| scripted events per scenario | 10 | 15 | 8.5 | 10 |
+| story screens per scenario | 1 | 3 | 0 | 1.5 |
+| map tiles | 540 | 1341 | 868 | 1184 |
+| distinct terrain codes per map | 7 | 52 | 33 | 42 |
+| villages per map | 10 | 15 | 13.5 | 17 |
+| villages cut off from the main landmass | 1 | 0 | (mainline median includes naval maps) | |
+
+- Narrative: 1,487 authored dialogue beats over 52 chapters, one module per
+  campaign under `packaging/android/campaigns/stories/`. The schema and the
+  authoring bar are documented in `stories/README.md` and enforced by
+  `python3 -m stories --strict`.
+- Maps: `mapgen.py` composes coastlines, rivers crossed by the roads that need
+  them, forest masses, ridges, cost-routed roads and village bands, then proves
+  every village and objective reachable from both keeps before the map is
+  accepted, retrying with a new seed otherwise. Every terrain code is checked
+  against `data/core/terrain.cfg`.
+- Art: `ART_PROMPTS.json` now carries a prompt for every image the campaigns
+  reference (38 portraits, 104 chapter scenes, 8 unit sprite sets) and
+  `artgen.py status` reports what is installed. Until the image generation pass
+  runs, chapters fall back to the portraits that already exist, so the build
+  never points the engine at a file nobody has drawn.
+
+Verified on the reconstructed tree: `python3 validate_campaigns.py` (structure,
+assets, reachability, terrain variety, dialogue volume) and
+`python3 compare_with_mainline.py --gate` both pass; CI runs both before
+packaging. Not measured here: tactical balance, and art parity with hand-painted
+mainline portraits, which depends on an image generation pass that has not been
+run.
+
 ## Base port — 2026-09-08
 
 - ARM64 and x86_64 engines compiled from upstream revision

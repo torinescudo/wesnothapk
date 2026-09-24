@@ -25,6 +25,11 @@ jobs:
       - uses: actions/checkout@v6
       - name: Prepare pinned full source
         run: python3 prepare-source.py
+      - name: Check authored campaigns against the mainline quality gates
+        working-directory: source/packaging/android/campaigns
+        run: |
+          python3 -m stories --strict
+          python3 compare_with_mainline.py --gate
       - name: Validate phone protocol and data packaging
         run: python3 -m unittest discover -s source/packaging/android/tests
       - name: Install target Android platform

@@ -69,7 +69,7 @@ def finish_scenario():
     deadline = time.monotonic()+30
     while time.monotonic() < deadline:
         nodes = ui()
-        end = next((n for n in nodes if n.get('text') in ('End turn','Terminar turno')
+        end = next((n for n in nodes if n.get('resource-id') == PACKAGE+':id/phone_action_endturn'
                     and n.get('enabled') == 'true'), None)
         if end is not None:
             tap(end)
@@ -85,8 +85,8 @@ def finish_scenario():
 
 def lua_hook(chapter):
     campaign, sid, goal = chapter['campaign'],chapter['id'],chapter['goal']
-    x,y = chapter['destination']
-    px,py = chapter['prison']
+    x,y = chapter['destination'] or (0,0)
+    px,py = chapter['prison'] or (0,0)
     points = '{' + ','.join('{'+f'{a},{b}'+'}' for a,b in chapter['points']) + '}'
     code = f'''
 local sid = "{sid}"
@@ -189,7 +189,10 @@ try:
     for _ in range(3):
         if all(any(c['title'] in text for text in titles) for c in manifest['campaigns']):
             break
-        listing = next(n for n in nodes if n.get('class') == 'android.widget.ListView')
+        listing = next((n for n in nodes if n.get('class') in
+                        ('android.widget.ListView', 'android.widget.ScrollView')), None)
+        if listing is None:
+            break
         x1,y1,x2,y2 = map(int,re.findall(r'\d+',listing.get('bounds')))
         adb('shell','input','swipe',str((x1+x2)//2),str(y2-20),str((x1+x2)//2),str(y1+20),'450')
         nodes = ui()
@@ -202,7 +205,8 @@ try:
         deadline = time.monotonic()+140
         while time.monotonic() < deadline:
             nodes = ui()
-            active = any(n.get('text') in ('Next unit','Otra unidad') and n.get('enabled') == 'true' for n in nodes)
+            active = any(n.get('resource-id') == PACKAGE+':id/phone_action_cycle'
+                         and n.get('enabled') == 'true' for n in nodes)
             if active:
                 break
             adb('shell','input','keyevent','KEYCODE_ENTER')
