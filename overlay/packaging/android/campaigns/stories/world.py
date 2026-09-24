@@ -79,7 +79,29 @@ BRANCHES = {
     },
 }
 
-# Chapters that take place where another campaign also fights. The key is a
+# The closing scene the campaign reaches when the player kept choosing the
+# other way through. Written apart from the main ending so it can disagree
+# with it: this is what a second playthrough is for.
+ENDING_ALT = {
+    'alba': 'El faro se quedó sin aceite y la playa sin piedras. Alba bajó la escalera '
+            'contando a quién no llegó a salvar y juró que la próxima campana sonaría '
+            'a tiempo, aunque fuera la última luz.',
+    'sira': 'Sira habló con una sola voz y las otras seis se quedaron mudas. Las cámaras '
+            'cerraron con ella dentro de una memoria: la suya, la única que ya no podía '
+            'prestar.',
+    'iria': 'Las ciudades bajaron enteras y los anclajes siguen tensos. Iria guardó el '
+            'mapa sin dibujar el descenso: hay caminos que solo existen para quien va a '
+            'dejar de usarlos.',
+    'maura': 'Las notas se quemaron y el notario se quedó sin oficio. Maura firmó, por '
+             'primera vez, un registro que nadie leería: el de las personas a las que '
+             'llamó por nombre antes de perderlas.',
+    'nerea': 'Los nombres volvieron al mar y las islas se quedaron mudas. Nerea zarpó sin '
+             'el cuaderno, porque un nombre que se devuelve no se puede contar dos veces.',
+    'darian': 'Darian firmó solo la tregua y las reparaciones nunca llegaron. Cruzó el '
+              'territorio con la firma a medio hacer y aprendió que un correo también '
+              'puede elegir qué no entrega.',
+}
+
 # SHARED_PLACES entry: one map, two campaigns, two years.
 SHARED = {
     ('darian', 2): 'valdara-harbor',

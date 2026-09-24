@@ -643,7 +643,18 @@ def scenario(c, index, chapter, manifest):
     victory = dialogue(chapter['victory'], ids, chapter)
     victory += dialogue([('narrator', chapter['resolution'])], ids, chapter)
     if index == len(c['chapters']):
-        victory += dialogue([('narrator', c['ending'])], ids, chapter)
+        # The ending follows what the player chose at the last decision, so the
+        # other closing is only reached by playing the campaign again.
+        last = max(WORLD.BRANCHES.get(key, {})) if WORLD.BRANCHES.get(key) else None
+        if last is not None:
+            var = 'cbm_decide_%s_%02d_1' % (key, last)
+            other = WORLD.BRANCHES[key][last][0][1][-1]
+            victory += tag('if', {}, body=(
+                tag('variable', {'name': var, 'equals': other})
+                + tag('then', {}, body=dialogue([('narrator', world.ENDING_ALT[key])], ids, chapter))
+                + tag('else', {}, body=dialogue([('narrator', c['ending'])], ids, chapter))))
+        else:
+            victory += dialogue([('narrator', c['ending'])], ids, chapter)
     if chapter['goal'] in ('escort', 'rescue'):
         victory += tag('kill', {'id': escort_id, 'animate': 'no', 'fire_event': 'no'})
     victory += '{CLEAR_VARIABLE cbm_points,cbm_rescued}\n'
