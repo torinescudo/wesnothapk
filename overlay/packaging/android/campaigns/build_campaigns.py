@@ -395,7 +395,16 @@ def scenario(c, index, chapter, manifest):
     else:
         layout = generate_map(key, index, chapter['biome'], chapter['goal'], size=mechanics['size'])
         SHARED_MAPS[map_name] = layout
-        write('maps/%s' % map_name, layout['rows'])
+        # A Wesnoth map is a rectangle: the generator can leave the last rows
+        # short, so finish them with the terrain they end on.
+        columns = max(len(r.split(',')) for r in layout['rows'])
+        rows = []
+        for row in layout['rows']:
+            codes = [c for c in row.split(',') if c]
+            fill = codes[-1] if codes else 'Gg'
+            codes += [fill] * (columns - len(codes))
+            rows.append(','.join(codes))
+        write('maps/%s' % map_name, rows)
     start, enemy = layout['start'], layout['enemy']
     destination, prison, points = layout['destination'], layout['prison'], layout['points']
 
