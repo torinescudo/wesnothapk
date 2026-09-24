@@ -110,6 +110,17 @@ local ok, failure = pcall(function()
     end
     wesnoth.wml_actions.message = function() end
     wesnoth.wml_actions.move_unit_fake = function() end
+    -- Secondary objectives can require holding ground. Take three villages so
+    -- that forcing the main objective does not trip the "keep the villages"
+    -- condition on the way to victory.
+    do
+        local held = 0
+        for _, loc in ipairs(wesnoth.map.find {{ terrain = "*^V*" }}) do
+            if held >= 3 then break end
+            wesnoth.wml_actions.capture_village {{ x = loc[1], y = loc[2], side = 1 }}
+            held = held + 1
+        end
+    end
     local ready = false
     wesnoth.game_events.add {{ name="victory", action=function()
         assert(ready, "victory fired before the objective was completed")
