@@ -234,7 +234,7 @@ CAMPAIGN = dict(
             biome='mountain',
             antagonist='Guardiana Derra',
             opening=(
-                'Un carro transportaba los sellos arrebatados al notario. Los pueblos de la calzada '
+                'Un carro transportaba las notas que el notario había escrito en la torre. Los pueblos de la calzada '
                 'intentaron detenerlo antes de que Maura pudiera reclamar a sus antepasados. El carro '
                 'avanzaba despacio, con las ruedas hundidas y la escolta contada. Derra había jurado '
                 'a los pueblos que ningún nombre saldría de la montaña sin permiso de su familia.'),
@@ -587,12 +587,12 @@ CAMPAIGN = dict(
                 ('hero', 'Pues entremos por la puerta. Quien no cobra y se queda merece ver quién lo sustituye.'),
                 ('antagonist', 'Treinta años he firmado treguas con gente peor que tú. Ninguna me ha durado una estación.'),
                 ('hero', 'Las treguas duran lo que dura la firma. Yo no vengo a firmar.'),
-                ('companion', 'En el patio han encendido la campana de los entierros. Es la única que queda en la ciudad.'),
+                ('companion', 'En el patio golpean la puerta de clavos. Es todo lo que queda de la campana de los entierros.'),
                 ('hero', 'Que siga sonando. Necesito que la ciudad entera oiga lo que pasa hoy.'),
                 ('antagonist', 'La guardia del trono no es un ejército. Son los hijos de esta ciudad con las ropas del padre.'),
                 ('hero', 'Entonces que salgan los padres. Con los hijos no negocio.'),
-                ('companion', 'El precio de esta tarde es que esa campana tocará por gente que aún está viva.'),
-                ('hero', 'Tocará por todos. Es lo más justo que va a pasar hoy en esta ciudad.'),
+                ('companion', 'El precio de esta tarde es que esa puerta sonará por gente que aún está viva.'),
+                ('hero', 'Sonará por todos. Es lo más justo que va a pasar hoy en esta ciudad.'),
                 ('narrator', 'La sala del trono tiene una sola entrada y veinte escalones. Cada escalón cuesta una vida.'),
                 ('antagonist', 'Cuando termine esto, pide que te llamen lo que quieras. Yo pienso llamarte como te llamaba tu padre.'),
             ],
@@ -621,7 +621,7 @@ CAMPAIGN = dict(
                 ('hero', 'Un regente que conoce cada pasillo vale más que uno que muere limpio.'),
                 ('companion', 'Cumplí el contrato. Ahora quiero pedirte una cosa como firmante, no como soldado.'),
                 ('hero', 'Pide lo que quieras por escrito. Hoy no es día de cambios en el organigrama.'),
-                ('narrator', 'La campana de los entierros sonó toda la noche en el patio, sin que nadie la tocara: se movía con el aire que entraba por la puerta rota.'),
+                ('narrator', 'La puerta de clavos sonó toda la noche en el patio, sin que nadie la tocara: se movía con el aire que entraba por la puerta rota.'),
             ],
             protected=None,
             resolution=(

@@ -302,7 +302,7 @@ CAMPAIGN = dict(
                     ('hero', 'Un pasillo, no una caravana. Que lo oiga quien lo negoció.'),
                 ]),
                 ('beacon lit 3', [
-                    ('antagonist', 'Está entero. Ahora todos saben que fui yo quien firmó. ¿Contento?'),
+                    ('antagonist', 'Está entero. Ahora todos saben que fui yo quien firmó. ¿Contenta?'),
                     ('hero', 'No. Ahora todos saben qué firmaste, que no es lo mismo.'),
                 ]),
                 ('turn 10', [

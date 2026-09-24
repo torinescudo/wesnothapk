@@ -102,8 +102,12 @@ def validate(allow_missing_art=False):
         assert digest not in maps, ('duplicate map', chapter['id'])
         maps.add(digest)
         serialized = [[s.strip() for s in row.split(',')] for row in data.strip().splitlines()]
-        # Native gamemap::read removes a one-cell off-board border. Verify the
-        # start markers against that coordinate convention before pathfinding.
+        # gamemap::read keeps every row and rejects ragged maps ("Map not a
+        # rectangle."), so the check covers the border too, not just the interior.
+        assert len({len(row) for row in serialized}) == 1, (
+            chapter['id'], 'map rows differ in width', [len(row) for row in serialized])
+        # WML (x, y) addresses the map with its off-board ring included: the
+        # start markers are checked against that same convention.
         for marker, position in [('1 ', chapter['start']), ('2 ', chapter['enemy'])]:
             x, y = position
             assert serialized[y][x].startswith(marker), (chapter['id'], 'map border offset', position)
@@ -138,7 +142,9 @@ def validate(allow_missing_art=False):
         messages = sum(1 for node in walk(scenario) if node.name == b'message')
         assert messages >= GATES['min_scenario_messages'], (
             chapter['id'], 'too little dialogue', messages)
-        assert stats.get('villages', villages) > 0
+        assert stats.get('villages') == villages, (
+            chapter['id'], 'manifest village count differs from the map',
+            stats.get('villages'), villages)
         objective_counts[chapter['goal']] += 1
     units = parse(PACK/'units/units.cfg').get_all(tag='unit_type')
     assert len(units) == 22

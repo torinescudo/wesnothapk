@@ -300,19 +300,7 @@ class MapBuilder:
 
     def smooth_terrain(self, passes=1):
         """Remove single-tile specks: masses are what make a map look drawn."""
-        families = {
-            'grass': GRASS + DIRT + ROAD + ROAD_EARTH + ('Gg', 'Gs'),
-            'forest': (),
-            'hill': HILLS,
-            'mountain': MOUNTAINS,
-            'sand': SAND,
-            'swamp': SWAMP,
-            'snow': SNOW,
-            'water': DEEP + SHALLOW,
-            'cave': CAVE_FLOOR + CAVE_HILLS + CAVE_WALL,
-            'ruin': RUIN_FLOOR,
-            'castle': tuple(name for names in CASTLE_RING.values() for name in names),
-        }
+        families = self._families()
         for _ in range(passes):
             snapshot = [['' for _ in range(self.width)] for _ in range(self.height)]
             for y in range(self.height):
@@ -351,22 +339,122 @@ class MapBuilder:
             return self._forest_code(y, x)
         return self.rng.choice(table.get(family, ('Gg',)))
 
+    def scatter_details(self):
+        """Break each mass with features of another family: mainline maps are textured.
+
+        The measurement is the largest same-family cluster: mainline sits near
+        0.45 of its own tiles, and a smoothed noise field drifts past 0.65.
+        """
+        companions = {
+            'grass': ('hill', 'forest', 'grass'),
+            'forest': ('grass', 'forest', 'hill'),
+            'hill': ('grass', 'rock', 'forest'),
+            'mountain': ('hill', 'rock', 'grass'),
+            'sand': ('grass', 'swamp', 'sand'),
+            'swamp': ('grass', 'sand', 'swamp'),
+            'snow': ('hill', 'mountain', 'snow'),
+            'cave': ('cave', 'hill', 'cave'),
+            'ruin': ('grass', 'ruin', 'hill'),
+            'water': ('sand', 'water', 'grass'),
+        }
+        for y in range(self.height):
+            for x in range(self.width):
+                code = self._plain(self.terrain[y][x])
+                if self.noise.fbm(x, y, 1.9, 2, 'detail') < 0.55:
+                    continue
+                family = self._family(code, self._families())
+                if family == 'castle':
+                    continue
+                if not self.land[y][x]:
+                    if self.noise.fbm(x, y, 4.5, 2, 'shallows') > 0.68:
+                        self.terrain[y][x] = self.rng.choice(SHALLOW)
+                    continue
+                choice = self.rng.choice(companions.get(family, ('grass',)))
+                self.terrain[y][x] = self._detail_tile(choice, family, y, x)
+
+    def roughen_edges(self):
+        """Inlets, headlands and islets: a mass edge should be irregular.
+
+        Mainline coasts and forests have high-frequency edges and islands, so the
+        map reads as a crop of a bigger world instead of a smooth blob.
+        """
+        for y in range(self.height):
+            for x in range(self.width):
+                here = self.land[y][x]
+                around = [(nx, ny) for nx, ny in neighbours(x, y, self.width, self.height)]
+                if not around:
+                    continue
+                other = sum(1 for nx, ny in around if self.land[ny][nx] != here)
+                if other == 0:
+                    continue
+                rough = self.noise.fbm(x, y, 1.7, 2, 'edge')
+                if here and rough > 0.62:
+                    self.land[y][x] = False
+                    self.terrain[y][x] = self._water_code(self.cut)
+                elif not here and rough < 0.34 and other >= 3:
+                    # An islet just off the coast, the kind a boat can reach.
+                    self.land[y][x] = True
+                    self.terrain[y][x] = self.rng.choice(SAND + GRASS)
+
+    def _detail_tile(self, choice, family, y, x):
+        if choice == family:
+            return self.terrain[y][x]
+        table = {'grass': ('Gg', 'Gs'), 'hill': HILLS, 'rock': MOUNTAINS,
+                 'forest': None, 'sand': SAND, 'swamp': SWAMP, 'snow': SNOW,
+                 'cave': CAVE_FLOOR, 'ruin': RUIN_FLOOR, 'water': SHALLOW}
+        if choice == 'forest':
+            return self._forest_code(y, x)
+        return self.rng.choice(table.get(choice, ('Gg',)))
+
+    def _families(self):
+        return {
+            'grass': GRASS + DIRT + ROAD + ROAD_EARTH + ('Gg', 'Gs'),
+            'forest': (),
+            'hill': HILLS,
+            'mountain': MOUNTAINS,
+            'sand': SAND,
+            'swamp': SWAMP,
+            'snow': SNOW,
+            'water': DEEP + SHALLOW,
+            'cave': CAVE_FLOOR + CAVE_HILLS + CAVE_WALL,
+            'ruin': RUIN_FLOOR,
+            'castle': tuple(name for names in CASTLE_RING.values() for name in names),
+        }
+
     def carve_rivers(self):
-        """Rivers run downhill and eat the ground they cross, so bridges matter."""
+        """Rivers start on high ground and leave the map: they have a source.
+
+        A river that dies inland reads as a mistake; mainline rivers come from a
+        ridge and run off the frame or into the sea.
+        """
         if not self.spec['river']:
             return
         for branch in range(1 + self.index % 2):
-            x = self.rng.randrange(4, self.width - 4)
-            y = 1
-            while y < self.height - 1:
+            sources = [(self.level[y][x], x, y)
+                       for y in range(1, self.height // 2) for x in range(2, self.width - 2)
+                       if self.land[y][x]]
+            if not sources:
+                return
+            _, x, y = max(sources)
+            x += self.rng.randrange(-3, 4)
+            y = max(1, y)
+            steps = 0
+            while 0 <= x < self.width and steps < self.height * 3:
                 self.land[y][x] = False
                 self.terrain[y][x] = 'Ww'
-                if self.rng.random() < 0.45:
-                    side = max(0, x - 1)
-                    self.land[y][side] = False
-                    self.terrain[y][side] = 'Ww'
-                x = max(1, min(self.width - 2, x + self.rng.choice((-1, 0, 1, 1, 2))))
-                y += 1
+                if self.rng.random() < 0.35 and x + 1 < self.width:
+                    self.land[y][x + 1] = False
+                    self.terrain[y][x + 1] = 'Ww'
+                if y + 1 >= self.height:
+                    break  # leaves the frame, like a river reaching the lowlands
+                # Walk downhill: the water finds the lowest neighbour ahead.
+                options = [(self.level[ny][nx], nx, ny)
+                           for nx, ny in neighbours(x, y + 1, self.width, self.height)
+                           if ny > y or nx != x]
+                if not options:
+                    break
+                _, x, y = min(options)
+                steps += 1
 
     def decorate_edges(self):
         """Beaches, swamps and snow follow the landform instead of being sprinkled."""
@@ -512,8 +600,9 @@ class MapBuilder:
 
     def _lay_road(self, x, y):
         cell = self.terrain[y][x]
-        if cell.split()[0].isdigit():
-            # A keep or an owned tile carries a start marker: roads go around it.
+        if cell.split()[0].isdigit() or '^V' in cell:
+            # A keep carries a start marker and a village is a place: roads go
+            # around both instead of paving over them.
             return
         code = self._plain(cell)
         base = base_of(code)
@@ -530,29 +619,96 @@ class MapBuilder:
         else:
             self.terrain[y][x] = self.rng.choice(ROAD)
 
+    def build_road_network(self):
+        """Arterials, branches and spurs: mainline maps lace the land with roads.
+
+        The target is about a tenth of the map's tiles on road, three times what
+        a set of spokes from the keeps produces.
+        """
+        arterial = [self.enemy]
+        if self.destination:
+            arterial.append(self.destination)
+        if self.prison:
+            arterial.append(self.prison)
+        arterial += self.points
+        for target in arterial:
+            path = self._path(self.start, target)
+            if path:
+                for x, y in path:
+                    self._lay_road(x, y)
+        # Branches from the middle of the arterial to the map's corners: roads
+        # that go somewhere, instead of spokes that end at the objective.
+        trunk = self._path(self.start, self.enemy) or []
+        for index, corner in enumerate([(2, 2), (self.width - 3, 2),
+                                        (2, self.height - 3), (self.width - 3, self.height - 3)]):
+            if index % 2 != self.index % 2 or not trunk:
+                continue
+            try:
+                target = self._nearest_land(corner, 6)
+            except RuntimeError:
+                continue  # that corner is open sea or a wall on this map
+            origin = trunk[len(trunk) // 2]
+            path = self._path(origin, target)
+            if path:
+                for x, y in path:
+                    self._lay_road(x, y)
+        # Spurs: short stubs off existing road, the verges and lookouts.
+        for _ in range(5 + self.index % 3):
+            if not self.roads:
+                break
+            x, y = sorted(self.roads)[self.rng.randrange(len(self.roads))]
+            for _ in range(4 + self.rng.randrange(5)):
+                steps = [(nx, ny) for nx, ny in neighbours(x, y, self.width, self.height)
+                         if self.land[ny][nx] and (nx, ny) not in self.roads]
+                if not steps:
+                    break
+                x, y = steps[self.rng.randrange(len(steps))]
+                self._lay_road(x, y)
+
     def place_villages(self):
+        """Settlements against a feature, spaced apart, rarely on the road.
+
+        Mainline spreads villages about six tiles apart and puts only a third of
+        them next to a road: a village belongs by a forest edge, a hill foot or a
+        bay, which is also where a defender would want it.
+        """
         wanted = self.spec['villages']
         candidates = []
         for y in range(2, self.height - 2):
             for x in range(2, self.width - 2):
                 if not self.land[y][x]:
                     continue
-                base = base_of(self._plain(self.terrain[y][x]))
+                code = self._plain(self.terrain[y][x])
+                base = base_of(code)
                 if base in MOUNTAINS + CAVE_WALL + SAND + SWAMP + SNOW:
                     continue
-                if self._distance(x, y, *self.start) < 3 or self._distance(x, y, *self.enemy) < 3:
+                if self._distance(x, y, *self.start) < 4 or self._distance(x, y, *self.enemy) < 4:
                     continue
+                families = {self._family(self._plain(self.terrain[ny][nx]), self._families())
+                            for nx, ny in neighbours(x, y, self.width, self.height)
+                            if self.land[ny][nx]}
+                own = self._family(code, self._families())
+                feature = len(families - {own, 'castle'})
+                # A village wants a shore, a mountain foot or a forest edge: the
+                # places a settlement can be found on a real map.
+                siting = (3 if 'water' in families else 0) + (2 if 'mountain' in families else 0) \
+                    + (2 if 'forest' in families else 0) + (1 if base in HILLS else 0)
                 near_road = sum(1 for nx, ny in neighbours(x, y, self.width, self.height)
-                                if (nx, ny) in self.roads)
-                score = near_road * 2 + (1 if base in GRASS else 0)
-                candidates.append((score, x, y))
+                                if (nx, ny) in self.roads) + (1 if (x, y) in self.roads else 0)
+                score = siting + feature - near_road * 2
+                candidates.append((score, x, y, near_road))
         candidates.sort(key=lambda row: (-row[0], row[1], row[2]))
-        placed = []
-        for _, x, y in candidates:
+        placed, roadside = [], 0
+        for _, x, y, near_road in candidates:
             if len(placed) >= wanted:
                 break
-            if all(self._distance(x, y, px, py) >= 3 for px, py in placed):
-                placed.append((x, y))
+            if not all(self._distance(x, y, px, py) >= 5 for px, py in placed):
+                continue
+            if near_road and roadside + 1 > wanted // 3:
+                continue  # at most a third of the villages may touch a road
+            if near_road:
+                roadside += 1
+            placed.append((x, y))
         for x, y in placed:
             self.terrain[y][x] = self._village_code(x, y)
         self.villages = placed
@@ -620,7 +776,9 @@ class MapBuilder:
         rows = []
         for y in range(self.height):
             rows.append([self.terrain[y][x] for x in range(self.width)])
-        border = [row[0] for row in rows]
+        # The off-board ring must match the interior width: gamemap::read rejects
+        # any map whose rows differ in length ("Map not a rectangle.").
+        border = [rows[0][0]] * (self.width + 2)
         bordered = [border] + [[row[0]] + row + [row[-1]] for row in rows] + [border]
         return '\n'.join(', '.join(row) for row in bordered) + '\n'
 
@@ -648,12 +806,15 @@ class MapBuilder:
 
 def generate(key, index, biome, goal, seed=None, attempts=12):
     """Build one map, retrying with new seeds until its structure verifies."""
+    reason = 'no attempt was made'
     for attempt in range(attempts):
         attempt_seed = '%s:%s:%s:%s:%s' % (seed or 'brasa-marea', key, index, biome, attempt)
         builder = MapBuilder(key, index, biome, goal, attempt_seed)
         builder.shape_land()
+        builder.roughen_edges()
         builder.paint_relief()
         builder.smooth_terrain()
+        builder.scatter_details()
         builder.carve_rivers()
         builder.decorate_edges()
         builder.place_castles()
@@ -661,6 +822,7 @@ def generate(key, index, biome, goal, seed=None, attempts=12):
         if not builder.carve_roads():
             continue
         builder.place_villages()
+        builder.build_road_network()
         ok, reason = builder.verify()
         if not ok:
             continue

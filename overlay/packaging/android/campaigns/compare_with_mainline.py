@@ -369,7 +369,8 @@ def main():
     mainline = [c for c in results if c['name'] != args.ours and c['scenarios'] >= 4]
     ours_summary = summarise(mine)
     mainline_summary = summarise(mainline)
-    floors = {field: percentile([summarise([c])[field] for c in mainline], 0.25)
+    measured = [c for c in mainline if c['maps']]
+    floors = {field: percentile([summarise([c])[field] for c in measured], 0.25)
               for field in GATE_FIELDS}
     floors['map_area'] = round(floors['map_area'])
     passed = all(ours_summary[field] >= floors[field] for field in GATE_FIELDS)

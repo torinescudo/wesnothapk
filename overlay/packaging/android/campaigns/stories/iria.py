@@ -42,7 +42,7 @@ CAMPAIGN = dict(
                     'Resistiremos hasta evacuar a los segadores. Luego dibujaré de dónde viene esa '
                     'sombra.')),
                 ('narrator', (
-                    'Los segadores cruzan el río en tres tandas. Aguantad los cuatro turnos que '
+                    'Los segadores cruzan el río en tres tandas. Aguantad los doce turnos que '
                     'tardan en pasar y nadie quedará bajo la sombra.')),
                 ('antagonist', (
                     'Traemos la cuota del distrito alto. Cada vela de esta nave da de beber a un '
@@ -239,7 +239,7 @@ CAMPAIGN = dict(
             ],
             protected=None,
             resolution=(
-                'Al cesar el flujo, un velario aterrizó sin armas. Se llamaba Esh y llevaba una cría '
+                'Al volver el flujo, un velario aterrizó sin armas. Se llamaba Esh y llevaba una cría '
                 'demasiado débil para plegar las alas. Iria le dio el sitio seco junto al fuego y le '
                 'pidió que repitiera, despacio, cuánta luz consumía una ciudad en un año.'),
         ),
@@ -674,7 +674,7 @@ CAMPAIGN = dict(
                 ]),
             ],
             victory=[
-                ('narrator', 'Los tres anclajes ardieron juntos. La ciudad bajó despacio, como una vela que se recoge.'),
+                ('narrator', 'Los tres anclajes ardieron juntos. La ciudad se desmontó despacio, como una vela que se recoge.'),
                 ('companion', 'Nadie ha caído. Ni del cielo ni del muelle.'),
                 ('hero', 'Once días de agua hay en el acueducto. Después habrá que cavar más pozos.'),
                 ('antagonist', 'El tercer anclaje lo encendisteis mal. Se habría partido si soplara viento.'),
@@ -682,8 +682,9 @@ CAMPAIGN = dict(
             ],
             protected=None,
             resolution=(
-                'Las ciudades tocaron tierra al atardecer. Nadie aplaudió al principio: todos estaban '
-                'escuchando un silencio sin motores. Iria abrió el mapa en el suelo del muelle y '
+                'Al atardecer, los velarios desmontaron las ciudades y las piezas bajaron una a '
+                'una. Nadie aplaudió al principio: todos estaban escuchando un silencio sin motores. '
+                'Iria abrió el mapa en el suelo del muelle y '
                 'señaló el primer pozo que habría que cavar, con la fecha escrita al lado y el '
                 'nombre del pueblo que lo bebería.'),
         ),

@@ -45,8 +45,8 @@ CAMPAIGN = dict(
                 ('Sarel, el cobrador', 'Nadie sale del embarcadero sin pagar su fianza. '
                                        'Firmé con el concejo, no con la marea.'),
                 ('hero', 'Enséñame esa firma y te la firmo yo delante de todo el muelle.'),
-                ('Sarel, el cobrador', 'Puedes romper la puerta. Cada tablón que rompas lo '
-                                       'pagará la familia que espera detrás.'),
+                ('Sarel, el cobrador', 'Puedes derribar la puerta. Yo firmo el destrozo '
+                                       'y se lo cobro a los encerrados en la aduana.'),
                 ('companion', 'Hay tres familias dentro. Si entramos con violencia, las '
                               'usarán de escudo.'),
                 ('hero', 'Entonces entraremos por el agua. El embarcadero tiene muelles '
@@ -55,8 +55,8 @@ CAMPAIGN = dict(
                               'nos oyen tendremos que salir corriendo hacia la bandera.'),
                 ('narrator', 'Nima, la hermana de Oren, está en la celda del fondo. '
                              'Escoltadla hasta la bandera de salida antes de la pleamar.'),
-                ('Oren', 'Ha estado tres días sin ver el mar. No la dejéis sola en la '
-                         'primera esquina.'),
+                ('companion', 'Ha estado tres días sin ver el mar. No la dejéis sola en '
+                              'la primera esquina.'),
                 ('hero', 'Va delante de nosotros. Siempre. Aunque grite que la dejemos.'),
                 ('Sarel, el cobrador', 'Sé lo que escribieron en esas barcas. Si me '
                                        'quitáis la puerta, la ciudad se ahogará contando '
@@ -72,9 +72,10 @@ CAMPAIGN = dict(
                     ('narrator', 'La pleamar llegará antes del amanecer. El tiempo corre.'),
                 ]),
                 ('half strength', [
-                    ('protected', 'No puedo correr. Dejadme y llevad la tablilla.'),
-                    ('hero', 'La tablilla pesa menos que tú. Sigue andando y no discutas '
-                             'con quien te saca de una celda.'),
+                    ('protected', 'Se me doblan las piernas. Volved por mí cuando baje '
+                                  'la marea.'),
+                    ('hero', 'La bandera está a un tiro de piedra. Apóyate en mi hombro '
+                             'y la alcanzamos.'),
                 ]),
                 ('turn 8', [
                     ('Sarel, el cobrador', 'Mis hombres no cobran por gusto. Cobran porque '
@@ -89,7 +90,7 @@ CAMPAIGN = dict(
             victory=[
                 ('protected', 'La tablilla dice que la marea subirá antes del amanecer. No '
                               'es una profecía: alguien abrió las compuertas del arrecife.'),
-                ('companion', 'Sarel vendió el aceite del faro y ahora persigue a quien lo '
+                ('companion', 'Velkan vendió el aceite del faro y ahora persigue a quien lo '
                               'vio hacerlo.'),
                 ('hero', 'Pues que persiga. Nosotros ya sabemos dónde está la puerta.'),
                 ('narrator', 'En la playa, las barcas vacías seguían esperando con sus '
@@ -123,7 +124,8 @@ CAMPAIGN = dict(
                               'verán desde el mar y desde ningún otro sitio.'),
                 ('Velkan, guardacostas', 'El aceite era mío. Vendí lo que sobraba después '
                                          'de cumplir con el faro.'),
-                ('hero', 'Y el faro lleva cuatro noches apagado. Explícame qué cumpliste.'),
+                ('hero', 'Y el faro estuvo cuatro noches apagado hasta que lo '
+                         'encendimos. Explícame qué cumpliste.'),
                 ('Velkan, guardacostas', 'Explícame tú quién paga a los guardacostas cuando '
                                          'no hay barcos que cobren.'),
                 ('hero', 'Nadie. Esa es la respuesta, y por eso hiciste mal el trabajo.'),

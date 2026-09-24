@@ -254,8 +254,9 @@ def triggered_event(trigger, beats, ids, chapter, turns, extra=''):
     if trigger == 'half strength':
         # The protected character matters most, but a chapter may wound the hero instead.
         who = ids['protected'] if chapter['protected'] else ids['hero']
+        # The unit filter has no hitpoints key: a formula is how the engine reads it.
         return tag('event', {'name': 'attack end'},
-                   tag('filter', {'id': who, 'hitpoints_percentage_less': 50}) + body)
+                   tag('filter', {'id': who, 'formula': 'hitpoints * 2 < max_hitpoints'}) + body)
     if trigger.startswith('beacon lit '):
         return ''  # emitted next to the objective handler that counts the points
     return tag('event', {'name': trigger}, body)
@@ -330,7 +331,7 @@ def scenario(c, index, chapter, manifest):
     conditions += tag('gold_carryover', {'bonus': 'yes', 'carryover_percentage': 40})
     conditions += tag('note', {'description': 'Toca una casilla para preparar el movimiento y '
                                               'pulsa Mover/atacar. Puedes revisar estos objetivos '
-                                              'desde Mas.'})
+                                              'desde Más.'})
     pre = tag('objectives', {'side': 1}, conditions)
     pre += tag('allow_recruit', {'side': 1, 'type': recruit})
     pre += '{VARIABLE cbm_points 0}\n{VARIABLE cbm_rescued no}\n'
@@ -342,7 +343,7 @@ def scenario(c, index, chapter, manifest):
         pre += tag('label', {'x': point[0], 'y': point[1], 'text': 'Punto %d' % number})
     if chapter['goal'] == 'rescue':
         pre += tag('item', {'x': prison[0], 'y': prison[1], 'image': 'items/cage.png'})
-        pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prision'})
+        pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prisión'})
     body += event('prestart', pre)
 
     # --- start: companions, the protected character, and the opening dialogue ---
@@ -385,8 +386,8 @@ def scenario(c, index, chapter, manifest):
                       protected_unit(prison[0], prison[1] + 1) +
                       '{VARIABLE cbm_rescued yes}\n' +
                       tag('sound', {'name': 'rumble.ogg'}) +
-                      dialogue([('protected', 'La puerta esta abierta. Acompanadme hasta la '
-                                             'bandera; no podre llegar sin ayuda.')], ids, chapter))
+                      dialogue([('protected', 'La puerta está abierta. Acompañadme hasta la '
+                                             'bandera; no podré llegar sin ayuda.')], ids, chapter))
     if chapter['goal'] in ('escape', 'escort', 'rescue'):
         who = ids['hero'] if chapter['goal'] == 'escape' else escort_id
         body += event('moveto', tag('filter', {'id': who, 'x': destination[0],
@@ -404,14 +405,16 @@ def scenario(c, index, chapter, manifest):
                            tag('objective', {'description': GOALS[chapter['goal']], 'condition': 'win'}) +
                            tag('note', {'description': 'Puntos activados: $cbm_points|/3.'}))
             if number == len(points):
-                handler += endlevel('victory')
+                handler += tag('if', body=tag('variable', {'name': 'cbm_points',
+                                                           'numerical_equals': len(points)}) +
+                               tag('then', body=endlevel('victory')))
             body += event('moveto', tag('filter', {'side': 1, 'x': px, 'y': py}) + handler)
     elif chapter['goal'] == 'survive':
         body += event('turn %d' % turns,
                       dialogue([('hero', 'Se ha cumplido el plazo. Podemos completar la retirada.')],
                                ids, chapter) + endlevel('victory'))
     else:
-        body += event('enemies defeated', dialogue([('narrator', 'La oposicion se ha roto.')],
+        body += event('enemies defeated', dialogue([('narrator', 'La oposición se ha roto.')],
                                                   ids, chapter) + endlevel('victory'))
 
     # --- pressure: two bounded reinforcements and an escalation, never infinite ---
@@ -427,17 +430,17 @@ def scenario(c, index, chapter, manifest):
 
     # --- defeat and victory ---
     body += event('last breath', tag('filter', {'id': ids['hero']}) +
-                  dialogue([('hero', 'No podre terminar este camino...')], ids, chapter) +
+                  dialogue([('hero', 'No podré terminar este camino…')], ids, chapter) +
                   endlevel('defeat'))
     body += event('last breath', tag('filter', {'id': ids['companion']}) +
-                  dialogue([('companion', 'Hasta aqui puedo acompanarte...')], ids, chapter) +
+                  dialogue([('companion', 'Hasta aquí puedo acompañarte…')], ids, chapter) +
                   endlevel('defeat'))
     if chapter['goal'] in ('escort', 'rescue'):
         body += event('die', tag('filter', {'id': escort_id}) +
-                      dialogue([('narrator', 'La persona que debias proteger ha muerto. La mision '
+                      dialogue([('narrator', 'La persona que debías proteger ha muerto. La misión '
                                              'ha fracasado.')], ids, chapter) + endlevel('defeat'))
     body += event('time over', dialogue([('narrator', 'El plazo se ha agotado antes de completar '
-                                                    'la mision.')], ids, chapter) + endlevel('defeat'))
+                                                    'la misión.')], ids, chapter) + endlevel('defeat'))
     victory = dialogue(chapter['victory'], ids, chapter)
     victory += dialogue([('narrator', chapter['resolution'])], ids, chapter)
     if index == len(c['chapters']):

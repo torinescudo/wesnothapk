@@ -64,7 +64,7 @@ CAMPAIGN = dict(
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
                 ('turn 4', [
-                    ('narrator', 'El agua cubre el primer escalón de la celda. Vaska ha abierto las compuertas del arrecife.'),
+                    ('narrator', 'El agua cubre el primer escalón de la celda. Alguien ha abierto las compuertas del arrecife.'),
                     ('Recaudadora Vaska', 'No he sido yo. La máquina mantiene el mar quieto y cobra lo que nadie usa.'),
                 ]),
                 ('half strength', [
@@ -207,7 +207,7 @@ CAMPAIGN = dict(
                 ]),
                 ('turn 8', [
                     ('narrator', 'Un bote sin remos aparece a la deriva con dos isleños dentro y ninguna carta a bordo.'),
-                    ('hero', 'Súbelos al bote y que nos sigan. Ya preguntaremos cómo se llaman.'),
+                    ('hero', 'Súbelos a nuestro barco y tomamos el bote a remolque. Ya preguntaremos cómo se llaman.'),
                 ]),
                 ('time limit', [
                     ('Custodio Issar', 'El mar no espera a los que dudan. Yo tampoco.'),
@@ -255,7 +255,7 @@ CAMPAIGN = dict(
                 ('hero', 'Cobras por guardar lo que tú mismo borraste de las cartas.'),
                 ('companion', 'Sobre la puerta hay una lista. El último renglón está raspado y reescrito tres veces.'),
                 ('hero', 'Averigua de quién es. Yo voy a por el almirante.'),
-                ('Almirante Serkos', 'Mi nombre también está en esa lista. Lo raspé yo. Nadie manda sobre un almirante sin nombre.'),
+                ('Almirante Serkos', 'Mi nombre también está en esa lista. El renglón raspado lo borré yo: sin nombre escrito no hay isla que reclamar.'),
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
@@ -385,7 +385,7 @@ CAMPAIGN = dict(
                 ('hero', 'Guardamos gente. Los nombres van con ellos.'),
                 ('Primera Lanza Uss', 'Entregad el cuaderno y la marea queda quieta una luna más. Es un buen precio.'),
                 ('companion', 'Es un precio de mercado. El mismo que cobra vuestro enemigo.'),
-                ('Primera Lanza Uss', 'Mi enemigo construyó la máquina. Yo solo cobro lo que él dejó firmado. Un custodio también obedece.'),
+                ('Primera Lanza Uss', 'Mi enemiga construyó la máquina. Yo solo cobro lo que ella dejó firmado. Un custodio también obedece.'),
                 ('narrator', 'Las barcas cargan de una en una. Cada turno que pasa, una familia sube a bordo.'),
                 ('companion', 'En la cala del este hay una mujer que repite la canción de su aldea para no perderla.'),
                 ('hero', 'Pon a la hija a cantar la respuesta. Así la canción tendrá dos voces y no se borrará.'),
@@ -620,9 +620,10 @@ CAMPAIGN = dict(
             resolution=(
                 'La flota se rindió cuando sus tripulantes recordaron quién había confiscado sus '
                 'barcos. Serkos entregó su bandera sin discutir y pidió que se la devolvieran a la '
-                'sastra del puerto, que la había cosido veinte años atrás. Nerea la hizo colgar en la '
-                'escuela de navegación con el nombre del barco debajo, para que nadie tuviera que '
-                'preguntar de quién era.'),
+                'sastra del puerto, que la había cosido veinte años atrás. Nerea la colgó en la sala '
+                'de cartas del puerto con el nombre del barco debajo, para que nadie tuviera que '
+                'preguntar de quién era. De aquella sala de cartas nació, al terminar las travesías, '
+                'la escuela de navegación.'),
         ),
         dict(
             title='Un camino para los naga',

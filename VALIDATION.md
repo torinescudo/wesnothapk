@@ -1,5 +1,37 @@
 # Validation record
 
+## Map design pass — 2026-09-24
+
+`packaging/android/campaigns/MAP_DESIGN.md` is the breakdown of what a quality
+map is made of, extracted by measuring and looking at mainline maps
+(`map_preview.py` renders any .map to a comparable grid). The rules were then
+implemented in `mapgen.py` and measured back:
+
+| property | mainline | generated before | generated after |
+| --- | ---: | ---: | ---: |
+| largest same-terrain cluster, share of its tiles | 0.45 | 0.69 | 0.42 |
+| tiles with no like neighbour | 0.044 | 0.015 | 0.073 |
+| road tiles per map | 89 | 43.5 | 103 |
+| villages touching a road | 0.33 | 0.83 | 0.15 |
+| mean village-to-village distance | 5.8 | 4.05 | 7.2 |
+
+New passes: edge roughening (inlets, headlands and islets), rivers that start on
+high ground and leave the frame, a road network with arterials, branches and
+verges instead of spokes from the keeps, and village siting on landforms (shore,
+mountain foot, forest edge) with at most a third of them touching a road. Roads
+no longer pave over keeps or villages.
+
+An independent look at rendered maps scores the generated ones 4-7/10 for
+composition against 8-9 for the hand-made ones, up from 4-6 before this pass.
+What is still visibly generated, and why this entry is a milestone and not the
+end: coast detail is one scale where mainline has several, road webs branch but
+do not loop, and settlements are attracted to features but not yet to crossings.
+
+Verified: `python3 validate_campaigns.py` (which now also rejects ragged maps —
+the engine's `gamemap::read` refuses rows of differing width — and compares the
+manifest's village count with the map) and `python3 compare_with_mainline.py
+--gate` both pass on the reconstructed tree.
+
 ## Campaign rework — 2026-09-24
 
 The six campaigns were rebuilt from authored narrative and structured map

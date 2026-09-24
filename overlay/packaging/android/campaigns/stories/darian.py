@@ -1187,8 +1187,8 @@ CAMPAIGN = dict(
             protected=('Irena, portavoz de los barrios', 'Peasant'),
             resolution=(
                 'La portavoz abrió las puertas desde dentro. Los vecinos guiaron a la alianza por '
-                'calles donde todavía ardían las lámparas. Nadie apagó ninguna: eran las señales de '
-                'los barrios, y esa noche indicaban camino libre.'),
+                'calles donde colgaban las lámparas apagadas. Nadie encendió ninguna: eran las '
+                'señales de los barrios, y esa noche indicaban camino libre.'),
         ),
         dict(
             title='La reina que no descansaba',
@@ -1293,7 +1293,6 @@ CAMPAIGN = dict(
                 ('companion', (
                     'Cuando lo destruyas, Sevrin podrá descansar. No habrá otra oportunidad de '
                     'preguntarle nada.')),
-                ('hero', 'Ya dio su testimonio. No nos debe una eternidad.'),
                 ('narrator', 'Objetivo: llevad a Darian y el sello hasta la bandera de la cámara '
                              'abierta, en la cima.'),
                 ('Sevrin', 'Antes de que subáis, decidme dónde vais a depositar los nombres.'),
