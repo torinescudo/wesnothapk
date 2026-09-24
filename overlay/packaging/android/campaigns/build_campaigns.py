@@ -196,6 +196,9 @@ from stories import world as WORLD
 
 # Map size follows what the chapter is: a skirmish does not need a battlefield.
 MAP_SIZES = {'skirmish': (32, 24), 'battle': (40, 30), 'siege': (46, 34)}
+# One map per shared place: generated the first time it is needed and reused by
+# every chapter that fights over it.
+SHARED_MAPS = {}
 
 
 def mechanics_for(chapter, index, total):
@@ -383,8 +386,16 @@ def scenario(c, index, chapter, manifest):
     turns = mechanics['turns']
     secondary = secondary_condition(chapter, index, turns)
     strategy = strategy_for(chapter, index, len(c['chapters']))
-    layout = generate_map(key, index, chapter['biome'], chapter['goal'], size=mechanics['size'])
-    write('maps/%s_%02d.map' % (key, index), layout['rows'])
+    # A place two campaigns fight over is one place: the same map, two years,
+    # two armies and two objectives on it.
+    place = WORLD.SHARED.get((key, index))
+    map_name = ('shared_%s.map' % place) if place else ('%s_%02d.map' % (key, index))
+    if map_name in SHARED_MAPS:
+        layout = SHARED_MAPS[map_name]
+    else:
+        layout = generate_map(key, index, chapter['biome'], chapter['goal'], size=mechanics['size'])
+        SHARED_MAPS[map_name] = layout
+        write('maps/%s' % map_name, layout['rows'])
     start, enemy = layout['start'], layout['enemy']
     destination, prison, points = layout['destination'], layout['prison'], layout['points']
 
@@ -600,9 +611,10 @@ def scenario(c, index, chapter, manifest):
                            'victory_when_enemies_defeated': 'no', 'experience_modifier': 85}, body)
     write('scenarios/%s/%02d.cfg' % (key, index), text)
     manifest.append({'id': sid, 'campaign': cid, 'title': title, 'goal': chapter['goal'],
-                     'next': following, 'map': '%s_%02d.map' % (key, index),
+                     'next': following, 'map': map_name,
                      'biome': chapter['biome'], 'size': mechanics['size'],
                      'turns': turns, 'fog': mechanics['fog'], 'shroud': mechanics['shroud'],
+                     'shared': place,
                      'start': start, 'enemy': enemy,
                      'destination': destination, 'prison': prison, 'points': points,
                      'villages': layout['villages'], 'terrain': layout['stats'],

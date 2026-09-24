@@ -62,6 +62,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         13
@@ -161,6 +162,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         31
@@ -273,6 +275,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         23,
         28
@@ -377,6 +380,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         13
@@ -477,6 +481,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         27
@@ -580,6 +585,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         25,
         31
@@ -696,6 +702,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
@@ -796,6 +803,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         18
@@ -896,6 +904,7 @@
       "turns": 12,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         13
@@ -1000,6 +1009,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         21
@@ -1128,6 +1138,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         22,
         28
@@ -1239,6 +1250,7 @@
       "turns": 22,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
@@ -1335,6 +1347,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         16
@@ -1447,6 +1460,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         31
@@ -1555,6 +1569,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         20,
         28
@@ -1675,6 +1690,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         13
@@ -1799,6 +1815,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         21
@@ -1911,6 +1928,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         18,
         21
@@ -2018,6 +2036,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
@@ -2114,6 +2133,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         18
@@ -2222,6 +2242,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         3,
         31
@@ -2342,6 +2363,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         25,
         31
@@ -2446,6 +2468,7 @@
       "turns": 22,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
@@ -2546,6 +2569,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         18
@@ -2654,6 +2678,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         3,
         13
@@ -2761,6 +2786,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         21
@@ -2857,6 +2883,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         18,
         21
@@ -2969,6 +2996,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         4
@@ -3077,6 +3105,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         16
@@ -3181,6 +3210,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         8,
         21
@@ -3281,6 +3311,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         18,
         22
@@ -3388,6 +3419,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         5,
         5
@@ -3504,6 +3536,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         18
@@ -3600,6 +3633,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         5,
         17
@@ -3694,12 +3728,13 @@
       "title": "El último mar en calma",
       "goal": "survive",
       "next": "CBM_nerea_12",
-      "map": "nerea_11.map",
+      "map": "shared_reef-machine.map",
       "biome": "ruins",
       "size": "siege",
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": "reef-machine",
       "start": [
         26,
         31
@@ -3808,6 +3843,7 @@
       "turns": 22,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
@@ -3912,6 +3948,7 @@
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         13
@@ -4010,12 +4047,13 @@
       "title": "La luz que emigró",
       "goal": "survive",
       "next": "CBM_darian_03",
-      "map": "darian_02.map",
+      "map": "shared_valdara-harbor.map",
       "biome": "harbor",
       "size": "skirmish",
       "turns": 12,
       "fog": false,
       "shroud": false,
+      "shared": "valdara-harbor",
       "start": [
         4,
         21
@@ -4114,12 +4152,13 @@
       "title": "La puerta que escucha",
       "goal": "beacons",
       "next": "CBM_darian_04",
-      "map": "darian_03.map",
+      "map": "shared_litario-door.map",
       "biome": "mountain",
       "size": "skirmish",
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": "litario-door",
       "start": [
         18,
         21
@@ -4226,12 +4265,13 @@
       "title": "Los hijos de la sombra",
       "goal": "rescue",
       "next": "CBM_darian_05",
-      "map": "darian_04.map",
+      "map": "shared_velario-city.map",
       "biome": "plains",
       "size": "skirmish",
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": "velario-city",
       "start": [
         4,
         4
@@ -4341,12 +4381,13 @@
       "title": "El puente de los agravios",
       "goal": "escort",
       "next": "CBM_darian_06",
-      "map": "darian_05.map",
+      "map": "shared_ember-fields.map",
       "biome": "forest",
       "size": "skirmish",
       "turns": 22,
       "fog": false,
       "shroud": false,
+      "shared": "ember-fields",
       "start": [
         4,
         13
@@ -4451,6 +4492,7 @@
       "turns": 32,
       "fog": false,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         27
@@ -4547,6 +4589,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         24,
         31
@@ -4641,12 +4684,13 @@
       "title": "El mensajero de hueso",
       "goal": "rescue",
       "next": "CBM_darian_09",
-      "map": "darian_08.map",
+      "map": "shared_capital-maura.map",
       "biome": "ruins",
       "size": "battle",
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": "capital-maura",
       "start": [
         3,
         4
@@ -4758,6 +4802,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         5,
         17
@@ -4874,6 +4919,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         27
@@ -4974,6 +5020,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         26,
         31
@@ -5086,6 +5133,7 @@
       "turns": 12,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         4
@@ -5190,6 +5238,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         4,
         17
@@ -5314,6 +5363,7 @@
       "turns": 30,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         27
@@ -5421,6 +5471,7 @@
       "turns": 38,
       "fog": true,
       "shroud": false,
+      "shared": null,
       "start": [
         25,
         31
@@ -5529,6 +5580,7 @@
       "turns": 22,
       "fog": true,
       "shroud": true,
+      "shared": null,
       "start": [
         4,
         4
