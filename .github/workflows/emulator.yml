@@ -2,7 +2,7 @@ name: Android emulator gameplay checks
 on:
   push:
     branches: [main]
-    paths: ['overlay/**', 'prepare-source.py']
+    paths: ['overlay/**', 'prepare-source.py', 'campaign-smoke-test.py', 'smoke-test.py']
   workflow_dispatch:
 permissions:
   contents: read
