@@ -477,7 +477,40 @@ def scenario(c, index, chapter, manifest):
     if chapter['goal'] == 'rescue':
         pre += tag('item', {'x': prison[0], 'y': prison[1], 'image': 'items/cage.png'})
         pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prisión'})
+    # Decisions taken on the map: the player picks by walking where they walk,
+    # and the choice is remembered into the chapters that follow.
+    previous = WORLD.BRANCHES.get(key, {}).get(index - 1, [])
+    for n, (question, keys) in enumerate(previous, start=1):
+        var = 'cbm_decide_%s_%02d_%d' % (key, index - 1, n)
+        first = keys[0].replace('-', ' ')
+        second = keys[1].replace('-', ' ') if len(keys) > 1 else 'lo otro'
+        pre += tag('if', {}, body=(
+            tag('variable', {'name': var, 'equals': keys[0]})
+            + tag('then', {}, body=(
+                tag('message', {'speaker': 'narrator',
+                                'message': 'Viniste de %s apostando por %s.'
+                                           % (chapter['biome'], first)})
+                + tag('gold', {'side': 1, 'amount': -20})))
+            + tag('else', {}, body=(
+                tag('message', {'speaker': 'narrator',
+                                'message': 'Viniste de %s apostando por %s.'
+                                           % (chapter['biome'], second)})
+                + tag('gold', {'side': 1, 'amount': 60})))))
     body += event('prestart', pre)
+    for n, (question, keys) in enumerate(WORLD.BRANCHES.get(key, {}).get(index, []), start=1):
+        var = 'cbm_decide_%s_%02d_%d' % (key, index, n)
+        options = ''
+        for m, choice in enumerate(keys):
+            label = choice.replace('-', ' ')
+            # Choosing people spends resources on them; choosing the thing
+            # keeps the gold and pays for it in the story that follows.
+            gold = -20 if m == 0 else 60
+            options += ('[option]\n    message="%s"\n    [command]\n'
+                        '        {VARIABLE %s "%s"}\n'
+                        '        [gold]\n            side=1\n            amount="%d"\n        [/gold]\n'
+                        '    [/command]\n[/option]\n') % (label, var, choice, gold)
+        body += ('[event]\n    name=turn %d\n    [message]\n        speaker=narrator\n'
+                 '        message="%s"\n%s    [/message]\n[/event]\n') % (n + 1, question, options)
     if secondary['kind'] == 'deaths':
         # A nested [event] would swallow its siblings in the WML tree: this
         # counter belongs at the top level like every other handler.
