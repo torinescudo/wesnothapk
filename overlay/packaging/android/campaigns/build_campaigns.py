@@ -482,8 +482,10 @@ def scenario(c, index, chapter, manifest):
     previous = WORLD.BRANCHES.get(key, {}).get(index - 1, [])
     for n, (question, keys) in enumerate(previous, start=1):
         var = 'cbm_decide_%s_%02d_%d' % (key, index - 1, n)
-        first = keys[0].replace('-', ' ')
-        second = keys[1].replace('-', ' ') if len(keys) > 1 else 'lo otro'
+        first = WORLD.CHOICE_TEXT.get((key, index - 1, n), {}).get(
+            keys[0], keys[0].replace('-', ' '))
+        second = WORLD.CHOICE_TEXT.get((key, index - 1, n), {}).get(
+            keys[1], keys[1].replace('-', ' ')) if len(keys) > 1 else 'lo otro'
         # What you chose becomes the situation of this chapter: a different
         # story, a different thing to protect and the resources to match.
         pre += tag('if', {}, body=(

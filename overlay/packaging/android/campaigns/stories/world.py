@@ -79,7 +79,61 @@ BRANCHES = {
     },
 }
 
-# A shared place is fought over twice. Each campaign brings its own account of
+# What each option really costs, said out loud once it is chosen. Keyed by
+# (campaign, chapter, decision number) and then by the option itself.
+CHOICE_TEXT = {
+    ('alba', 3, 1): {
+        'salvar-gente': 'Embarcaste a la gente y dejaste las piedras al agua. El puerto '
+                        'se llenó de voces y el faro de huecos.',
+        'salvar-piedras': 'Guardaste las piedras y contaste las barcas que se fueron '
+                          'sin cargar. El faro aguanta; el resto, a ver.'},
+    ('alba', 3, 2): {
+        'aceite-plaza': 'Quemaste el aceite en la plaza y la noche se hizo de día '
+                        'dentro del pueblo. A cambio, el faro quedó a ciegas.',
+        'aceite-faro': 'Guardaste el aceite para el faro y la plaza se quedó oscura. '
+                       'Desde el agua se vio todo lo que dejaste sin alumbrar.'},
+    ('sira', 5, 1): {
+        'una-voz': 'Hablaste con una voz y las otras seis te oyeron callarse. Fue la '
+                   'primera vez que una memoria aceptaba quedar segunda.',
+        'siete-voces': 'Hablaste con las siete a la vez y la puerta no supo a cuál '
+                       'creer. Algo de ti quedó repartido en todas.'},
+    ('iria', 7, 1): {
+        'bajar-ciudades': 'Bajaste las ciudades enteras y el mapa quedó obsoleto en '
+                          'una tarde: hay descensos que solo se dibujan una vez.',
+        'romper-anclajes': 'Cortaste los anclajes y las ciudades se quedaron donde '
+                           'estaban, ligeramente más libres y mucho más solas.'},
+    ('maura', 4, 1): {
+        'guardar-notas': 'Guardaste las notas del notario y cargaste con los nombres '
+                         'que nadie viene a buscar.',
+        'quemar-notas': 'Quemaste las notas y el notario se quedó sin oficio. Hay '
+                        'deudas que solo existen mientras están escritas.'},
+    ('maura', 9, 1): {
+        'archivo-abierto': 'Abriste el archivo al pueblo y la gente aprendió a leer '
+                           'lo que les había pasado.',
+        'archivo-guardado': 'Cerraste el archivo con llave y firmaste tú la lista de '
+                            'a quién se le permite acordarse.'},
+    ('nerea', 6, 1): {
+        'nombres-al-mar': 'Devolviste los nombres al mar y las islas se quedaron mudas. '
+                          'El agua ahora sabe cosas que la tierra olvidó.',
+        'nombres-a-las-islas': 'Repartiste los nombres por las islas y el mar se quedó '
+                               'sin nadie a quien llamar.'},
+    ('nerea', 12, 1): {
+        'maquina-apagada': 'Dejaste la máquina apagada y la memoria de las cosas siguió '
+                           'viva en las cosas mismas.',
+        'maquina-desmontada': 'Desmontaste la máquina pieza a pieza y te quedaste con '
+                              'un recuerdo que ya no se puede comprobar.'},
+    ('darian', 5, 1): {
+        'firmar-reparaciones': 'Firmaste las reparaciones y cargaste con el plazo de '
+                               'todos. A cambio, el territorio empezó a arreglarse.',
+        'firmar-tregua': 'Solo firmaste la tregua y las reparaciones se quedaron en '
+                         'el aire. La paz llegó a medias y se nota.'},
+    ('darian', 15, 1): {
+        'juzgar-maura': 'Juzgaste a Maura y la memoria de las siete brasas pasó a '
+                        'tener una fecha y un juez.',
+        'desterrar-maura': 'Desterraste a Maura y la dejaste fuera, con lo que sabe '
+                           'y sin nadie que se lo reclame.'},
+}
+
 # what that place is and what it costs to be there.
 SHARED_ACCOUNTS = {
     'valdara-harbor': {
