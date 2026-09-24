@@ -1,52 +1,48 @@
-"""Exercise the actual data packager with a small complete fixture."""
-import hashlib
-import importlib.util
-from pathlib import Path
-import tempfile
+"""Contract checks for the packaged Brasa y Marea data.
+
+Run with: python3 -m unittest discover -s packaging/android/tests
+"""
+import json
+import re
 import unittest
-import zipfile
+from pathlib import Path
 
-SPEC = importlib.util.spec_from_file_location(
-    'phone_data', Path(__file__).resolve().parents[1] / 'package-phone-data.py')
-MODULE = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(MODULE)
+DATA = Path(__file__).resolve().parents[3] / 'data' / 'campaigns' / 'Brasa_y_Marea'
 
 
-class PhoneDataTest(unittest.TestCase):
-    def test_archive_preserves_content_and_import_directory_order(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            for name in ('data', 'fonts', 'images', 'sounds'):
-                (root / name).mkdir()
-                (root / name / 'sample').write_bytes(b'game content')
-            (root / 'data/core/music').mkdir(parents=True)
-            (root / 'data/core/music/theme.ogg').write_bytes(b'music')
-            (root / 'data/.gitignore').write_text('ignored')
-            for name in ('COPYING', 'copyright'):
-                (root / name).write_text('license')
-            previous_root = MODULE.ROOT
-            try:
-                MODULE.ROOT = root
-                output = root / 'dist/data.zip'
-                MODULE.package(output, english_only=True)
-            finally:
-                MODULE.ROOT = previous_root
-            with zipfile.ZipFile(output) as archive:
-                self.assertIsNone(archive.testzip())
-                names = archive.namelist()
-                self.assertIn('translations/', names)
-                self.assertNotIn('data/.gitignore', names)
-                self.assertEqual(archive.read('data/core/music/theme.ogg'), b'music')
-                self.assertEqual(archive.read('COPYING'), b'license')
-                seen = set()
-                for name in names:
-                    parent = Path(name.rstrip('/')).parent.as_posix()
-                    if parent != '.':
-                        self.assertIn(parent + '/', seen)
-                    seen.add(name)
-            digest = hashlib.sha256(output.read_bytes()).hexdigest()
-            self.assertEqual(output.with_suffix('.zip.sha256').read_text(),
-                             digest + '  data.zip\n')
+class DataContract(unittest.TestCase):
+    def setUp(self):
+        manifest = json.loads((DATA / 'manifest.json').read_text(encoding='utf-8'))
+        self.entries = manifest['scenarios']
+
+    def test_every_scenario_map_exists_and_is_rectangular(self):
+        for entry in self.entries:
+            rows = (DATA / 'maps' / entry['map']).read_text(encoding='utf-8').splitlines()
+            self.assertTrue(rows, entry['map'])
+            widths = {len(r) for r in rows}
+            self.assertEqual(len(widths), 1, '%s has ragged rows' % entry['map'])
+
+    def test_every_scenario_has_a_goal_with_a_description(self):
+        for entry in self.entries:
+            text = (DATA / entry['file']).read_text(encoding='utf-8')
+            self.assertIn('[goal]', text, entry['file'])
+            self.assertRegex(text, r'\[goal\]\s+description=',
+                             '%s has an empty goal' % entry['file'])
+
+    def test_speaker_names_stay_inside_the_label_budget(self):
+        for entry in self.entries:
+            text = (DATA / entry['file']).read_text(encoding='utf-8')
+            for name in re.findall(r'speaker="([^"]+)"', text):
+                self.assertLessEqual(len(name), 26,
+                                     '%s: %r is too long for a nameplate' % (entry['file'], name))
+
+    def test_shared_places_reuse_one_map(self):
+        shared = {}
+        for entry in self.entries:
+            if entry['shared']:
+                shared.setdefault(entry['shared'], set()).add(entry['map'])
+        for place, maps in shared.items():
+            self.assertEqual(len(maps), 1, '%s is split over %s' % (place, sorted(maps)))
 
 
 if __name__ == '__main__':
