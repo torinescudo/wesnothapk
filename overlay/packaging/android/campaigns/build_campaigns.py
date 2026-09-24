@@ -651,7 +651,7 @@ def scenario(c, index, chapter, manifest):
             other = WORLD.BRANCHES[key][last][0][1][-1]
             victory += tag('if', {}, body=(
                 tag('variable', {'name': var, 'equals': other})
-                + tag('then', {}, body=dialogue([('narrator', world.ENDING_ALT[key])], ids, chapter))
+                + tag('then', {}, body=dialogue([('narrator', WORLD.ENDING_ALT[key])], ids, chapter))
                 + tag('else', {}, body=dialogue([('narrator', c['ending'])], ids, chapter))))
         else:
             victory += dialogue([('narrator', c['ending'])], ids, chapter)
