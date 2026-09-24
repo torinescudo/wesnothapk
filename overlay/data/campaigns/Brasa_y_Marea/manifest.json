@@ -135,12 +135,12 @@
         "area": 1209,
         "distinct_terrain": 54,
         "villages": 13,
-        "forest": 129,
+        "forest": 126,
         "water": 299,
         "mountain": 34,
-        "road": 103,
+        "road": 90,
         "bridge": 0,
-        "sand": 42,
+        "sand": 40,
         "swamp": 8
       },
       "file": "scenarios/alba/01.cfg"
@@ -241,15 +241,15 @@
         "width": 42,
         "height": 28,
         "area": 1176,
-        "distinct_terrain": 56,
+        "distinct_terrain": 55,
         "villages": 13,
-        "forest": 133,
+        "forest": 128,
         "water": 304,
         "mountain": 31,
-        "road": 116,
+        "road": 120,
         "bridge": 0,
-        "sand": 44,
-        "swamp": 8
+        "sand": 46,
+        "swamp": 9
       },
       "file": "scenarios/alba/02.cfg"
     },
@@ -341,14 +341,14 @@
         "width": 45,
         "height": 33,
         "area": 1485,
-        "distinct_terrain": 52,
+        "distinct_terrain": 51,
         "villages": 15,
-        "forest": 144,
+        "forest": 134,
         "water": 488,
         "mountain": 17,
-        "road": 72,
+        "road": 74,
         "bridge": 1,
-        "sand": 66,
+        "sand": 65,
         "swamp": 8
       },
       "file": "scenarios/alba/03.cfg"
@@ -442,7 +442,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 104,
+        "road": 112,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -536,14 +536,14 @@
         "width": 42,
         "height": 28,
         "area": 1176,
-        "distinct_terrain": 52,
+        "distinct_terrain": 51,
         "villages": 14,
-        "forest": 143,
+        "forest": 147,
         "water": 28,
-        "mountain": 143,
-        "road": 106,
+        "mountain": 142,
+        "road": 110,
         "bridge": 0,
-        "sand": 12,
+        "sand": 16,
         "swamp": 0
       },
       "file": "scenarios/sira/02.cfg"
@@ -653,7 +653,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 141,
+        "road": 150,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -746,12 +746,12 @@
         "area": 1110,
         "distinct_terrain": 48,
         "villages": 14,
-        "forest": 113,
+        "forest": 120,
         "water": 65,
         "mountain": 132,
-        "road": 111,
+        "road": 103,
         "bridge": 0,
-        "sand": 39,
+        "sand": 37,
         "swamp": 0
       },
       "file": "scenarios/sira/04.cfg"
@@ -845,7 +845,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 91,
+        "road": 95,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -942,10 +942,10 @@
         "area": 1209,
         "distinct_terrain": 59,
         "villages": 15,
-        "forest": 328,
+        "forest": 325,
         "water": 71,
         "mountain": 59,
-        "road": 110,
+        "road": 109,
         "bridge": 1,
         "sand": 26,
         "swamp": 8
@@ -1069,9 +1069,9 @@
         "forest": 137,
         "water": 108,
         "mountain": 25,
-        "road": 125,
+        "road": 116,
         "bridge": 0,
-        "sand": 52,
+        "sand": 49,
         "swamp": 7
       },
       "file": "scenarios/iria/02.cfg"
@@ -1093,93 +1093,93 @@
         4
       ],
       "destination": [
-        21,
-        19
+        15,
+        22
       ],
       "prison": [
-        31,
-        6
+        28,
+        30
       ],
       "points": [],
       "villages": [
         [
-          41,
-          29
+          4,
+          4
+        ],
+        [
+          4,
+          30
         ],
         [
           5,
-          3
-        ],
-        [
-          7,
-          28
+          13
         ],
         [
           11,
-          25
+          14
+        ],
+        [
+          11,
+          26
         ],
         [
           16,
+          10
+        ],
+        [
+          19,
           3
         ],
         [
-          16,
-          8
+          40,
+          3
+        ],
+        [
+          41,
+          29
         ],
         [
           25,
           19
         ],
         [
-          28,
-          29
-        ],
-        [
-          33,
-          15
-        ],
-        [
-          3,
-          15
-        ],
-        [
-          4,
-          10
+          29,
+          28
         ],
         [
           10,
           6
         ],
         [
-          12,
-          30
+          10,
+          19
         ],
         [
-          17,
-          16
+          10,
+          31
         ],
         [
-          17,
-          22
+          16,
+          28
         ],
         [
-          17,
-          29
+          21,
+          15
         ]
       ],
       "terrain": {
         "width": 45,
         "height": 33,
         "area": 1485,
-        "distinct_terrain": 66,
+        "distinct_terrain": 70,
         "villages": 16,
-        "forest": 193,
+        "forest": 219,
         "water": 156,
-        "mountain": 0,
-        "road": 102,
+        "mountain": 42,
+        "road": 107,
         "bridge": 0,
         "sand": 56,
-        "swamp": 8
+        "swamp": 10
       },
       "file": "scenarios/iria/03.cfg"
     },
@@ -1201,7 +1201,7 @@
       ],
       "destination": [
         6,
-        9
+        16
       ],
       "prison": null,
       "points": [],
@@ -1215,28 +1215,36 @@
           19
         ],
         [
-          13,
-          10
+          12,
+          14
         ],
         [
-          17,
-          5
+          14,
+          8
         ],
         [
           17,
           16
         ],
         [
-          20,
-          11
+          18,
+          3
         ],
         [
-          23,
-          15
+          19,
+          8
+        ],
+        [
+          21,
+          13
         ],
         [
           24,
           8
+        ],
+        [
+          24,
+          18
         ],
         [
           31,
@@ -1249,14 +1257,6 @@
         [
           34,
           17
-        ],
-        [
-          6,
-          28
-        ],
-        [
-          28,
-          3
         ]
       ],
       "terrain": {
@@ -1265,10 +1265,10 @@
         "area": 1110,
         "distinct_terrain": 46,
         "villages": 13,
-        "forest": 161,
+        "forest": 160,
         "water": 63,
-        "mountain": 172,
-        "road": 93,
+        "mountain": 170,
+        "road": 90,
         "bridge": 0,
         "sand": 23,
         "swamp": 0
@@ -1371,14 +1371,14 @@
         "width": 40,
         "height": 27,
         "area": 1080,
-        "distinct_terrain": 52,
+        "distinct_terrain": 51,
         "villages": 17,
-        "forest": 141,
+        "forest": 139,
         "water": 121,
         "mountain": 21,
-        "road": 96,
+        "road": 101,
         "bridge": 1,
-        "sand": 49,
+        "sand": 51,
         "swamp": 6
       },
       "file": "scenarios/iria/05.cfg"
@@ -1400,23 +1400,35 @@
         4
       ],
       "destination": [
-        28,
-        15
+        4,
+        16
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          5,
-          12
+          4,
+          14
         ],
         [
-          11,
-          3
+          12,
+          8
         ],
         [
-          13,
-          12
+          14,
+          15
+        ],
+        [
+          37,
+          13
+        ],
+        [
+          17,
+          11
+        ],
+        [
+          31,
+          9
         ],
         [
           19,
@@ -1427,12 +1439,12 @@
           23
         ],
         [
-          30,
-          4
+          32,
+          14
         ],
         [
-          36,
-          17
+          37,
+          19
         ],
         [
           39,
@@ -1440,50 +1452,38 @@
         ],
         [
           3,
-          20
+          9
+        ],
+        [
+          9,
+          4
         ],
         [
           11,
           25
         ],
         [
-          12,
-          17
-        ],
-        [
-          15,
-          7
-        ],
-        [
           20,
-          17
+          16
         ],
         [
           24,
           4
-        ],
-        [
-          26,
-          22
-        ],
-        [
-          30,
-          15
         ]
       ],
       "terrain": {
         "width": 43,
         "height": 32,
         "area": 1376,
-        "distinct_terrain": 64,
+        "distinct_terrain": 70,
         "villages": 16,
-        "forest": 202,
+        "forest": 217,
         "water": 117,
-        "mountain": 0,
-        "road": 96,
+        "mountain": 47,
+        "road": 105,
         "bridge": 0,
-        "sand": 44,
-        "swamp": 6
+        "sand": 46,
+        "swamp": 7
       },
       "file": "scenarios/iria/06.cfg"
     },
@@ -1591,14 +1591,14 @@
         "width": 46,
         "height": 29,
         "area": 1334,
-        "distinct_terrain": 54,
+        "distinct_terrain": 53,
         "villages": 15,
-        "forest": 84,
+        "forest": 83,
         "water": 448,
         "mountain": 23,
-        "road": 98,
+        "road": 97,
         "bridge": 0,
-        "sand": 86,
+        "sand": 89,
         "swamp": 5
       },
       "file": "scenarios/iria/07.cfg"
@@ -1620,24 +1620,24 @@
         15
       ],
       "destination": [
-        23,
-        9
+        31,
+        26
       ],
       "prison": [
-        21,
-        22
+        23,
+        5
       ],
       "points": [
         [
+          31,
+          26
+        ],
+        [
           23,
-          9
+          5
         ],
         [
-          21,
-          22
-        ],
-        [
-          5,
+          32,
           5
         ]
       ],
@@ -1675,20 +1675,16 @@
           20
         ],
         [
+          13,
+          28
+        ],
+        [
           15,
           23
         ],
         [
-          22,
-          15
-        ],
-        [
           30,
           16
-        ],
-        [
-          10,
-          28
         ],
         [
           13,
@@ -1703,22 +1699,26 @@
           27
         ],
         [
-          23,
-          7
+          22,
+          23
+        ],
+        [
+          24,
+          18
         ]
       ],
       "terrain": {
         "width": 39,
         "height": 31,
         "area": 1209,
-        "distinct_terrain": 66,
+        "distinct_terrain": 64,
         "villages": 16,
-        "forest": 150,
+        "forest": 147,
         "water": 149,
-        "mountain": 13,
-        "road": 129,
-        "bridge": 1,
-        "sand": 64,
+        "mountain": 37,
+        "road": 118,
+        "bridge": 0,
+        "sand": 68,
         "swamp": 8
       },
       "file": "scenarios/maura/01.cfg"
@@ -1819,14 +1819,14 @@
         "width": 42,
         "height": 28,
         "area": 1176,
-        "distinct_terrain": 51,
+        "distinct_terrain": 50,
         "villages": 17,
-        "forest": 177,
+        "forest": 173,
         "water": 129,
-        "mountain": 27,
-        "road": 101,
+        "mountain": 28,
+        "road": 104,
         "bridge": 0,
-        "sand": 44,
+        "sand": 45,
         "swamp": 5
       },
       "file": "scenarios/maura/02.cfg"
@@ -1924,13 +1924,13 @@
         "area": 1485,
         "distinct_terrain": 62,
         "villages": 15,
-        "forest": 328,
+        "forest": 332,
         "water": 81,
         "mountain": 71,
-        "road": 124,
+        "road": 122,
         "bridge": 0,
         "sand": 18,
-        "swamp": 13
+        "swamp": 14
       },
       "file": "scenarios/maura/03.cfg"
     },
@@ -1951,12 +1951,16 @@
         27
       ],
       "destination": [
-        10,
-        7
+        30,
+        13
       ],
       "prison": null,
       "points": [],
       "villages": [
+        [
+          21,
+          21
+        ],
         [
           3,
           8
@@ -1972,10 +1976,6 @@
         [
           16,
           14
-        ],
-        [
-          21,
-          21
         ],
         [
           29,
@@ -2016,10 +2016,10 @@
         "area": 1110,
         "distinct_terrain": 49,
         "villages": 13,
-        "forest": 142,
+        "forest": 141,
         "water": 69,
-        "mountain": 186,
-        "road": 93,
+        "mountain": 150,
+        "road": 98,
         "bridge": 1,
         "sand": 22,
         "swamp": 0
@@ -2043,55 +2043,67 @@
         14
       ],
       "destination": [
-        13,
-        5
+        24,
+        21
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
+          8,
+          12
+        ],
+        [
           3,
           19
         ],
         [
-          5,
-          4
-        ],
-        [
-          9,
-          20
+          4,
+          3
         ],
         [
           10,
           6
         ],
         [
-          15,
-          18
-        ],
-        [
-          16,
-          13
-        ],
-        [
-          26,
-          22
-        ],
-        [
           30,
-          8
-        ],
-        [
-          31,
-          3
+          13
         ],
         [
           36,
           9
         ],
         [
+          3,
+          8
+        ],
+        [
+          9,
+          20
+        ],
+        [
+          15,
+          18
+        ],
+        [
+          26,
+          22
+        ],
+        [
+          31,
+          3
+        ],
+        [
+          13,
+          11
+        ],
+        [
           18,
           6
+        ],
+        [
+          18,
+          11
         ],
         [
           22,
@@ -2100,33 +2112,21 @@
         [
           23,
           8
-        ],
-        [
-          24,
-          16
-        ],
-        [
-          27,
-          12
-        ],
-        [
-          31,
-          24
         ]
       ],
       "terrain": {
         "width": 40,
         "height": 27,
         "area": 1080,
-        "distinct_terrain": 63,
+        "distinct_terrain": 70,
         "villages": 16,
-        "forest": 109,
+        "forest": 134,
         "water": 109,
-        "mountain": 0,
-        "road": 122,
+        "mountain": 43,
+        "road": 102,
         "bridge": 0,
-        "sand": 36,
-        "swamp": 13
+        "sand": 43,
+        "swamp": 14
       },
       "file": "scenarios/maura/05.cfg"
     },
@@ -2234,14 +2234,14 @@
         "width": 43,
         "height": 32,
         "area": 1376,
-        "distinct_terrain": 49,
+        "distinct_terrain": 50,
         "villages": 15,
-        "forest": 112,
+        "forest": 116,
         "water": 448,
         "mountain": 24,
-        "road": 109,
+        "road": 112,
         "bridge": 0,
-        "sand": 80,
+        "sand": 81,
         "swamp": 3
       },
       "file": "scenarios/maura/06.cfg"
@@ -2336,10 +2336,10 @@
         "area": 1334,
         "distinct_terrain": 60,
         "villages": 15,
-        "forest": 334,
+        "forest": 329,
         "water": 43,
-        "mountain": 77,
-        "road": 93,
+        "mountain": 74,
+        "road": 97,
         "bridge": 0,
         "sand": 14,
         "swamp": 4
@@ -2435,7 +2435,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 96,
+        "road": 92,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -2459,31 +2459,39 @@
         16
       ],
       "destination": [
-        31,
-        18
+        35,
+        20
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
+          4,
+          10
+        ],
+        [
+          10,
+          29
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          12,
+          9
+        ],
+        [
           37,
           23
         ],
         [
-          3,
-          8
+          21,
+          10
         ],
         [
           4,
-          20
-        ],
-        [
-          8,
-          8
-        ],
-        [
-          11,
-          26
+          23
         ],
         [
           15,
@@ -2494,14 +2502,6 @@
           28
         ],
         [
-          22,
-          9
-        ],
-        [
-          23,
-          14
-        ],
-        [
           4,
           3
         ],
@@ -2510,38 +2510,38 @@
           28
         ],
         [
-          10,
-          20
+          8,
+          6
+        ],
+        [
+          9,
+          23
         ],
         [
           16,
           12
         ],
         [
-          23,
-          4
+          22,
+          5
         ],
         [
-          27,
-          22
-        ],
-        [
-          28,
-          9
+          26,
+          8
         ]
       ],
       "terrain": {
         "width": 41,
         "height": 31,
         "area": 1271,
-        "distinct_terrain": 67,
+        "distinct_terrain": 71,
         "villages": 16,
-        "forest": 158,
+        "forest": 174,
         "water": 143,
-        "mountain": 2,
-        "road": 106,
+        "mountain": 41,
+        "road": 92,
         "bridge": 0,
-        "sand": 47,
+        "sand": 49,
         "swamp": 8
       },
       "file": "scenarios/maura/09.cfg"
@@ -2637,14 +2637,14 @@
         "width": 39,
         "height": 31,
         "area": 1209,
-        "distinct_terrain": 52,
+        "distinct_terrain": 50,
         "villages": 15,
-        "forest": 103,
+        "forest": 102,
         "water": 426,
-        "mountain": 13,
-        "road": 89,
+        "mountain": 10,
+        "road": 92,
         "bridge": 0,
-        "sand": 82,
+        "sand": 83,
         "swamp": 5
       },
       "file": "scenarios/nerea/01.cfg"
@@ -2729,14 +2729,14 @@
         "width": 42,
         "height": 28,
         "area": 1176,
-        "distinct_terrain": 57,
+        "distinct_terrain": 58,
         "villages": 13,
-        "forest": 141,
+        "forest": 145,
         "water": 289,
-        "mountain": 30,
-        "road": 106,
+        "mountain": 32,
+        "road": 101,
         "bridge": 0,
-        "sand": 35,
+        "sand": 33,
         "swamp": 8
       },
       "file": "scenarios/nerea/02.cfg"
@@ -2841,15 +2841,15 @@
         "width": 45,
         "height": 33,
         "area": 1485,
-        "distinct_terrain": 44,
+        "distinct_terrain": 42,
         "villages": 14,
-        "forest": 129,
+        "forest": 125,
         "water": 639,
-        "mountain": 16,
-        "road": 118,
+        "mountain": 14,
+        "road": 122,
         "bridge": 1,
-        "sand": 134,
-        "swamp": 5
+        "sand": 133,
+        "swamp": 4
       },
       "file": "scenarios/nerea/03.cfg"
     },
@@ -2870,87 +2870,87 @@
         27
       ],
       "destination": [
-        21,
-        8
+        28,
+        27
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          3,
-          24
+          10,
+          14
+        ],
+        [
+          16,
+          8
+        ],
+        [
+          21,
+          13
+        ],
+        [
+          32,
+          12
+        ],
+        [
+          14,
+          17
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          25,
+          10
         ],
         [
           8,
           24
-        ],
-        [
-          17,
-          6
         ],
         [
           20,
           24
         ],
         [
-          21,
-          17
-        ],
-        [
-          23,
-          9
-        ],
-        [
-          30,
-          4
-        ],
-        [
-          31,
-          10
+          3,
+          24
         ],
         [
           8,
-          16
+          9
+        ],
+        [
+          10,
+          4
         ],
         [
           14,
           24
         ],
         [
-          16,
-          15
+          20,
+          19
         ],
         [
-          17,
-          20
+          24,
+          4
         ],
         [
-          21,
-          3
-        ],
-        [
-          25,
-          26
-        ],
-        [
-          27,
-          14
-        ],
-        [
-          30,
-          18
+          29,
+          6
         ]
       ],
       "terrain": {
         "width": 37,
         "height": 30,
         "area": 1110,
-        "distinct_terrain": 65,
+        "distinct_terrain": 69,
         "villages": 16,
-        "forest": 123,
+        "forest": 165,
         "water": 123,
-        "mountain": 0,
-        "road": 102,
+        "mountain": 35,
+        "road": 104,
         "bridge": 0,
         "sand": 48,
         "swamp": 7
@@ -3045,14 +3045,14 @@
         "width": 40,
         "height": 27,
         "area": 1080,
-        "distinct_terrain": 61,
+        "distinct_terrain": 60,
         "villages": 15,
-        "forest": 219,
+        "forest": 208,
         "water": 63,
         "mountain": 56,
-        "road": 92,
+        "road": 96,
         "bridge": 0,
-        "sand": 27,
+        "sand": 28,
         "swamp": 10
       },
       "file": "scenarios/nerea/05.cfg"
@@ -3141,14 +3141,14 @@
         "width": 43,
         "height": 32,
         "area": 1376,
-        "distinct_terrain": 40,
+        "distinct_terrain": 38,
         "villages": 14,
-        "forest": 116,
+        "forest": 120,
         "water": 603,
         "mountain": 16,
-        "road": 88,
+        "road": 89,
         "bridge": 0,
-        "sand": 96,
+        "sand": 89,
         "swamp": 2
       },
       "file": "scenarios/nerea/06.cfg"
@@ -3244,14 +3244,14 @@
         "width": 46,
         "height": 29,
         "area": 1334,
-        "distinct_terrain": 50,
+        "distinct_terrain": 52,
         "villages": 15,
-        "forest": 111,
+        "forest": 115,
         "water": 436,
         "mountain": 20,
-        "road": 90,
+        "road": 75,
         "bridge": 0,
-        "sand": 55,
+        "sand": 54,
         "swamp": 2
       },
       "file": "scenarios/nerea/07.cfg"
@@ -3361,7 +3361,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 124,
+        "road": 132,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -3448,14 +3448,14 @@
         "width": 41,
         "height": 31,
         "area": 1271,
-        "distinct_terrain": 57,
+        "distinct_terrain": 55,
         "villages": 13,
-        "forest": 143,
+        "forest": 141,
         "water": 324,
         "mountain": 34,
-        "road": 96,
+        "road": 88,
         "bridge": 0,
-        "sand": 47,
+        "sand": 50,
         "swamp": 9
       },
       "file": "scenarios/nerea/09.cfg"
@@ -3544,14 +3544,14 @@
         "width": 44,
         "height": 28,
         "area": 1232,
-        "distinct_terrain": 40,
+        "distinct_terrain": 39,
         "villages": 14,
-        "forest": 103,
+        "forest": 101,
         "water": 551,
-        "mountain": 18,
-        "road": 97,
+        "mountain": 20,
+        "road": 91,
         "bridge": 0,
-        "sand": 94,
+        "sand": 96,
         "swamp": 2
       },
       "file": "scenarios/nerea/10.cfg"
@@ -3573,18 +3573,18 @@
         4
       ],
       "destination": [
-        9,
-        9
+        8,
+        30
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          4,
-          31
+          5,
+          4
         ],
         [
-          5,
+          10,
           4
         ],
         [
@@ -3592,24 +3592,24 @@
           25
         ],
         [
+          30,
+          31
+        ],
+        [
           32,
-          5
+          3
         ],
         [
           3,
           19
         ],
         [
-          10,
-          4
+          3,
+          30
         ],
         [
           4,
           24
-        ],
-        [
-          32,
-          30
         ],
         [
           34,
@@ -3628,8 +3628,8 @@
           12
         ],
         [
-          12,
-          26
+          15,
+          3
         ],
         [
           17,
@@ -3648,15 +3648,15 @@
         "width": 36,
         "height": 33,
         "area": 1188,
-        "distinct_terrain": 72,
+        "distinct_terrain": 71,
         "villages": 16,
-        "forest": 154,
+        "forest": 156,
         "water": 149,
-        "mountain": 10,
-        "road": 113,
+        "mountain": 36,
+        "road": 115,
         "bridge": 0,
-        "sand": 74,
-        "swamp": 8
+        "sand": 73,
+        "swamp": 11
       },
       "file": "scenarios/nerea/11.cfg"
     },
@@ -3748,15 +3748,15 @@
         "width": 39,
         "height": 30,
         "area": 1170,
-        "distinct_terrain": 50,
+        "distinct_terrain": 49,
         "villages": 15,
-        "forest": 115,
+        "forest": 106,
         "water": 386,
         "mountain": 14,
-        "road": 90,
+        "road": 94,
         "bridge": 0,
-        "sand": 55,
-        "swamp": 1
+        "sand": 54,
+        "swamp": 2
       },
       "file": "scenarios/nerea/12.cfg"
     },
@@ -3848,15 +3848,15 @@
         "width": 39,
         "height": 31,
         "area": 1209,
-        "distinct_terrain": 64,
+        "distinct_terrain": 63,
         "villages": 15,
-        "forest": 297,
+        "forest": 290,
         "water": 98,
         "mountain": 62,
-        "road": 99,
+        "road": 101,
         "bridge": 1,
-        "sand": 33,
-        "swamp": 9
+        "sand": 34,
+        "swamp": 8
       },
       "file": "scenarios/darian/01.cfg"
     },
@@ -3948,14 +3948,14 @@
         "width": 42,
         "height": 28,
         "area": 1176,
-        "distinct_terrain": 51,
+        "distinct_terrain": 50,
         "villages": 15,
-        "forest": 92,
+        "forest": 91,
         "water": 382,
         "mountain": 14,
-        "road": 93,
+        "road": 102,
         "bridge": 0,
-        "sand": 57,
+        "sand": 55,
         "swamp": 4
       },
       "file": "scenarios/darian/02.cfg"
@@ -3977,28 +3977,32 @@
         4
       ],
       "destination": [
-        27,
-        17
+        42,
+        31
       ],
       "prison": [
-        40,
-        21
+        26,
+        9
       ],
       "points": [
         [
-          27,
-          17
+          42,
+          31
         ],
         [
-          40,
-          21
+          26,
+          9
         ],
         [
-          6,
+          31,
           13
         ]
       ],
       "villages": [
+        [
+          3,
+          30
+        ],
         [
           4,
           20
@@ -4008,60 +4012,56 @@
           10
         ],
         [
-          43,
-          8
+          8,
+          31
         ],
         [
-          17,
-          19
+          15,
+          23
         ],
         [
-          21,
+          18,
           9
         ],
         [
-          31,
+          18,
+          19
+        ],
+        [
+          22,
           16
         ],
         [
-          33,
-          21
+          27,
+          3
+        ],
+        [
+          32,
+          17
         ],
         [
           36,
-          8
+          6
+        ],
+        [
+          37,
+          24
         ],
         [
           38,
           15
-        ],
-        [
-          38,
-          25
-        ],
-        [
-          3,
-          30
-        ],
-        [
-          4,
-          15
-        ],
-        [
-          10,
-          10
         ]
       ],
       "terrain": {
         "width": 45,
         "height": 33,
         "area": 1485,
-        "distinct_terrain": 51,
+        "distinct_terrain": 47,
         "villages": 13,
-        "forest": 171,
+        "forest": 173,
         "water": 103,
-        "mountain": 32,
-        "road": 125,
+        "mountain": 220,
+        "road": 104,
         "bridge": 0,
         "sand": 32,
         "swamp": 0
@@ -4167,14 +4167,14 @@
         "width": 37,
         "height": 30,
         "area": 1110,
-        "distinct_terrain": 50,
+        "distinct_terrain": 51,
         "villages": 17,
-        "forest": 201,
+        "forest": 202,
         "water": 92,
         "mountain": 28,
-        "road": 95,
+        "road": 93,
         "bridge": 0,
-        "sand": 32,
+        "sand": 31,
         "swamp": 4
       },
       "file": "scenarios/darian/04.cfg"
@@ -4267,15 +4267,15 @@
         "width": 40,
         "height": 27,
         "area": 1080,
-        "distinct_terrain": 63,
+        "distinct_terrain": 62,
         "villages": 15,
-        "forest": 259,
+        "forest": 258,
         "water": 55,
-        "mountain": 56,
-        "road": 92,
+        "mountain": 55,
+        "road": 99,
         "bridge": 0,
-        "sand": 16,
-        "swamp": 4
+        "sand": 18,
+        "swamp": 3
       },
       "file": "scenarios/darian/05.cfg"
     },
@@ -4361,10 +4361,10 @@
         "area": 1376,
         "distinct_terrain": 55,
         "villages": 13,
-        "forest": 192,
+        "forest": 191,
         "water": 311,
-        "mountain": 40,
-        "road": 106,
+        "mountain": 42,
+        "road": 100,
         "bridge": 0,
         "sand": 22,
         "swamp": 3
@@ -4459,8 +4459,8 @@
         "villages": 14,
         "forest": 189,
         "water": 32,
-        "mountain": 145,
-        "road": 99,
+        "mountain": 150,
+        "road": 101,
         "bridge": 0,
         "sand": 12,
         "swamp": 0
@@ -4484,61 +4484,65 @@
         23
       ],
       "destination": [
-        27,
-        8
+        18,
+        19
       ],
       "prison": [
-        13,
-        18
+        3,
+        16
       ],
       "points": [],
       "villages": [
+        [
+          10,
+          9
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          14,
+          12
+        ],
+        [
+          16,
+          4
+        ],
+        [
+          21,
+          13
+        ],
+        [
+          27,
+          9
+        ],
         [
           19,
           20
         ],
         [
-          7,
-          5
+          21,
+          8
         ],
         [
           24,
           19
         ],
         [
-          29,
-          9
-        ],
-        [
           7,
           19
-        ],
-        [
-          8,
-          10
         ],
         [
           9,
           24
         ],
         [
-          18,
-          10
-        ],
-        [
-          20,
-          15
-        ],
-        [
-          21,
+          25,
           4
         ],
         [
-          26,
-          3
-        ],
-        [
-          29,
+          28,
           15
         ],
         [
@@ -4550,26 +4554,22 @@
           4
         ],
         [
-          34,
-          13
-        ],
-        [
-          34,
-          18
+          33,
+          9
         ]
       ],
       "terrain": {
         "width": 38,
         "height": 26,
         "area": 988,
-        "distinct_terrain": 66,
+        "distinct_terrain": 68,
         "villages": 16,
-        "forest": 129,
+        "forest": 140,
         "water": 126,
-        "mountain": 0,
-        "road": 109,
+        "mountain": 31,
+        "road": 103,
         "bridge": 1,
-        "sand": 41,
+        "sand": 43,
         "swamp": 9
       },
       "file": "scenarios/darian/08.cfg"
@@ -4676,13 +4676,13 @@
         "area": 1271,
         "distinct_terrain": 43,
         "villages": 14,
-        "forest": 107,
+        "forest": 109,
         "water": 548,
-        "mountain": 19,
-        "road": 105,
+        "mountain": 20,
+        "road": 98,
         "bridge": 1,
-        "sand": 121,
-        "swamp": 3
+        "sand": 116,
+        "swamp": 2
       },
       "file": "scenarios/darian/09.cfg"
     },
@@ -4775,7 +4775,7 @@
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 93,
+        "road": 97,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -4878,14 +4878,14 @@
         "width": 36,
         "height": 33,
         "area": 1188,
-        "distinct_terrain": 53,
+        "distinct_terrain": 52,
         "villages": 17,
-        "forest": 195,
+        "forest": 191,
         "water": 114,
-        "mountain": 18,
-        "road": 112,
+        "mountain": 21,
+        "road": 114,
         "bridge": 0,
-        "sand": 36,
+        "sand": 39,
         "swamp": 2
       },
       "file": "scenarios/darian/11.cfg"
@@ -4980,10 +4980,10 @@
         "area": 1170,
         "distinct_terrain": 59,
         "villages": 15,
-        "forest": 281,
+        "forest": 271,
         "water": 48,
-        "mountain": 53,
-        "road": 92,
+        "mountain": 52,
+        "road": 96,
         "bridge": 0,
         "sand": 24,
         "swamp": 5
@@ -5007,28 +5007,56 @@
         14
       ],
       "destination": [
-        38,
-        7
+        11,
+        16
       ],
       "prison": [
-        30,
-        17
+        19,
+        15
       ],
       "points": [
         [
-          38,
-          7
+          11,
+          16
         ],
         [
-          30,
-          17
+          19,
+          15
         ],
         [
-          13,
-          5
+          5,
+          24
         ]
       ],
       "villages": [
+        [
+          19,
+          4
+        ],
+        [
+          31,
+          6
+        ],
+        [
+          32,
+          16
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          39,
+          5
+        ],
+        [
+          27,
+          9
+        ],
+        [
+          40,
+          10
+        ],
         [
           3,
           20
@@ -5038,75 +5066,47 @@
           24
         ],
         [
+          9,
+          12
+        ],
+        [
           12,
           24
         ],
         [
-          18,
-          7
+          27,
+          18
         ],
         [
-          34,
-          11
+          10,
+          7
         ],
         [
           10,
           19
         ],
         [
-          12,
-          10
-        ],
-        [
           15,
           19
         ],
         [
-          21,
-          16
-        ],
-        [
-          23,
-          23
-        ],
-        [
-          30,
-          21
-        ],
-        [
-          35,
-          20
-        ],
-        [
-          38,
-          4
-        ],
-        [
-          39,
-          23
-        ],
-        [
-          40,
-          18
-        ],
-        [
-          3,
-          5
+          19,
+          13
         ]
       ],
       "terrain": {
         "width": 42,
         "height": 27,
         "area": 1134,
-        "distinct_terrain": 67,
+        "distinct_terrain": 69,
         "villages": 16,
-        "forest": 119,
+        "forest": 149,
         "water": 134,
-        "mountain": 0,
-        "road": 136,
+        "mountain": 35,
+        "road": 99,
         "bridge": 0,
-        "sand": 59,
-        "swamp": 10
+        "sand": 64,
+        "swamp": 11
       },
       "file": "scenarios/darian/13.cfg"
     },
@@ -5203,12 +5203,12 @@
         "area": 1440,
         "distinct_terrain": 52,
         "villages": 15,
-        "forest": 119,
+        "forest": 123,
         "water": 460,
-        "mountain": 21,
-        "road": 116,
+        "mountain": 19,
+        "road": 119,
         "bridge": 0,
-        "sand": 59,
+        "sand": 58,
         "swamp": 4
       },
       "file": "scenarios/darian/14.cfg"
@@ -5230,43 +5230,55 @@
         4
       ],
       "destination": [
-        28,
-        3
+        14,
+        25
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
+          5,
+          11
+        ],
+        [
+          24,
+          10
+        ],
+        [
+          29,
+          10
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          20,
+          13
+        ],
+        [
+          31,
+          16
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          28,
+          3
+        ],
+        [
+          34,
+          12
+        ],
+        [
           4,
           22
         ],
         [
-          5,
-          4
-        ],
-        [
           9,
           23
-        ],
-        [
-          12,
-          9
-        ],
-        [
-          14,
-          26
-        ],
-        [
-          24,
-          25
-        ],
-        [
-          35,
-          17
-        ],
-        [
-          35,
-          27
         ],
         [
           3,
@@ -5277,43 +5289,31 @@
           18
         ],
         [
+          11,
+          4
+        ],
+        [
+          12,
+          9
+        ],
+        [
           13,
           14
-        ],
-        [
-          17,
-          17
-        ],
-        [
-          30,
-          5
-        ],
-        [
-          31,
-          23
-        ],
-        [
-          35,
-          6
-        ],
-        [
-          10,
-          3
         ]
       ],
       "terrain": {
         "width": 37,
         "height": 29,
         "area": 1073,
-        "distinct_terrain": 68,
+        "distinct_terrain": 70,
         "villages": 16,
-        "forest": 109,
+        "forest": 161,
         "water": 112,
-        "mountain": 0,
-        "road": 88,
+        "mountain": 42,
+        "road": 96,
         "bridge": 0,
-        "sand": 28,
-        "swamp": 12
+        "sand": 40,
+        "swamp": 13
       },
       "file": "scenarios/darian/15.cfg"
     },
@@ -5334,8 +5334,8 @@
         23
       ],
       "destination": [
-        29,
-        4
+        33,
+        8
       ],
       "prison": null,
       "points": [],
@@ -5357,10 +5357,6 @@
           15
         ],
         [
-          31,
-          21
-        ],
-        [
           35,
           5
         ],
@@ -5369,28 +5365,32 @@
           15
         ],
         [
+          30,
+          22
+        ],
+        [
           4,
           21
+        ],
+        [
+          7,
+          11
         ],
         [
           12,
           20
         ],
         [
-          16,
-          3
+          13,
+          5
+        ],
+        [
+          25,
+          24
         ],
         [
           3,
           8
-        ],
-        [
-          8,
-          10
-        ],
-        [
-          23,
-          9
         ]
       ],
       "terrain": {
@@ -5399,12 +5399,12 @@
         "area": 1040,
         "distinct_terrain": 50,
         "villages": 13,
-        "forest": 76,
+        "forest": 79,
         "water": 59,
-        "mountain": 98,
-        "road": 94,
+        "mountain": 138,
+        "road": 107,
         "bridge": 0,
-        "sand": 18,
+        "sand": 17,
         "swamp": 0
       },
       "file": "scenarios/darian/16.cfg"

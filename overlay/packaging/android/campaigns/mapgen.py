@@ -38,7 +38,8 @@ CAVE_HILLS = ('Uh', 'Uhe')
 CAVE_WALL = ('Xu', 'Xur', 'Xue', 'Xuc')
 CAVE_DECOR = ('^Uf', '^Ufi', '^Qhh', '^Qhu')
 RUIN_DECOR = ('^Eb', '^Ebn', '^Edp', '^Edb', '^Efs', '^Es')
-RUIN_FLOOR = ('Rp', 'Rd', 'Rb')
+# Dirt tracks and stone paths: the surfaces a road can take in the wild.
+TRACKS = ('Rp', 'Rd', 'Rb')
 FOREST_PINE = ('^Fp', '^Fpa')
 FOREST_DECIDUOUS = ('^Fds', '^Fdf', '^Fda', '^Fdw')
 FOREST_TROPICAL = ('^Fet', '^Feta', '^Fetd', '^Feth')
@@ -51,8 +52,7 @@ VILLAGE_FOREST = ('^Vhr', '^Vhha')
 VILLAGE_CAVE = ('^Vu', '^Vud')
 VILLAGE_RUIN = ('^Vct', '^Vc', '^Vca')
 ROAD = ('Rr', 'Rra', 'Rrc', 'Rrd')
-ROAD_EARTH = ('Re', 'Rp')
-MOUNTAIN_PASS = ('Mm',)
+ROAD_EARTH = ('Re',)
 BRIDGE = ('^Bw/', '^Bw|', '^Bw\\')
 
 CASTLE_RING = {'grass': ('Ce', 'Chr', 'Ch'), 'coast': ('Ch', 'Chr'), 'harbor': ('Ch', 'Chw'),
@@ -401,14 +401,14 @@ class MapBuilder:
             return self.terrain[y][x]
         table = {'grass': ('Gg', 'Gs'), 'hill': HILLS, 'rock': MOUNTAINS,
                  'forest': None, 'sand': SAND, 'swamp': SWAMP, 'snow': SNOW,
-                 'cave': CAVE_FLOOR, 'ruin': RUIN_FLOOR, 'water': SHALLOW}
+                 'cave': CAVE_FLOOR, 'water': SHALLOW}
         if choice == 'forest':
             return self._forest_code(y, x)
         return self.rng.choice(table.get(choice, ('Gg',)))
 
     def _families(self):
         return {
-            'grass': GRASS + DIRT + ROAD + ROAD_EARTH + ('Gg', 'Gs'),
+            'grass': GRASS + DIRT + TRACKS + ROAD + ROAD_EARTH + ('Gg', 'Gs'),
             'forest': (),
             'hill': HILLS,
             'mountain': MOUNTAINS,
@@ -417,7 +417,6 @@ class MapBuilder:
             'snow': SNOW,
             'water': DEEP + SHALLOW,
             'cave': CAVE_FLOOR + CAVE_HILLS + CAVE_WALL,
-            'ruin': RUIN_FLOOR,
             'castle': tuple(name for names in CASTLE_RING.values() for name in names),
         }
 
@@ -475,9 +474,14 @@ class MapBuilder:
                     elif spec['swamp'] and self.rng.random() < spec['swamp'] * 3:
                         self.terrain[ny][nx] = self.rng.choice(SWAMP)
         if spec['snow']:
+            # Snow takes its own share of the high ground: without the cut it
+            # buries the mountains and the biome mix stops being what it says.
+            land_levels = [self.level[y][x] for y in range(self.height)
+                           for x in range(self.width) if self.land[y][x]]
+            snow_cut = quantile(land_levels, max(0.0, 1.0 - spec['snow']))
             for y in range(self.height):
                 for x in range(self.width):
-                    if self.land[y][x] and self.level[y][x] > 0.62:
+                    if self.land[y][x] and self.level[y][x] > snow_cut:
                         self.terrain[y][x] = self.rng.choice(SNOW)
 
     # --- structure ---------------------------------------------------------
@@ -542,8 +546,19 @@ class MapBuilder:
                 picked.append((x, y))
             if len(picked) >= 4:
                 break
-        if len(picked) < 4:
-            picked += [(self.width // 2, self.height // 2)] * (4 - len(picked))
+        while len(picked) < 4:
+            # Fall back to spread quadrants rather than stacking one tile: two
+            # objectives on the same hex would be indistinguishable.
+            quadrant = [(self.width // 3, self.height // 3),
+                        (2 * self.width // 3, self.height // 3),
+                        (self.width // 3, 2 * self.height // 3),
+                        (2 * self.width // 3, 2 * self.height // 3)][len(picked)]
+            fallback = self._nearest_land(quadrant, 8)
+            if all(self._distance(*fallback, px, py) >= 2 for px, py in picked):
+                picked.append(fallback)
+            else:
+                picked.append((min(fallback[0] + len(picked), self.width - 3),
+                               min(fallback[1] + len(picked), self.height - 3)))
         if self.goal == 'beacons':
             self.points = picked[:3]
             self.destination, self.prison = picked[0], picked[1]
@@ -600,12 +615,12 @@ class MapBuilder:
 
     def _lay_road(self, x, y):
         cell = self.terrain[y][x]
-        if cell.split()[0].isdigit() or '^V' in cell:
-            # A keep carries a start marker and a village is a place: roads go
-            # around both instead of paving over them.
+        base = base_of(self._plain(cell))
+        if cell.split()[0].isdigit() or '^V' in cell or base[:1] in CASTLE_RING:
+            # A keep carries a start marker, a village is a place and a castle
+            # ring is a fortification: roads go around all three.
             return
         code = self._plain(cell)
-        base = base_of(code)
         self.roads.add((x, y))
         if not is_walkable(code) and base not in ('Ww', 'Wo'):
             return
@@ -614,28 +629,17 @@ class MapBuilder:
             return
         if base in SAND:
             self.terrain[y][x] = self.rng.choice(ROAD_EARTH)
-        elif base in RUIN_FLOOR or self.biome == 'ruins':
+        elif base in TRACKS or self.biome == 'ruins':
             self.terrain[y][x] = self.rng.choice(ROAD_EARTH + ROAD[:1])
         else:
             self.terrain[y][x] = self.rng.choice(ROAD)
 
     def build_road_network(self):
-        """Arterials, branches and spurs: mainline maps lace the land with roads.
+        """Branches and verges on top of the arterials: a network, not spokes.
 
         The target is about a tenth of the map's tiles on road, three times what
         a set of spokes from the keeps produces.
         """
-        arterial = [self.enemy]
-        if self.destination:
-            arterial.append(self.destination)
-        if self.prison:
-            arterial.append(self.prison)
-        arterial += self.points
-        for target in arterial:
-            path = self._path(self.start, target)
-            if path:
-                for x, y in path:
-                    self._lay_road(x, y)
         # Branches from the middle of the arterial to the map's corners: roads
         # that go somewhere, instead of spokes that end at the objective.
         trunk = self._path(self.start, self.enemy) or []
@@ -852,8 +856,8 @@ def verify_vocabulary(terrain_cfg):
                                   CAVE_DECOR, RUIN_DECOR)
                 for name in group}
     bases = {name for group in (GRASS, DIRT, HILLS, MOUNTAINS, SAND, SWAMP, SNOW, SHALLOW,
-                                DEEP, CAVE_FLOOR, CAVE_HILLS, CAVE_WALL, RUIN_FLOOR, ROAD,
-                                ROAD_EARTH, MOUNTAIN_PASS) for name in group}
+                                DEEP, CAVE_FLOOR, CAVE_HILLS, CAVE_WALL, TRACKS, ROAD,
+                                ROAD_EARTH) for name in group}
     bases |= {name for names in CASTLE_RING.values() for name in names}
     bases |= set(KEEP.values())
     unknown_bases = sorted(name for name in bases if name not in declared)

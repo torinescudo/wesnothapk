@@ -17,6 +17,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 from pathlib import Path
 import argparse
 import json
+import math
 import re
 import statistics
 import sys
@@ -120,6 +121,10 @@ def terrain_code(cell):
     return parts[-1] if parts else cell
 
 
+def base_of(code):
+    return code.split('^')[0]
+
+
 def walkable_cell(code):
     """Bridges crossing or fords (Wwf) make water passable; chasms never are."""
     river = code.split('^')[0]
@@ -137,6 +142,8 @@ def map_stats(rows):
     base = [code[:2] for code in codes]
     owners = [cell.split()[0] for row in rows for cell in row if len(cell.split()) > 1]
     villages = sum(1 for code in codes if any(v in code for v in VILLAGE))
+    villages_xy = [(x, y) for y, row in enumerate(rows) for x, cell in enumerate(row)
+                   if any(v in terrain_code(cell) for v in VILLAGE)]
     # Isolation: how often a tile's base terrain differs from all four neighbours.
     # Coherent mainline maps shape masses of terrain; noise generators do not.
     isolated = 0
@@ -157,6 +164,34 @@ def map_stats(rows):
     walkable = [[walkable_cell(terrain_code(cell)) for cell in row] for row in rows]
     land = sum(1 for row in walkable for cell in row if cell)
     components, largest, stranded = connectivity(rows, walkable)
+    # Composition, in the same terms for both corpora: how much of a terrain
+    # family lives in one blob, and how far villages sit from each other.
+    seen = [[False] * len(row) for row in rows]
+    biggest, per_base = 0, {}
+    for y in range(len(rows)):
+        for x in range(len(rows[y])):
+            here = base_of(terrain_code(rows[y][x]))
+            per_base[here] = per_base.get(here, 0) + 1
+            if seen[y][x]:
+                continue
+            size = 0
+            stack = [(y, x)]
+            while stack:
+                cy, cx = stack.pop()
+                if not (0 <= cy < len(rows) and 0 <= cx < len(rows[cy])) or seen[cy][cx]:
+                    continue
+                if base_of(terrain_code(rows[cy][cx])) != here:
+                    continue
+                seen[cy][cx] = True
+                size += 1
+                stack.extend([(cy + 1, cx), (cy - 1, cx), (cy, cx + 1), (cy, cx - 1)])
+            biggest = max(biggest, size)
+    total = sum(per_base.values())
+    spacing = []
+    for index, (ax, ay) in enumerate(villages_xy):
+        best = min((math.hypot(ax - bx, ay - by)
+                    for other, (bx, by) in enumerate(villages_xy) if other != index), default=0.0)
+        spacing.append(best)
     return {
         'width': width,
         'height': height,
@@ -177,6 +212,8 @@ def map_stats(rows):
         'snow': sum(1 for code in base if code in SNOW),
         'cave': sum(1 for code in base if code in CAVE),
         'isolated_ratio': round(isolated / compared, 4) if compared else 0.0,
+        'largest_cluster_share': round(biggest / total, 3) if total else 0.0,
+        'village_spacing': round(statistics.mean(spacing), 2) if spacing else 0.0,
         'components': components,
         'main_land_fraction': round(largest / land, 4) if land else 0.0,
         'stranded_villages': stranded,
@@ -299,6 +336,8 @@ def summarise(campaigns):
         'map_distinct_base': median([m['distinct_base'] for m in maps]),
         'map_villages': median([m['villages'] for m in maps]),
         'map_isolated_ratio': round(median([m['isolated_ratio'] for m in maps]), 4),
+        'map_largest_cluster_share': median([m['largest_cluster_share'] for m in maps]),
+        'map_village_spacing': median([m['village_spacing'] for m in maps]),
         'map_forest': median([m['forest'] for m in maps]),
         'map_mountain': median([m['mountain'] for m in maps]),
         'map_water': median([m['water'] for m in maps]),
@@ -345,7 +384,8 @@ def print_report(ours, mainline, floors, passed):
         print('%-30s %14s %14s %17s %7s   %s' % (
             label, mine, floor, mainline[field], floor, verdict))
     print()
-    for field in ('map_isolated_ratio', 'map_road', 'map_bridge', 'map_components',
+    for field in ('map_isolated_ratio', 'map_largest_cluster_share', 'map_village_spacing',
+                  'map_road', 'map_bridge', 'map_components',
                   'stranded_villages', 'art_per_scenario', 'music_tracks_per_campaign'):
         print('%-30s %14s %14s' % (field, ours[field], mainline[field]))
     print()

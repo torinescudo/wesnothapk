@@ -7,13 +7,21 @@ map is made of, extracted by measuring and looking at mainline maps
 (`map_preview.py` renders any .map to a comparable grid). The rules were then
 implemented in `mapgen.py` and measured back:
 
-| property | mainline | generated before | generated after |
+| property (from `compare_with_mainline.py`) | mainline | generated before | generated after |
 | --- | ---: | ---: | ---: |
-| largest same-terrain cluster, share of its tiles | 0.45 | 0.69 | 0.42 |
-| tiles with no like neighbour | 0.044 | 0.015 | 0.073 |
-| road tiles per map | 89 | 43.5 | 103 |
-| villages touching a road | 0.33 | 0.83 | 0.15 |
-| mean village-to-village distance | 5.8 | 4.05 | 7.2 |
+| map tiles | 932 | 540 | 1341 |
+| distinct terrain codes per map | 34.5 | 7 | 51.5 |
+| road tiles per map | 60 | 43.5 | 101 |
+| mean village-to-village distance | 4.38 | 4.05 | 5.78 |
+| tiles with no like neighbour | 0.0813 | 0.1306 | 0.1681 |
+| villages cut off from the main landmass | 689 | 1 | 0 |
+
+The isolated-tile ratio is the one axis that got worse: the edge roughening that
+gives the coasts inlets also leaves more single-tile breaks (0.17 against
+mainline's 0.08). Every number above reproduces with
+`python3 compare_with_mainline.py`; an earlier version of this table used a
+separate measurement script whose definitions differed from the committed tool,
+and those numbers have been replaced.
 
 New passes: edge roughening (inlets, headlands and islets), rivers that start on
 high ground and leave the frame, a road network with arterials, branches and

@@ -70,6 +70,7 @@ def validate(allow_missing_art=False):
     for path in (ROOT/'data/core/units').rglob('*.cfg'):
         known.update(re.findall(r'^\s*id\s*=\s*"?([^"\r\n]+)', path.read_text(encoding='utf-8'), re.M))
     used_assets = set()
+    mapgen.verify_vocabulary(ROOT / 'data/core/terrain.cfg')
     terrain_codes = set(re.findall(r'^\s*string\s*=\s*"?([^"\s]+)',
         (ROOT/'data/core/terrain.cfg').read_text(encoding='utf-8'),re.M))
     maps = set()
@@ -122,6 +123,10 @@ def validate(allow_missing_art=False):
         assert sum(t.startswith('1 ') for row in grid for t in row) == 1
         assert sum(t.startswith('2 ') for row in grid for t in row) == 1
         reached = reachable(grid, chapter['start'])
+        enemy_reach = reachable(grid, chapter['enemy'])
+        for x, y in chapter.get('villages', []):
+            assert (x, y) in reached and (x, y) in enemy_reach, (
+                chapter['id'], 'village unreachable from a keep', x, y)
         for destination in [chapter['enemy'], chapter['destination'], chapter['prison'],
                             *chapter['points']]:
             if destination is None:

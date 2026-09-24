@@ -12,6 +12,7 @@ scaling, alpha and file naming are mechanical, so the pass is reproducible.
 
 `install` accepts files named after a prompt key, in any common image format:
     alba.png, sarel-el-cobrador.png, alba_01_1.png, litario-guardian.png
+Portraits keep their background removed and sprites keep their square frame.
 
 SPDX-License-Identifier: GPL-2.0-or-later
 """
@@ -31,6 +32,12 @@ PACK = ROOT / 'data/campaigns/Brasa_y_Marea'
 IMAGES = PACK / 'images/cbm'
 PROMPTS = PACK / 'ART_PROMPTS.json'
 SCENES_PER_CHAPTER = 2
+# Unit art the campaigns reference; the generator ships one image per line.
+SPRITES = (
+    'litario-guardian', 'litario-resonador', 'litario-tejedor', 'litario-explorador',
+    'velario-lancero', 'velario-cosechador', 'velario-vigia', 'velario-cantor',
+    'hero-alba', 'hero-sira', 'hero-iria', 'hero-maura', 'hero-nerea', 'hero-darian',
+)
 
 
 def seed_for(*parts):
@@ -39,6 +46,7 @@ def seed_for(*parts):
 
 PORTRAIT_SIZE = (512, 768)
 SCENE_SIZE = (1024, 512)
+SPRITE_SIZE = (512, 512)
 
 # Style clauses shared by every request, worded the way the existing, proven
 # entries in ART_PROMPTS.json are.
@@ -179,22 +187,37 @@ def plan():
 
 
 def required():
-    """Every asset the generated campaigns reference, as (kind, key) pairs."""
-    wanted = []
+    """Every asset the generated campaigns reference, as (kind, key) pairs.
+
+    A hero also speaks as a named character, so the keys are deduplicated: one
+    portrait per name, never two generations of the same face.
+    """
+    wanted, seen = [], set()
+
+    def add(kind, key):
+        if (kind, key) not in seen:
+            seen.add((kind, key))
+            wanted.append((kind, key))
+
     for campaign in stories.CAMPAIGNS:
         key = campaign['key']
-        wanted.append(('portrait', key))
+        add('portrait', key)
         for index, _ in enumerate(campaign['chapters'], 1):
             for scene in range(1, SCENES_PER_CHAPTER + 1):
-                wanted.append(('scene', '%s_%02d_%d' % (key, index, scene)))
+                add('scene', '%s_%02d_%d' % (key, index, scene))
     for name in stories.characters():
-        wanted.append(('portrait', stories.portrait_key(name)))
+        add('portrait', stories.portrait_key(name))
+    add('portrait', 'velario')  # the profile art of the velario units
+    for sprite in SPRITES:
+        add('sprite', sprite)
     return wanted
 
 
 def target(kind, key):
     if kind == 'portrait':
         return IMAGES / 'portraits' / ('%s.png' % key)
+    if kind == 'sprite':
+        return IMAGES / 'units' / ('%s.png' % key)
     # Scenes are wide backgrounds with no alpha: JPEG keeps the repository light.
     return IMAGES / 'story' / ('%s.jpg' % key)
 
@@ -235,24 +258,30 @@ NEGATIVE = ('text, letters, signature, watermark, logo, border, frame, collage, 
 
 
 def workflow(prompt, key, size, lora, seed):
-    return {
+    lora_node, clip_index, model_node, model_index = ('4', 1, '4', 0)
+    nodes = {}
+    if lora:
+        nodes['10'] = {'class_type': 'LoraLoader',
+                       'inputs': {'lora_name': lora, 'strength_model': 0.75, 'strength_clip': 0.75,
+                                  'model': ['4', 0], 'clip': ['4', 1]}}
+        lora_node, clip_index, model_node, model_index = ('10', 1, '10', 0)
+    graph = {
         '4': {'class_type': 'CheckpointLoaderSimple',
               'inputs': {'ckpt_name': CHECKPOINT}},
-        '10': {'class_type': 'LoraLoader',
-               'inputs': {'lora_name': lora, 'strength_model': 0.75, 'strength_clip': 0.75,
-                          'model': ['4', 0], 'clip': ['4', 1]}},
         '5': {'class_type': 'EmptyLatentImage',
               'inputs': {'width': size[0], 'height': size[1], 'batch_size': 1}},
-        '6': {'class_type': 'CLIPTextEncode', 'inputs': {'text': prompt, 'clip': ['10', 1]}},
-        '7': {'class_type': 'CLIPTextEncode', 'inputs': {'text': NEGATIVE, 'clip': ['10', 1]}},
+        '6': {'class_type': 'CLIPTextEncode', 'inputs': {'text': prompt, 'clip': [lora_node, clip_index]}},
+        '7': {'class_type': 'CLIPTextEncode', 'inputs': {'text': NEGATIVE, 'clip': [lora_node, clip_index]}},
         '3': {'class_type': 'KSampler',
               'inputs': {'seed': seed, 'steps': 28, 'cfg': 6.0, 'sampler_name': 'dpmpp_2m',
-                         'scheduler': 'karras', 'denoise': 1.0, 'model': ['10', 0],
+                         'scheduler': 'karras', 'denoise': 1.0, 'model': [model_node, model_index],
                          'positive': ['6', 0], 'negative': ['7', 0], 'latent_image': ['5', 0]}},
         '8': {'class_type': 'VAEDecode', 'inputs': {'samples': ['3', 0], 'vae': ['4', 2]}},
         '9': {'class_type': 'SaveImage',
               'inputs': {'filename_prefix': 'cbm-' + key, 'images': ['8', 0]}},
     }
+    graph.update(nodes)
+    return graph
 
 
 def cutout(path):
@@ -289,7 +318,8 @@ def generate(server, kinds, limit, staging):
         size = SCENE_SIZE_GEN if kind == 'scene' else PORTRAIT_SIZE_GEN
         # '@' separates the key from ComfyUI's own counter, so 'alba' can never
         # pick up the files of 'alba_01_1'.
-        graph = workflow(prompt, 'cbm@%s@' % key, size, PORTRAIT_LORA, seed_for('draw', key))
+        lora = None if kind == 'scene' else PORTRAIT_LORA
+        graph = workflow(prompt, 'cbm@%s@' % key, size, lora, seed_for('draw', key))
         body = json.dumps({'prompt': graph, 'client_id': 'wesnoth-phone'}).encode('utf-8')
         request = urllib.request.Request(server + '/prompt', data=body,
                                          headers={'Content-Type': 'application/json'})
@@ -336,11 +366,15 @@ def install(source_dir):
         for candidate in sorted(source_dir.glob('%s.*' % key)):
             if candidate.suffix.lower() not in ('.png', '.jpg', '.jpeg', '.webp'):
                 continue
-            size = PORTRAIT_SIZE if kind == 'portrait' else SCENE_SIZE
+            size = (PORTRAIT_SIZE if kind == 'portrait'
+                    else SPRITE_SIZE if kind == 'sprite' else SCENE_SIZE)
             destination.parent.mkdir(parents=True, exist_ok=True)
             frame = fit(Image.open(candidate), size)
-            if kind == 'portrait':
+            if kind == 'sprite':
                 frame.save(destination, 'PNG', optimize=True)
+            elif kind == 'portrait':
+                frame.save(destination, 'PNG', optimize=True)
+                cutout(destination)  # a portrait is drawn over the dialogue panel
             else:
                 frame.convert('RGB').save(destination, 'JPEG', quality=90, optimize=True)
             installed += 1

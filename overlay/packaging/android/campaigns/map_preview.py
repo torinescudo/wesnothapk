@@ -52,7 +52,9 @@ def lighten(colour, amount):
 
 
 def draw_map(text):
-    rows = [[cell.strip() for cell in line.split(',') if cell.strip()]
+    # One chunk per comma, blanks included: the engine reads it that way, and a
+    # dropped empty cell would shift a row instead of showing the gap.
+    rows = [[cell.strip() for cell in line.split(',')]
             for line in text.splitlines() if line.strip()]
     width = max(len(row) for row in rows)
     height = len(rows)
@@ -92,6 +94,7 @@ def contact_sheet(paths, columns=3):
         left = (index % columns) * (width + 8) + 4
         top = (index // columns) * (height + 8) + 4
         sheet.paste(image, (left, top))
+        ImageDraw.Draw(sheet).text((left + 4, top + 4), name, fill=(240, 232, 200))
     return sheet
 
 

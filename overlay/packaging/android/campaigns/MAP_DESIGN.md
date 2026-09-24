@@ -9,19 +9,26 @@ Eye 01, Liberty 01, The South Guard 01, Dead Water 01, Rise of Wesnoth 01) and
 
 ## What the measurements say
 
-| property | mainline | generated before | generated after | what it means |
-| --- | ---: | ---: | ---: | --- |
-| largest same-terrain cluster, share of its own tiles | 0.45 | 0.69 | 0.42 | masses now break up the way mainline maps do |
-| tiles with no like neighbour | 0.044 | 0.015 | 0.073 | textured edges instead of smooth blobs |
-| road tiles | 89 | 43.5 | 103 | roads now lace the land |
-| road share of the map | 0.107 | 0.03 | 0.076 | arterials, branches and verges |
-| villages | 14 | 14.5 | 14.5 | parity |
-| villages touching a road | 0.33 | 0.83 | 0.15 | settlements sit at features now |
-| mean village-to-village distance | 5.8 | 4.05 | 7.2 | spread out like defensible places |
-| villages cut off from the main landmass | 0 | 0 | 2 | two island chapters, by design |
+All numbers come from `compare_with_mainline.py`, so they reproduce with one
+command on the reconstructed tree. "before" is the maps as first generated,
+"after" is what the rules below produce.
+
+| property (tool field) | mainline | before | after |
+| --- | ---: | ---: | ---: |
+| map tiles | 932 | 540 | 1341 |
+| distinct terrain codes per map | 34.5 | 7 | 51.5 |
+| villages per map | 14 | 10 | 15 |
+| road tiles per map | 60 | 43.5 | 101 |
+| mean village-to-village distance | 4.38 | 4.05 | 5.78 |
+| largest one-blob share of a base terrain | 0.139 | — | 0.113 |
+| tiles with no like neighbour | 0.0813 | 0.1306 | 0.1681 |
+| villages cut off from the main landmass | 689 | 1 | 0 |
 
 So the problem was never size or village count: it was that the maps were too
-uniform and too empty of structure.
+uniform and too empty of structure. Two rows need a word: the isolated-tile
+ratio is the one axis where we are *worse* than mainline (0.17 against 0.08) —
+the edge roughening that gives the coasts inlets also leaves more single-tile
+breaks — and mainline's cut-off villages are naval maps where that is the point.
 
 ## The rules
 
