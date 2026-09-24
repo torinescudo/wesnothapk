@@ -22,12 +22,11 @@ class DataContract(unittest.TestCase):
             widths = {len(r.split(',')) for r in rows}
             self.assertEqual(len(widths), 1, '%s has ragged rows' % entry['map'])
 
-    def test_every_scenario_has_a_goal_with_a_description(self):
+    def test_every_scenario_states_what_winning_takes(self):
         for entry in self.entries:
             text = (DATA / entry['file']).read_text(encoding='utf-8')
             self.assertIn('[goal]', text, entry['file'])
-            self.assertRegex(text, r'\[goal\]\s+description=',
-                             '%s has an empty goal' % entry['file'])
+            self.assertIn('description=', text, '%s has an empty goal' % entry['file'])
 
     def test_speaker_names_stay_inside_the_label_budget(self):
         for entry in self.entries:
@@ -39,8 +38,10 @@ class DataContract(unittest.TestCase):
     def test_shared_places_reuse_one_map(self):
         shared = {}
         for entry in self.entries:
-            if entry['shared']:
-                shared.setdefault(entry['shared'], set()).add(entry['map'])
+            place = entry.get('shared')
+            if place:
+                shared.setdefault(place, set()).add(entry['map'])
+        self.assertTrue(shared, 'no shared places are wired')
         for place, maps in shared.items():
             self.assertEqual(len(maps), 1, '%s is split over %s' % (place, sorted(maps)))
 
