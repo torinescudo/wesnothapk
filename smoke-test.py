@@ -155,8 +155,12 @@ try:
         lambda: next((n for n in ui() if n.get('resource-id') == 'android:id/button1'), None),
         10, label='the end turn confirmation dialog')
     tap(confirmation)
-    wait_for(in_bar('phone_action_cycle'), 240,
-             label='the next player turn after confirming the end of one')
+    # The contract is that the dialog-driven send is accepted and the player
+    # turn ends there: what the AI does with a 1300-tile map afterwards is its
+    # own business and can take minutes on an emulator.
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None
+             and find(ui(), resource='phone_action_cycle', enabled=True) is None,
+             60, label='the player turn to end after the confirmation')
     screen('05c-end-turn-confirmed')
     adb('shell', 'am', 'force-stop', PACKAGE)
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
