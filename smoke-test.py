@@ -105,11 +105,17 @@ try:
     wait_for(lambda: find(ui(), resource='phone_tutorial'), 15, label='the launcher after closing the picker')
     print('Launcher and campaign picker shown', flush=True)
     for attempt in range(4):
-        tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15, label='the enabled tutorial button'))
-        time.sleep(2)
-        if 'WesnothActivity' in adb('shell', 'dumpsys', 'activity', 'top'):
-            break
-        if find(ui(), resource='download_msg') is not None:
+        tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15,
+                     label='the enabled tutorial button'))
+        # Either the game comes up (data already installed) or the launcher
+        # starts preparing it: asking for the launcher button again would race
+        # with both.
+        started = wait_for(lambda: 'game' if 'WesnothActivity' in adb(
+                'shell', 'dumpsys', 'activity', 'top') else (
+                'preparing' if find(ui(), resource='download_msg') is not None else None),
+            30, label='the game or the data preparation to start')
+        if started:
+            print('Tutorial tap started:', started, flush=True)
             break
     else:
         raise AssertionError('Tutorial button did not start data preparation')
