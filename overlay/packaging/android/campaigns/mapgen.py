@@ -606,9 +606,10 @@ class MapBuilder:
                     continue
                 if not is_walkable(code) and base not in ('Ww', 'Wo'):
                     continue
-                # Water is crossable, but only where a detour would cost more: that
-                # is what puts bridges on the roads instead of around the rivers.
-                step = 12 if not is_walkable(code) else COST.get(base, 3)
+                # Water is crossable at a price, so roads cross rivers where a
+                # detour would cost more: that is what puts real bridges on the
+                # roads instead of routing every road around the water.
+                step = 5 if not is_walkable(code) else COST.get(base, 3)
                 tentative = cost[current] + step
                 if (nx, ny) not in cost or tentative < cost[(nx, ny)]:
                     cost[(nx, ny)] = tentative
@@ -672,6 +673,42 @@ class MapBuilder:
                 x, y = steps[self.rng.randrange(len(steps))]
                 self._lay_road(x, y)
 
+    def smooth_masses(self):
+        """Let terrain masses grow: a plain tile takes the base its neighbourhood
+        mostly has. A map whose every tile argues with its neighbours reads as
+        static, not as land."""
+        for _ in range(5):
+            snapshot = [[base_of(self._plain(c)) for c in row] for row in self.terrain]
+            for y in range(self.height):
+                for x in range(self.width):
+                    cell = self.terrain[y][x]
+                    if '^' in cell or cell.split()[0].isdigit() or '^V' in cell:
+                        continue
+                    counts = {}
+                    counts[snapshot[y][x]] = 2
+                    for nx, ny in neighbours(x, y, self.width, self.height):
+                        b = snapshot[ny][nx]
+                        counts[b] = counts.get(b, 0) + 1
+                    best = max(counts, key=lambda k: (counts[k], k))
+                    if best != snapshot[y][x]:
+                        self.terrain[y][x] = best
+
+    def ensure_crossings(self):
+        """Put a bridge wherever a road already reaches both banks of the water.
+
+        A map whose roads stop at the river reads as unfinished: the crossing is
+        the one place the road network and the water must meet.
+        """
+        for y in range(self.height):
+            for x in range(self.width):
+                if base_of(self._plain(self.terrain[y][x])) not in ('Ww', 'Wo'):
+                    continue
+                banks = [(nx, ny) for nx, ny in neighbours(x, y, self.width, self.height)
+                         if (nx, ny) in self.roads]
+                if len(banks) >= 2:
+                    self.terrain[y][x] = base_of(self._plain(self.terrain[y][x])) + self.rng.choice(BRIDGE)
+                    self.roads.add((x, y))
+
     def place_villages(self):
         """Settlements against a feature, spaced apart, rarely on the road.
 
@@ -709,7 +746,7 @@ class MapBuilder:
         for _, x, y, near_road in candidates:
             if len(placed) >= wanted:
                 break
-            if not all(self._distance(x, y, px, py) >= 5 for px, py in placed):
+            if not all(self._distance(x, y, px, py) >= 3 for px, py in placed):
                 continue
             if near_road and roadside + 1 > wanted // 3:
                 continue  # at most a third of the villages may touch a road
@@ -822,6 +859,7 @@ def generate(key, index, biome, goal, seed=None, attempts=12, size='battle'):
         builder.paint_relief()
         builder.smooth_terrain()
         builder.scatter_details()
+        builder.smooth_masses()
         builder.carve_rivers()
         builder.decorate_edges()
         builder.place_castles()
@@ -830,6 +868,7 @@ def generate(key, index, biome, goal, seed=None, attempts=12, size='battle'):
             continue
         builder.place_villages()
         builder.build_road_network()
+        builder.ensure_crossings()
         ok, reason = builder.verify()
         if not ok:
             continue
