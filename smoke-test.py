@@ -36,6 +36,7 @@ def ui():
 
 
 def find(nodes, text=None, resource=None, enabled=False):
+    """Controls are found by resource id: the phone UI is translated, ids are not."""
     for node in nodes:
         if text is not None and node.get('text') != text:
             continue
@@ -64,6 +65,10 @@ def wait_for(predicate, timeout):
     raise AssertionError('Timed out waiting for the native game or UI')
 
 
+def in_bar(resource, enabled=True):
+    return lambda: find(ui(), resource=resource, enabled=enabled)
+
+
 try:
     adb('install', '-r', sys.argv[1])
     # The delayed Android immersive-mode hint can consume the first tap after
@@ -72,8 +77,15 @@ try:
     adb('shell', 'svc', 'wifi', 'disable')
     adb('shell', 'svc', 'data', 'disable')
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
-    tutorial = wait_for(lambda: find(ui(), resource='phone_tutorial'), 40)
+    wait_for(lambda: find(ui(), resource='phone_tutorial'), 40)
     screen('01-launcher')
+    # The picker has to describe every bundled story before one is chosen.
+    tap(find(ui(), resource='phone_campaigns'))
+    wait_for(lambda: find(ui(), text='La última luz de Valdara'), 15)
+    screen('01b-campaign-picker')
+    adb('shell', 'input', 'keyevent', 'KEYCODE_BACK')
+    wait_for(lambda: find(ui(), resource='phone_tutorial'), 15)
+    print('Launcher and campaign picker shown', flush=True)
     for attempt in range(4):
         tap(wait_for(lambda: find(ui(), resource='phone_tutorial', enabled=True), 15))
         time.sleep(2)
@@ -89,28 +101,28 @@ try:
     screen('02-tutorial-loaded')
     for step in range(90):
         nodes = ui()
-        if find(nodes, text='Next unit', enabled=True) is not None:
+        if find(nodes, resource='phone_action_cycle', enabled=True) is not None:
             break
         adb('shell', 'input', 'keyevent', 'KEYCODE_ENTER')
         time.sleep(2)
-    if find(ui(), text='Next unit', enabled=True) is None:
+    if find(ui(), resource='phone_action_cycle', enabled=True) is None:
         raise AssertionError('Tutorial did not reach an interactive player turn')
     screen('03-interactive-game')
     print('Native tutorial reached an interactive turn', flush=True)
-    tap(find(ui(), text='More'))
-    wait_for(lambda: find(ui(), text='Objectives'), 15)
+    tap(find(ui(), resource='phone_action_more'))
+    wait_for(in_bar('phone_action_objectives', enabled=False), 15)
     screen('04-touch-menu')
-    tap(find(ui(), text='Objectives', enabled=True))
-    wait_for(lambda: find(ui(), text='Next unit') is not None
-             and find(ui(), text='Next unit', enabled=True) is None, 20)
+    tap(find(ui(), resource='phone_action_objectives', enabled=True))
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None
+             and find(ui(), resource='phone_action_cycle', enabled=True) is None, 20)
     screen('04b-native-objectives')
     adb('shell', 'input', 'keyevent', 'KEYCODE_ENTER')
-    wait_for(lambda: find(ui(), text='Next unit', enabled=True), 20)
-    tap(wait_for(lambda: find(ui(), text='Hide'), 15))
-    wait_for(lambda: find(ui(), text='Controls'), 15)
+    wait_for(in_bar('phone_action_cycle'), 20)
+    tap(find(ui(), resource='phone_bar_toggle'))
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is None, 15)
     screen('05-collapsed-controls')
-    tap(find(ui(), text='Controls'))
-    wait_for(lambda: find(ui(), text='Next unit'), 15)
+    tap(find(ui(), resource='phone_bar_toggle'))
+    wait_for(lambda: find(ui(), resource='phone_action_cycle') is not None, 15)
     adb('shell', 'am', 'force-stop', PACKAGE)
     adb('shell', 'am', 'start', '-n', PACKAGE + '/org.wesnoth.Wesnoth.InitActivity')
     tap(wait_for(lambda: find(ui(), resource='tap_label'), 30))

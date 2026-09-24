@@ -13,12 +13,24 @@ part of the project. See COPYING and copyright for upstream licensing.
 
 ## Implemented
 
-- Landscape Android controls with 48 dp minimum button height and system-scaled
-  labels. The bottom bar reserves surface space, accounts for display cutouts,
-  scrolls on narrow phones, and collapses with a saved preference.
+- Landscape Android controls with 48 dp minimum targets, an icon and a short
+  caption per action, and labels in scaled sp units. The bottom bar reserves
+  surface space, accounts for display cutouts, scrolls on narrow phones, and
+  collapses with a saved preference into a floating chevron.
 - Explicit Move / attack confirmation, next unit, recruit, undo, zoom, and
-  confirmed end turn. More exposes objectives,
+  confirmed end turn. Move / attack is filled in gold and End turn outlined, so
+  the action that commits a move stands apart from the rest. Actions the game
+  cannot accept are dimmed from the same availability mask the native side
+  publishes, so the bar never disagrees with the game, and taps give haptic
+  feedback. More opens scrollable icon rows for objectives,
   save, recall, unit list, leader, unit details, preferences, quit, and touch help.
+- The launcher keeps the display-cutout area clear, shows the build version,
+  reports bundled installation as bytes and a percentage, checks free space
+  before unpacking, and names every original campaign with its protagonist,
+  length and hook before launching it. Its settings menu, dialogs and progress
+  messages are translated alongside the in-game controls.
+  Building the bar and the picker in code uses resource ids, so the emulator
+  checks address controls by id instead of by translated label.
 - JNI/SDL command bridge independent of custom keyboard bindings. Commands run
   on the game thread through the existing legality checks. Out-of-range commands,
   stale events, dialogs, and unavailable actions are rejected. Java polls an

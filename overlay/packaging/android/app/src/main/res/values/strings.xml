@@ -1,33 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
 <resources>
     <string name="app_name">Wesnoth Phone</string>
-    <string name="phone_install_failed">Game setup could not finish</string>
-    <string name="phone_install_retry">Check that your phone has enough free storage, then retry. Your saved games are kept separately.</string>
-    <string name="phone_retry">Retry</string>
-    <string name="phone_game_data">Game content</string>
-    <string name="phone_preparing">Preparing your game…</string>
+    <string name="phone_version">Version %1$s</string>
+
+    <!-- Launcher -->
+    <string name="phone_welcome">A world of strategy, ready for touch</string>
+    <string name="phone_first_launch">The first launch prepares the included campaigns, music and texts. Nothing is downloaded.</string>
     <string name="phone_play">Play Wesnoth</string>
     <string name="phone_tutorial">Learn to play</string>
     <string name="phone_campaigns">Original campaigns · Español</string>
-    <string-array name="phone_campaign_titles">
-        <item>La última luz de Valdara · 3 escenarios</item>
-        <item>Los que escuchan la piedra · 5 escenarios</item>
-        <item>La deuda del cielo · 7 escenarios</item>
-        <item>El trono de ceniza · 9 escenarios · Villana</item>
-        <item>Las mareas sin nombre · 12 escenarios</item>
-        <item>El pacto de las siete brasas · 16 escenarios</item>
-    </string-array>
-    <string name="phone_welcome">A world of strategy, ready for touch</string>
-    <string name="phone_first_launch">The first launch prepares the included campaigns and music. No extra download is needed.</string>
     <string name="phone_settings">Game data and save settings</string>
+
+    <!-- Progress -->
+    <string name="phone_game_data">Game content</string>
+    <string name="phone_preparing">Preparing your game…</string>
+    <string name="phone_launching">Starting Wesnoth…</string>
+    <string name="phone_checking">Checking for updates…</string>
+    <string name="phone_downloading">Downloading %1$s · %2$s of %3$s (%4$d%%)</string>
+    <string name="phone_downloading_unknown">Downloading %1$s · %2$s</string>
+    <string name="phone_unpacking">Preparing %1$s · %2$d / %3$d (%4$d%%)</string>
+    <string name="phone_unpacking_bytes">Preparing %1$s · %2$s / %3$s (%4$d%%)</string>
+    <string name="phone_unpacking_unknown">Preparing %1$s · %2$d</string>
+    <string name="phone_patching">Applying update · %1$d</string>
+    <string name="phone_importing">Importing %1$s…</string>
+    <string name="phone_exporting">Exporting %1$s…</string>
+
+    <!-- Failures -->
+    <string name="phone_install_failed">Game setup could not finish</string>
+    <string name="phone_install_retry">Check that your phone has enough free storage, then retry. Your saved games are kept separately.</string>
+    <string name="phone_install_failed_toast">Installation failed</string>
+    <string name="phone_retry">Retry</string>
+    <string name="phone_data_missing_title">Game data is missing</string>
+    <string name="phone_data_missing_message">The game needs its data before it can start. Connect to the internet to download it, or install a ZIP file from the settings menu.</string>
+    <string name="phone_data_missing_download">Download</string>
+    <string name="phone_exit">Exit</string>
+    <string name="phone_storage_title">Not enough free space</string>
+    <string name="phone_storage_message">Preparing the game needs about %1$s, and %2$s are free. Free some space, then try again. Your saved games are kept separately.</string>
+    <string name="phone_storage_check">Check again</string>
+
+    <!-- Power saver -->
+    <string name="phone_power_title">Battery saver is on</string>
+    <string name="phone_power_message">Android may interrupt the data preparation. Allow this app to run without battery restrictions, or continue anyway.</string>
+    <string name="phone_power_settings">Battery settings</string>
+    <string name="phone_power_ignore">Continue</string>
+
+    <!-- Settings menu -->
+    <string name="phone_menu_clear">Clear game content</string>
+    <string name="phone_menu_zip">Install data from a ZIP file</string>
+    <string name="phone_menu_userdata">Import or export saves and add-ons</string>
+    <string name="phone_clear_title">Delete game content?</string>
+    <string name="phone_clear_message">All game data is deleted, including the content included in the app. Saved games, preferences and add-ons are kept separately.</string>
+    <string name="phone_clear_confirm">Delete</string>
+    <string name="phone_clear_working">Deleting game content…</string>
+    <string name="phone_clear_done">Game content deleted</string>
+    <string name="phone_clear_failed">Could not delete the game content</string>
+    <string name="phone_zip_title">Install from a ZIP file</string>
+    <string name="phone_zip_message">The ZIP file must contain the data, fonts, images, sounds and translations folders of a Wesnoth installation. Automatic updates stay off until you clear the game content.</string>
+    <string name="phone_zip_proceed">Choose ZIP file</string>
+    <string name="phone_userdata_title">Saves and add-ons</string>
+    <string name="phone_userdata_message">Import or export your userdata folder, which holds saved games, add-ons, logs and preferences. Intended for advanced users.</string>
+    <string name="phone_import">Import</string>
+    <string name="phone_export">Export</string>
+    <string name="phone_import_done">Import finished</string>
+    <string name="phone_export_done">Export finished</string>
+    <string name="phone_installed">Game data installed</string>
+
+    <!-- Campaign picker -->
+    <string name="phone_campaigns_title">Choose a story</string>
+    <string name="phone_campaigns_intro">Six independent stories written in Spanish. Tap one to play it.</string>
+    <string-array name="phone_campaign_titles">
+        <item>La última luz de Valdara</item>
+        <item>Los que escuchan la piedra</item>
+        <item>La deuda del cielo</item>
+        <item>El trono de ceniza</item>
+        <item>Las mareas sin nombre</item>
+        <item>El pacto de las siete brasas</item>
+    </string-array>
+    <string-array name="phone_campaign_meta">
+        <item>Alba · 3 scenarios</item>
+        <item>Sira de las Siete Vetas · 5 scenarios</item>
+        <item>Iria Salcedo · 7 scenarios</item>
+        <item>Maura Vey · 9 scenarios · you play the villain</item>
+        <item>Nerea Vado · 12 scenarios</item>
+        <item>Darian de Linde · 16 scenarios</item>
+    </string-array>
+    <string-array name="phone_campaign_hooks">
+        <item>Rescue a coastal city and get its people out in time</item>
+        <item>A people of living stone defends the memory it carries</item>
+        <item>Fight the winged velarios who harvest light</item>
+        <item>Play the villain and build her tyranny step by step</item>
+        <item>Explore an archipelago that is losing its memories</item>
+        <item>Gather an alliance against the empire of Maura</item>
+    </string-array>
+
+    <!-- In-game control bar -->
     <string name="phone_controls">Controls</string>
     <string name="phone_hide">Hide</string>
     <string name="phone_next">Next unit</string>
+    <string name="phone_next_short">Next</string>
     <string name="phone_move_action">Move / attack</string>
     <string name="phone_recruit">Recruit</string>
+    <string name="phone_recruit_short">Recruit</string>
     <string name="phone_undo">Undo</string>
+    <string name="phone_undo_short">Undo</string>
     <string name="phone_end_turn">End turn</string>
-    <string name="phone_zoom_in">Zoom +</string>
-    <string name="phone_zoom_out">Zoom −</string>
+    <string name="phone_end_turn_short">End turn</string>
+    <string name="phone_zoom_in">Zoom in</string>
+    <string name="phone_zoom_in_short">Zoom +</string>
+    <string name="phone_zoom_out">Zoom out</string>
+    <string name="phone_zoom_out_short">Zoom −</string>
     <string name="phone_more">More</string>
     <string name="phone_objectives">Objectives</string>
     <string name="phone_save">Save game</string>
@@ -41,5 +123,5 @@
     <string name="phone_end_confirm">Finish your turn? Units with moves remaining will wait until your next turn.</string>
     <string name="phone_quit_confirm">Return to the main menu? Save your game first to keep your latest progress.</string>
     <string name="phone_help">Touch controls</string>
-    <string name="phone_help_text">Tap your unit, then tap a destination to preview the route. Press Move / attack to move there. To attack, tap a reachable enemy and press Move / attack; you can review weapons and odds before committing.\n\nTap your selected unit again to deselect it, then drag to explore the map. Use Zoom + and Zoom − for a closer view. Long press a hex for its context menu.\n\nNext unit finds another unit. Recruit opens recruitment when available. Undo reverses moves when the game allows it. End turn asks before finishing.\n\nHide collapses this bar to give the map more space. More contains objectives, saves, unit information, and preferences.</string>
+    <string name="phone_help_text">Tap your unit, then tap a destination to preview the route. Press Move / attack to move there. To attack, tap a reachable enemy and press Move / attack; you can review weapons and odds before committing.\n\nTap your selected unit again to deselect it, then drag to explore the map. Zoom + and Zoom − change the scale. Long press a hex for its context menu.\n\nNext unit, Recruit, Undo and End turn act on the current game. Greyed controls are not available yet, and End turn and Quit to menu ask before acting.\n\nThe arrow on the left hides the bar and gives the map more space; tap it again to bring the controls back. More holds objectives, saves, unit information, preferences and this help.</string>
 </resources>

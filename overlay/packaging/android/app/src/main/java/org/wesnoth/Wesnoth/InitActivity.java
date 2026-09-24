@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,20 +47,28 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.StatFs;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.DisplayCutout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.documentfile.provider.DocumentFile;
@@ -72,6 +81,7 @@ public class InitActivity extends Activity {
 	private Properties status = new Properties();
 	private boolean launchTutorial;
 	private String launchCampaign;
+	private AlertDialog dialog;
 
 	private String toSizeString(long bytes) {
 		return String.format("%4.2f MB", (bytes * 1.0f) / (1e6));
@@ -85,6 +95,10 @@ public class InitActivity extends Activity {
 		// Keep the screen on while this activity runs
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+		keepContentOutOfCutouts();
+		((TextView) findViewById(R.id.app_version))
+			.setText(getString(R.string.phone_version, BuildConfig.VERSION_NAME));
+
 		initMainDataDir();
 		
 		status = initStatusFile(new File(dataDir, "status.properties"));
@@ -92,6 +106,33 @@ public class InitActivity extends Activity {
 		initSettingsMenu();
 
 		doPowerCheckAndStart();
+	}
+
+	private int dp(int value) {
+		return Math.round(value * getResources().getDisplayMetrics().density);
+	}
+
+	/**
+	 * The launcher is fullscreen in landscape, so a notch or a rounded corner can
+	 * sit over the top corners where the settings button lives. Reserving the
+	 * cutout insets as padding keeps every control inside the usable area.
+	 */
+	private void keepContentOutOfCutouts() {
+		View screen = findViewById(R.id.screen);
+		screen.setOnApplyWindowInsetsListener((view, insets) -> {
+			int left = 0, top = 0, right = 0, bottom = 0;
+			if (Build.VERSION.SDK_INT >= 28) {
+				DisplayCutout cutout = insets.getDisplayCutout();
+				if (cutout != null) {
+					left = cutout.getSafeInsetLeft();
+					top = cutout.getSafeInsetTop();
+					right = cutout.getSafeInsetRight();
+					bottom = cutout.getSafeInsetBottom();
+				}
+			}
+			view.setPadding(left, top, right, bottom);
+			return insets;
+		});
 	}
 	
 	/**
@@ -142,7 +183,7 @@ public class InitActivity extends Activity {
 		File manifestFile = new File(dataDir, "manifest.txt");
 		
 		try {
-			lastModified = downloadFile(downloadAddr, manifestFile, lastModified, "Checking Manifest...", true);
+			lastModified = downloadFile(downloadAddr, manifestFile, lastModified, getString(R.string.phone_checking), true);
 
 			Properties manifest = new Properties();
 			manifest.load(new FileInputStream(manifestFile));
@@ -230,13 +271,13 @@ public class InitActivity extends Activity {
 		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		if (powerManager.isPowerSaveMode()) {
 			new AlertDialog.Builder(this)
-				.setTitle("Power Saver Detected")
-				.setMessage("Battery Saver is on. Data download may be interrupted. Consider whitelisting this app from battery saver or turning it off.")
+				.setTitle(R.string.phone_power_title)
+				.setMessage(R.string.phone_power_message)
 				// onActivityResult will be called (with reqCode = 1)
 				// after this intent finishes, that is,
 				// the user returns from Battery Saver settings
-				.setPositiveButton("Settings", (dialog, which) -> startActivityForResult(new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS), 1))
-				.setNegativeButton("Ignore", (dialog, which) -> initialize())
+				.setPositiveButton(R.string.phone_power_settings, (dialog, which) -> startActivityForResult(new Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS), 1))
+				.setNegativeButton(R.string.phone_power_ignore, (dialog, which) -> initialize())
 				.setCancelable(false)
 				.show();
 		} else {
@@ -266,16 +307,76 @@ public class InitActivity extends Activity {
 				launchCampaign = null;
 				initializeAssets();
 			});
-			findViewById(R.id.phone_campaigns).setOnClickListener(e ->
-				new AlertDialog.Builder(this)
-					.setTitle(R.string.phone_campaigns)
-					.setItems(R.array.phone_campaign_titles, (dialog, which) -> {
-						launchTutorial = false;
-						launchCampaign = PhoneCampaigns.IDS[which];
-						initializeAssets();
-					})
-					.setNegativeButton(android.R.string.cancel, null).show());
+			findViewById(R.id.phone_campaigns).setOnClickListener(e -> showCampaignPicker());
 		});
+	}
+
+	/**
+	 * Lists the bundled stories with their protagonist, length and hook, so the
+	 * choice is made before the game has to load a main menu. Titles stay in the
+	 * language the campaigns are written in.
+	 */
+	private void showCampaignPicker() {
+		String[] titles = getResources().getStringArray(R.array.phone_campaign_titles);
+		String[] meta = getResources().getStringArray(R.array.phone_campaign_meta);
+		String[] hooks = getResources().getStringArray(R.array.phone_campaign_hooks);
+		int count = Math.min(PhoneCampaigns.IDS.length, titles.length);
+
+		LinearLayout list = new LinearLayout(this);
+		list.setOrientation(LinearLayout.VERTICAL);
+		list.setPadding(dp(10), dp(10), dp(10), dp(10));
+
+		TextView intro = new TextView(this);
+		intro.setText(R.string.phone_campaigns_intro);
+		intro.setTextSize(13);
+		intro.setTextColor(getColor(R.color.phone_text_muted));
+		intro.setPadding(dp(6), dp(2), dp(6), dp(10));
+		list.addView(intro);
+
+		LayoutInflater inflater = LayoutInflater.from(this);
+		for (int i = 0; i < count; ++i) {
+			final String campaign = PhoneCampaigns.IDS[i];
+			View row = inflater.inflate(R.layout.phone_campaign_item, list, false);
+			((TextView) row.findViewById(R.id.phone_campaign_title)).setText(titles[i]);
+			((TextView) row.findViewById(R.id.phone_campaign_meta)).setText(entry(meta, i));
+			((TextView) row.findViewById(R.id.phone_campaign_hook)).setText(entry(hooks, i));
+			row.setOnClickListener(view -> {
+				dismissDialog();
+				launchTutorial = false;
+				launchCampaign = campaign;
+				initializeAssets();
+			});
+			list.addView(row);
+		}
+
+		ScrollView scroll = new ScrollView(this);
+		scroll.addView(list);
+		dialog = new AlertDialog.Builder(this)
+			.setTitle(R.string.phone_campaigns_title)
+			.setView(scroll)
+			.setNegativeButton(android.R.string.cancel, null)
+			.create();
+		dialog.show();
+		stretchToScreen(dialog);
+	}
+
+	private String entry(String[] values, int index) {
+		return index < values.length ? values[index] : "";
+	}
+
+	private void dismissDialog() {
+		if (dialog != null) {
+			dialog.dismiss();
+			dialog = null;
+		}
+	}
+
+	/** Keeps a long picker scrollable in landscape instead of running off screen. */
+	private void stretchToScreen(AlertDialog target) {
+		Window window = target.getWindow();
+		if (window == null) return;
+		window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+			Math.round(getResources().getDisplayMetrics().heightPixels * 0.85f));
 	}
 
 	private void initializeAssets() {
@@ -283,6 +384,10 @@ public class InitActivity extends Activity {
 		showProgressScreen();
 		TextView progressText = findViewById(R.id.download_msg);
 		progressText.setText(R.string.phone_preparing);
+
+		if (bundledInstallPending() && !hasRoomForBundledData()) {
+			return;
+		}
 
 		Executors.newSingleThreadExecutor().execute(() -> {
 			try {
@@ -387,10 +492,10 @@ public class InitActivity extends Activity {
 			} else {
 				runOnUiThread(() -> {
 					new AlertDialog.Builder(this)
-						.setTitle("Data missing!")
-						.setMessage("Gamedata is missing, please download it to proceed (requires network).")
-						.setPositiveButton("OK", (d, res) -> initialize())
-						.setNegativeButton("Exit", (d, res) -> System.exit(0))
+						.setTitle(R.string.phone_data_missing_title)
+						.setMessage(R.string.phone_data_missing_message)
+						.setPositiveButton(R.string.phone_data_missing_download, (d, res) -> initialize())
+						.setNegativeButton(R.string.phone_exit, (d, res) -> System.exit(0))
 						.setCancelable(false)
 						.show();
 				});
@@ -401,7 +506,7 @@ public class InitActivity extends Activity {
 	private void launchWesnoth() {
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		TextView progressText = findViewById(R.id.download_msg);
-		progressText.setText("Launching Wesnoth...");
+		progressText.setText(R.string.phone_launching);
 		Log.d("InitActivity", "Launch wesnoth");
 		Intent launchIntent = new Intent(this, WesnothActivity.class);
 		launchIntent.putExtra("phone_tutorial", launchTutorial);
@@ -463,16 +568,16 @@ public class InitActivity extends Activity {
 			status = initStatusFile(new File(dataDir, "status.properties"));
 			
 			String msg;
-			if (unpackArchive(uri, dataDir, "Custom Data")) {
+			if (unpackArchive(uri, dataDir, getString(R.string.phone_game_data))) {
 				status.setProperty("manual_install", "true");
 				// if we have a custom status.properties bundled inside, merge it with `status`.
 				status.putAll(initStatusFile(new File(dataDir, "status.properties")));
 				status.setProperty("manual_install", "true");
 				status.remove("bundled_data");
 				storeStatus(status);
-				msg = "Installed!";
+				msg = getString(R.string.phone_installed);
 			} else {
-				msg = "Installation failed!";
+				msg = getString(R.string.phone_install_failed_toast);
 			}
 
 			runOnUiThread(() -> {
@@ -484,30 +589,30 @@ public class InitActivity extends Activity {
 
 	private void showClearDataDialog(File dataDir) {
 		new AlertDialog.Builder(this)
-			.setTitle("Confirm Deletion")
-			.setMessage("All gamedata will be completely deleted. Are you sure?")
-			.setPositiveButton("Yes", (dialog, which) -> {
-				Toast.makeText(this, "Clearing data...", Toast.LENGTH_SHORT).show();
+			.setTitle(R.string.phone_clear_title)
+			.setMessage(R.string.phone_clear_message)
+			.setPositiveButton(R.string.phone_clear_confirm, (dialog, which) -> {
+				Toast.makeText(this, R.string.phone_clear_working, Toast.LENGTH_SHORT).show();
 				try {
 					GameDataFiles.deleteTree(dataDir);
-					Toast.makeText(this, "Cleared!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, R.string.phone_clear_done, Toast.LENGTH_SHORT).show();
 					recreate();
 				} catch (IOException ioe) {
 					Log.e("InitActivity", "IO exception", ioe);
-					Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, R.string.phone_clear_failed, Toast.LENGTH_SHORT).show();
 				}
 			})
-			.setNegativeButton("No", null)
+			.setNegativeButton(android.R.string.cancel, null)
 			.setCancelable(false)
 			.show();
 	}
 
 	private void showZIPHelpDialog() {
 		new AlertDialog.Builder(this)
-			.setTitle("Manual Install Guide")
-			.setMessage("The ZIP file should contain data, fonts, images, sounds and translations folders from a Wesnoth PC installation. This also disables automatic updates until you clear the game data.")
-			.setPositiveButton("Proceed", (dialog, which) -> openDataFile())
-			.setNegativeButton("Cancel", null)
+			.setTitle(R.string.phone_zip_title)
+			.setMessage(R.string.phone_zip_message)
+			.setPositiveButton(R.string.phone_zip_proceed, (dialog, which) -> openDataFile())
+			.setNegativeButton(android.R.string.cancel, null)
 			.setCancelable(false)
 			.show();
 	}
@@ -518,80 +623,94 @@ public class InitActivity extends Activity {
 		inttOpen.addCategory(Intent.CATEGORY_OPENABLE);
 		inttOpen.setType("application/zip");
 		inttOpen.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
-		Intent inttOpen2 = Intent.createChooser(inttOpen, "Open ZIP file...");
+		Intent inttOpen2 = Intent.createChooser(inttOpen, getString(R.string.phone_zip_proceed));
 		startActivityForResult(inttOpen2, 2);
 	}
 	
 	private void showImportExportDialog() {
 		new AlertDialog.Builder(this)
-			.setTitle("Import/Export User Data")
-			.setMessage("This allows you to import/export your userdata folder, which contains your add-ons, game saves, logs and so on. Intended for advanced users and UMC creators.")
-			.setPositiveButton("Import", (dialog, which) ->
+			.setTitle(R.string.phone_userdata_title)
+			.setMessage(R.string.phone_userdata_message)
+			.setPositiveButton(R.string.phone_import, (dialog, which) ->
 				// Open directory picker to select import destination
 				startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), 3)
 			)
-			.setNegativeButton("Export", (dialog, which) ->
+			.setNegativeButton(R.string.phone_export, (dialog, which) ->
 				// Open directory picker to select export destination
 				startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), 4)
 			)
-			.setNeutralButton("Cancel", null)
+			.setNeutralButton(android.R.string.cancel, null)
 			.setCancelable(false)
 			.show();
 	}
 	
 	private void importUserData(Uri uri) {
-		Toast.makeText(this, "Importing...", Toast.LENGTH_SHORT).show();
 		Executors.newSingleThreadExecutor().execute(() -> {
 			runOnUiThread(()-> showProgressScreen());
 			DocumentFile targetDir = DocumentFile.fromTreeUri(this, uri);
+			if (targetDir == null) return;
 			for (DocumentFile child : targetDir.listFiles()) {
 				if (!child.getName().equals("gamedata")) {
-					runOnUiThread(()-> updateProgress("Importing " + child.getName(), 0));
+					final String name = child.getName();
+					runOnUiThread(()-> updateProgress(getString(R.string.phone_importing, name), -1));
 					IOUtils.copyRecursive(this, child, getExternalFilesDir(null));
 				}
 			}
 			runOnUiThread(()-> showLaunchScreen());
-			runOnUiThread(()-> Toast.makeText(this, "Imported!", Toast.LENGTH_SHORT).show());
+			runOnUiThread(()-> Toast.makeText(this, R.string.phone_import_done, Toast.LENGTH_SHORT).show());
 		});
 	}
 	
 	private void exportUserData(Uri uri) {
-		Toast.makeText(this, "Exporting...", Toast.LENGTH_SHORT).show();
 		Executors.newSingleThreadExecutor().execute(() -> {
 			runOnUiThread(()-> showProgressScreen());
 			for (File child : getExternalFilesDir(null).listFiles()) {
 				if (!child.getName().equals("gamedata")) {
-					runOnUiThread(()-> updateProgress("Exporting " + child.getName(), 0));
+					final String name = child.getName();
+					runOnUiThread(()-> updateProgress(getString(R.string.phone_exporting, name), -1));
 					IOUtils.copyRecursive(this, child, uri);
 				}
 			}
 			runOnUiThread(()-> showLaunchScreen());
-			runOnUiThread(()-> Toast.makeText(this, "Exported!", Toast.LENGTH_SHORT).show());
+			runOnUiThread(()-> Toast.makeText(this, R.string.phone_export_done, Toast.LENGTH_SHORT).show());
 		});
 	}
 	
-	private void updateProgress(String progressMsg, int progress) {
+	/** percent < 0 leaves the bar indeterminate, which is all a stream can report. */
+	private void updateProgress(String progressMsg, int percent) {
 		TextView progressText = (TextView) findViewById(R.id.download_msg);
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.download_progress);
-		progressBar.setIndeterminate(progress == -1);
-		progressBar.setProgress(progress);
+		progressBar.setMax(100);
+		progressBar.setIndeterminate(percent < 0);
+		if (percent >= 0) {
+			progressBar.setProgress(percent);
+		}
 		progressText.setText(progressMsg);
 	}
 
-	private void updateDownloadProgress(int progress, int max, String type) {
-		updateProgress(
-			String.format("Downloading %s ... (%s/%s)", type, toSizeString(progress), toSizeString(max)),
-			progress);
+	private void updateDownloadProgress(long done, long total, String type) {
+		if (total > 0) {
+			int percent = (int) Math.min(100, done * 100 / total);
+			updateProgress(getString(R.string.phone_downloading, type,
+				toSizeString(done), toSizeString(total), percent), percent);
+		} else {
+			updateProgress(getString(R.string.phone_downloading_unknown, type, toSizeString(done)), -1);
+		}
 	}
 
-	private void updateUnpackProgress(int progress, int max, String type) {
-		// progress starts from 0 but asset counting starts from 1.
-		// also, when installing from zip the total number of files is
-		// not available, so don't show max in that case.
-		String unpackMsg = max > 0
-			? String.format("Unpacking %s assets... (%s/%s)", type, progress+1, max)
-			: String.format("Unpacking %s assets... (%s)", type, progress+1);
-		updateProgress(unpackMsg, max > 0 ? progress : -1);
+	/**
+	 * Bundled installs count archive bytes; ZIP installs count entries, because
+	 * only the byte stream of the bundled archive has a usable total.
+	 */
+	private void updateUnpackProgress(long done, long total, String type, boolean bySize) {
+		if (total <= 0) {
+			updateProgress(getString(R.string.phone_unpacking_unknown, type, done), -1);
+			return;
+		}
+		int percent = (int) Math.min(100, done * 100 / total);
+		updateProgress(bySize
+			? getString(R.string.phone_unpacking_bytes, type, toSizeString(done), toSizeString(total), percent)
+			: getString(R.string.phone_unpacking, type, done, total, percent), percent);
 	}
 
 	private long downloadFile(String url, File destpath, long modified, String typeOrMsg, boolean isCustomMsg) {
@@ -619,33 +738,26 @@ public class InitActivity extends Activity {
 				return newModified;
 			}
 			
-			final int max = conn.getContentLength();
-			final AtomicInteger progress = new AtomicInteger(0);
-			final AtomicInteger length = new AtomicInteger(0);
+			final long max = conn.getContentLength();
 
 			// TODO rewrite to use copyStream function.
+			long done = 0;
+			int lastPercent = -1;
 			byte[] buffer = new byte[8192];
 			try (
 				DataInputStream in = new DataInputStream(conn.getInputStream());
 				OutputStream out = new FileOutputStream(destpath))
 			{
-				runOnUiThread(() -> {
-					ProgressBar progressBar = (ProgressBar) findViewById(R.id.download_progress);
-					progressBar.setMax(max);
-					progressBar.setProgress(0);
-				});
-
-				length.set(in.read(buffer));
-				while (length.get() > 0) {
-					out.write(buffer, 0, length.get());
-					runOnUiThread(() -> {
-						if (isCustomMsg) {
-							updateProgress(typeOrMsg, -1);
-						} else {
-							updateDownloadProgress(progress.addAndGet(length.get()), max, typeOrMsg);
-						}
-					});
-					length.set(in.read(buffer));
+				int length;
+				while ((length = in.read(buffer)) > 0) {
+					out.write(buffer, 0, length);
+					done += length;
+					int percent = max > 0 ? (int) Math.min(100, done * 100 / max) : -1;
+					if (!isCustomMsg && percent != lastPercent) {
+						lastPercent = percent;
+						final long downloaded = done;
+						runOnUiThread(() -> updateDownloadProgress(downloaded, max, typeOrMsg));
+					}
 				}
 			}
 
@@ -663,31 +775,86 @@ public class InitActivity extends Activity {
 		return 0;
 	}
 
-	/** A completed installation is keyed by the checksum of the bundled archive. */
-	private boolean installBundledData() throws IOException {
-		if (Boolean.parseBoolean(status.getProperty("manual_install", "false"))
-			&& !status.containsKey("bundled_data")) return false;
-		String checksum;
+	/** Bundled archive identity, or an exception when this build ships no data. */
+	private String readBundledChecksum() throws IOException {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 			getAssets().open("gamedata.zip.sha256"), StandardCharsets.UTF_8))) {
 			String line = reader.readLine();
 			if (line == null || !line.matches("[0-9a-f]{64}\\s+.+")) {
 				throw new IOException("Invalid bundled data identity");
 			}
-			checksum = line.substring(0, 64);
+			return line.substring(0, 64);
+		}
+	}
+
+	private boolean manualInstallWithoutBundledData() {
+		return Boolean.parseBoolean(status.getProperty("manual_install", "false"))
+			&& !status.containsKey("bundled_data");
+	}
+
+	private boolean bundledDataUnpacked(String checksum) {
+		return checksum.equals(status.getProperty("bundled_data"))
+			&& new File(dataDir, "data/_main.cfg").isFile()
+			&& new File(dataDir, "fonts").isDirectory();
+	}
+
+	/** Mirrors installBundledData's own conditions, so the space check never misfires. */
+	private boolean bundledInstallPending() {
+		if (manualInstallWithoutBundledData()) return false;
+		try {
+			return !bundledDataUnpacked(readBundledChecksum());
+		} catch (IOException noBundledData) {
+			return false; // Small development APKs import their data manually.
+		}
+	}
+
+	/**
+	 * Unpacking the bundled archive on a full phone would stop halfway and leave
+	 * a partial game directory, so the space is checked before anything is written.
+	 */
+	private boolean hasRoomForBundledData() {
+		long archiveSize = bundledArchiveSize();
+		if (archiveSize <= 0) return true;
+		long needed = archiveSize + archiveSize / 5;
+		long free = new StatFs(dataDir.getAbsolutePath()).getAvailableBytes();
+		if (free >= needed) return true;
+
+		new AlertDialog.Builder(this)
+			.setTitle(R.string.phone_storage_title)
+			.setMessage(getString(R.string.phone_storage_message, toSizeString(needed), toSizeString(free)))
+			.setPositiveButton(R.string.phone_storage_check, (dialog, which) -> initializeAssets())
+			.setNegativeButton(android.R.string.cancel, (dialog, which) -> finish())
+			.setCancelable(false)
+			.show();
+		return false;
+	}
+
+	/** Uncompressed asset length, or 0 when it cannot be read. */
+	private long bundledArchiveSize() {
+		try (AssetFileDescriptor descriptor = getAssets().openFd("gamedata.zip")) {
+			return descriptor.getLength();
+		} catch (IOException unreadable) {
+			return 0;
+		}
+	}
+
+	/** A completed installation is keyed by the checksum of the bundled archive. */
+	private boolean installBundledData() throws IOException {
+		if (manualInstallWithoutBundledData()) return false;
+		String checksum;
+		try {
+			checksum = readBundledChecksum();
 		} catch (FileNotFoundException absent) {
 			return false; // Supports small development APKs with manual data import.
 		}
-		if (checksum.equals(status.getProperty("bundled_data"))
-			&& new File(dataDir, "data/_main.cfg").isFile()
-			&& new File(dataDir, "fonts").isDirectory()) return true;
+		if (bundledDataUnpacked(checksum)) return true;
 
 		try (InputStream archive = getAssets().open("gamedata.zip")) {
 			// Only game data is replaced. Saves and preferences are sibling directories.
 			GameDataFiles.deleteTree(dataDir);
 			if (!dataDir.mkdirs()) throw new IOException("Cannot create game-data directory");
 			status.clear();
-			if (!unpackArchive(archive, dataDir, getString(R.string.phone_game_data))) {
+			if (!unpackArchive(archive, dataDir, getString(R.string.phone_game_data), bundledArchiveSize())) {
 				throw new IOException("Cannot unpack bundled game data");
 			}
 			status.setProperty("bundled_data", checksum);
@@ -700,6 +867,13 @@ public class InitActivity extends Activity {
 	private boolean unpackArchive(Uri uri, File destdir, String type) {
 		Log.d("Unpack", "Start");
 
+		long total = -1;
+		try (AssetFileDescriptor descriptor = getContentResolver().openAssetFileDescriptor(uri, "r")) {
+			if (descriptor != null) total = descriptor.getLength();
+		} catch (IOException | SecurityException unknownLength) {
+			total = -1; // Providers may refuse; the bar stays indeterminate then.
+		}
+
 		InputStream zipstream = null;
 		try {
 			zipstream = getContentResolver().openInputStream(uri);
@@ -707,22 +881,19 @@ public class InitActivity extends Activity {
 			Log.e("Unpack", "File not found exception", fe);
 			return false;
 		}
-		return zipstream != null && unpackArchive(zipstream, destdir, type);
+		return zipstream != null && unpackArchive(zipstream, destdir, type, total);
 	}
 
-	private boolean unpackArchive(InputStream zipstream, File destdir, String type) {
-		try (ZipInputStream zf = new ZipInputStream(zipstream)) {
+	private boolean unpackArchive(InputStream zipstream, File destdir, String type, long totalBytes) {
+		CountingInputStream counted = new CountingInputStream(zipstream);
+		try (ZipInputStream zf = new ZipInputStream(counted)) {
 			AtomicInteger progress = new AtomicInteger(1);
+			int lastPercent = -1;
 
-			runOnUiThread(() -> ((ProgressBar) findViewById(R.id.download_progress)).setIndeterminate(true));
+			runOnUiThread(() -> updateUnpackProgress(0, totalBytes, type, true));
 
 			ZipEntry ze;
 			while ((ze = zf.getNextEntry()) != null) {
-				if (progress.get() % 100 == 1) {
-					final int completed = progress.get();
-					runOnUiThread(() -> updateUnpackProgress(completed, 0, type));
-				}
-
 				File destination = GameDataFiles.resolve(destdir, ze.getName());
 				File directory = ze.isDirectory() ? destination : destination.getParentFile();
 				if (!directory.isDirectory() && !directory.mkdirs()) {
@@ -732,6 +903,19 @@ public class InitActivity extends Activity {
 					try (FileOutputStream out = new FileOutputStream(destination)) {
 						IOUtils.copyStreamNoClose(zf, out);
 					}
+				}
+
+				if (totalBytes > 0) {
+					final long done = counted.count();
+					int percent = (int) Math.min(100, done * 100 / totalBytes);
+					if (percent != lastPercent) {
+						lastPercent = percent;
+						runOnUiThread(() -> updateUnpackProgress(done, totalBytes, type, true));
+					}
+				} else if (progress.get() % 100 == 1) {
+					// No usable total: report how many entries have been written.
+					final int completed = progress.get();
+					runOnUiThread(() -> updateUnpackProgress(completed, 0, type, false));
 				}
 
 				progress.incrementAndGet();
@@ -766,17 +950,17 @@ public class InitActivity extends Activity {
 
 			AtomicInteger progress = new AtomicInteger(1);
 			final int max = zf.size();
-
-			runOnUiThread(() -> {
-				ProgressBar progressBar = (ProgressBar) findViewById(R.id.download_progress);
-				progressBar.setMax((int) max);
-				progressBar.setProgress(0);
-			});
+			int lastPercent = -1;
 
 			while (e.hasMoreElements()) {
 				ZipEntry ze = (ZipEntry) e.nextElement();
 
-				runOnUiThread(() -> updateUnpackProgress(progress.get(), max, type));
+				int percent = max > 0 ? (int) Math.min(100, progress.get() * 100 / max) : -1;
+				if (percent != lastPercent) {
+					lastPercent = percent;
+					final long completed = progress.get();
+					runOnUiThread(() -> updateUnpackProgress(completed, max, type, false));
+				}
 
 				if (ze.isDirectory()) {
 					File dir = new File(destdir, ze.getName());
@@ -824,7 +1008,7 @@ public class InitActivity extends Activity {
 		}
 		
 		AtomicInteger progress = new AtomicInteger(1);
-		runOnUiThread(() -> updateProgress("Patching", -1));
+		runOnUiThread(() -> updateProgress(getString(R.string.phone_patching, 0), -1));
 		String line = "";
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 			new FileInputStream(deleteList), StandardCharsets.UTF_8))) {
@@ -835,7 +1019,8 @@ public class InitActivity extends Activity {
 				if (toDelete.exists()) {
 					Log.d("Unpack", "Deleting " + toDelete.getAbsolutePath());
 					if (!toDelete.delete()) throw new IOException("Cannot delete " + toDelete);
-					runOnUiThread(() -> updateProgress("Patching... (" +  progress.incrementAndGet() + ")", -1));
+					final int applied = progress.incrementAndGet();
+					runOnUiThread(() -> updateProgress(getString(R.string.phone_patching, applied), -1));
 				} else {
 					Log.d("Unpack", "File " + toDelete.getAbsolutePath() + " doesn't exist.");
 				}
@@ -848,5 +1033,30 @@ public class InitActivity extends Activity {
 		}
 		
 		return false;
+	}
+
+	/** Counts archive bytes as the unpacker consumes them, so the bar shows real progress. */
+	private static final class CountingInputStream extends FilterInputStream {
+		private long read;
+
+		CountingInputStream(InputStream source) {
+			super(source);
+		}
+
+		@Override public int read() throws IOException {
+			int value = super.read();
+			if (value >= 0) ++read;
+			return value;
+		}
+
+		@Override public int read(byte[] buffer, int offset, int length) throws IOException {
+			int count = super.read(buffer, offset, length);
+			if (count > 0) read += count;
+			return count;
+		}
+
+		long count() {
+			return read;
+		}
 	}
 }

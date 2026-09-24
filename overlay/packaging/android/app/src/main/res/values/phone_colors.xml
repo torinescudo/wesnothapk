@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
+<!-- One palette for the launcher and the in-game control bar. -->
+<resources>
+    <color name="phone_surface">#FF0D1823</color>
+    <color name="phone_surface_alt">#FF213C45</color>
+    <color name="phone_bar">#FF182027</color>
+    <color name="phone_panel">#FF14212B</color>
+    <color name="phone_button">#FF26333D</color>
+    <color name="phone_button_pressed">#FF3B5560</color>
+    <color name="phone_button_outline">#FFE0C080</color>
+    <color name="phone_button_outline_pressed">#FF2A3F4A</color>
+    <color name="phone_icon_button">#1AFFFFFF</color>
+    <color name="phone_icon_button_pressed">#4DFFFFFF</color>
+    <color name="phone_gold">#FFE0C080</color>
+    <color name="phone_gold_pressed">#FFB89751</color>
+    <color name="phone_ink">#FF162731</color>
+    <color name="phone_text">#FFF7EBD1</color>
+    <color name="phone_text_secondary">#FFCAD7D9</color>
+    <color name="phone_text_muted">#FF97AEBB</color>
+    <color name="phone_text_on_button">#FFEAF2F5</color>
+</resources>

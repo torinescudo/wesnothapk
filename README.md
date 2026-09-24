@@ -6,8 +6,11 @@ with the source changes in `overlay/`. It is a development build, not an officia
 Wesnoth release.
 
 The phone interface adds large collapsible controls for move/attack confirmation, next unit, recruitment,
-undo, zoom, and confirmed end turn. More provides saves, objectives and unit
-information. Existing campaigns, multiplayer, add-ons, music, and game rules
+undo, zoom, and confirmed end turn. Every control carries an icon and a short
+caption, actions the game cannot accept are dimmed, and the settings menu, dialogs
+and progress messages are translated. More provides saves, objectives and unit
+information, and the campaign selector names each story with its protagonist,
+length and hook. Existing campaigns, multiplayer, add-ons, music, and game rules
 come from the full upstream source.
 
 **Crónicas de la Brasa y la Marea** adds six original Spanish-language fantasy

@@ -3,21 +3,35 @@ package org.wesnoth.Wesnoth;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Handler;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
-/** Native-sized, accessible controls surrounding the SDL game surface. */
+/**
+ * Native-sized touch controls surrounding the SDL game surface.
+ *
+ * The bar keeps the actions a turn is played with within thumb reach, each with
+ * an icon and a short caption; every control also reports its full game action
+ * as a content description. Controls the game cannot accept yet are dimmed
+ * rather than removed, so the bar never reflows while a unit is selected.
+ */
 final class PhoneControls {
     // Wire IDs match src/phone_actions.hpp. No dependency on editable hotkeys.
     static final String[] ACTIONS = {
@@ -25,6 +39,16 @@ final class PhoneControls {
         "objectives", "save", "recall", "unitlist", "leader", "describeunit",
         "preferences", "quit", "moveaction"
     };
+
+    private static final int END_TURN = 3;
+    private static final int QUIT = 13;
+    private static final int MOVE_ACTION = 14;
+
+    /** Actions on the always-visible bar, in reading order. */
+    private static final int[] BAR_ACTIONS = { MOVE_ACTION, 0, 1, 2, 4, 5 };
+    /** Actions that only need room once the More sheet is open. */
+    private static final int[] SHEET_ACTIONS = { 6, 7, 8, 9, 10, 11, 12, QUIT };
+
     private static final int[] LABELS = {
         R.string.phone_next, R.string.phone_recruit, R.string.phone_undo,
         R.string.phone_end_turn, R.string.phone_zoom_in, R.string.phone_zoom_out,
@@ -32,12 +56,37 @@ final class PhoneControls {
         R.string.phone_units, R.string.phone_leader, R.string.phone_unit_info,
         R.string.phone_preferences, R.string.phone_quit, R.string.phone_move_action
     };
+    /** Short bar captions. Zero keeps the full label, which is already short. */
+    private static final int[] SHORT_LABELS = {
+        R.string.phone_next_short, R.string.phone_recruit_short, R.string.phone_undo_short,
+        R.string.phone_end_turn_short, R.string.phone_zoom_in_short, R.string.phone_zoom_out_short,
+        0, 0, 0, 0, 0, 0, 0, 0, 0
+    };
+    private static final int[] ICONS = {
+        R.drawable.phone_ic_next, R.drawable.phone_ic_recruit, R.drawable.phone_ic_undo,
+        R.drawable.phone_ic_end_turn, R.drawable.phone_ic_zoom_in, R.drawable.phone_ic_zoom_out,
+        R.drawable.phone_ic_objectives, R.drawable.phone_ic_save, R.drawable.phone_ic_recall,
+        R.drawable.phone_ic_units, R.drawable.phone_ic_leader, R.drawable.phone_ic_unit_info,
+        R.drawable.phone_ic_preferences, R.drawable.phone_ic_quit, R.drawable.phone_ic_move
+    };
+    private static final int[] VIEW_IDS = {
+        R.id.phone_action_cycle, R.id.phone_action_recruit, R.id.phone_action_undo,
+        R.id.phone_action_endturn, R.id.phone_action_zoomin, R.id.phone_action_zoomout,
+        R.id.phone_action_objectives, R.id.phone_action_save, R.id.phone_action_recall,
+        R.id.phone_action_unitlist, R.id.phone_action_leader, R.id.phone_action_describeunit,
+        R.id.phone_action_preferences, R.id.phone_action_quit, R.id.phone_action_moveaction
+    };
+
+    private static final int POLL_MS = 250;
+    private static final int FOCUS_WAIT_MS = 4000;
+    private static final float CAPTION_SP = 12f;
+    private static final float SHEET_CAPTION_SP = 16f;
 
     private final WesnothActivity activity;
     private final View surface;
     private final LinearLayout bar;
     private final LinearLayout actions;
-    private final Button toggle;
+    private final ImageButton toggle;
     private final Button more;
     private final Button[] buttons = new Button[ACTIONS.length];
     private final SharedPreferences settings;
@@ -53,10 +102,12 @@ final class PhoneControls {
         this.surface = surface;
         settings = activity.getSharedPreferences("phone_controls", 0);
         expanded = settings.getBoolean("expanded", true);
+
         bar = new LinearLayout(activity);
+        bar.setId(R.id.phone_bar);
         bar.setOrientation(LinearLayout.HORIZONTAL);
         bar.setGravity(Gravity.CENTER_VERTICAL);
-        bar.setBackgroundColor(Color.rgb(24, 32, 39));
+        bar.setBackgroundResource(R.drawable.phone_bar_background);
         bar.setPadding(dp(4), dp(2), dp(4), dp(2));
         bar.setVisibility(View.GONE);
         bar.setOnApplyWindowInsetsListener((view, insets) -> {
@@ -70,34 +121,62 @@ final class PhoneControls {
             return insets;
         });
 
-        toggle = button(R.string.phone_controls);
+        toggle = new ImageButton(activity);
+        toggle.setId(R.id.phone_bar_toggle);
+        toggle.setBackgroundResource(R.drawable.phone_icon_button);
+        toggle.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        toggle.setPadding(dp(12), dp(12), dp(12), dp(12));
+        toggle.setMinimumWidth(dp(48));
+        toggle.setMinimumHeight(dp(48));
         toggle.setOnClickListener(view -> {
+            haptic(view);
             expanded = !expanded;
             settings.edit().putBoolean("expanded", expanded).apply();
             updateLayout(previousMask);
         });
-        bar.addView(toggle);
+        bar.addView(toggle, new LinearLayout.LayoutParams(dp(48), dp(48)));
 
         HorizontalScrollView scroll = new HorizontalScrollView(activity);
         scroll.setFillViewport(true);
+        scroll.setHorizontalScrollBarEnabled(false);
         actions = new LinearLayout(activity);
+        actions.setId(R.id.phone_bar_actions);
         actions.setGravity(Gravity.CENTER_VERTICAL);
         scroll.addView(actions);
         bar.addView(scroll, new LinearLayout.LayoutParams(0,
             ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        for (int id : new int[] {14, 0, 1, 2, 4, 5}) {
+
+        for (int id : BAR_ACTIONS) {
             final int action = id;
-            buttons[id] = button(LABELS[id]);
-            buttons[id].setOnClickListener(view -> send(action));
-            actions.addView(buttons[id]);
+            boolean primary = action == MOVE_ACTION;
+            buttons[action] = barButton(action,
+                primary ? R.color.phone_ink : R.color.phone_text_on_button,
+                primary ? R.drawable.phone_button_primary : R.drawable.phone_button);
+            buttons[action].setOnClickListener(view -> {
+                haptic(view);
+                send(action);
+            });
+            actions.addView(buttons[action], actionParams());
         }
-        more = button(R.string.phone_more);
-        more.setOnClickListener(view -> showMore());
-        bar.addView(more);
-        buttons[3] = button(LABELS[3]);
-        buttons[3].setTextColor(Color.rgb(255, 216, 128));
-        buttons[3].setOnClickListener(view -> confirm(3));
-        bar.addView(buttons[3]);
+
+        more = barButton(-1, R.color.phone_text_on_button, R.drawable.phone_button);
+        more.setId(R.id.phone_action_more);
+        more.setText(R.string.phone_more);
+        more.setContentDescription(activity.getString(R.string.phone_more));
+        setIcon(more, R.drawable.phone_ic_more, R.color.phone_text_on_button);
+        more.setOnClickListener(view -> {
+            haptic(view);
+            showMore();
+        });
+        bar.addView(more, actionParams());
+
+        buttons[END_TURN] = barButton(END_TURN, R.color.phone_gold,
+            R.drawable.phone_button_accent);
+        buttons[END_TURN].setOnClickListener(view -> {
+            haptic(view);
+            confirm(END_TURN);
+        });
+        bar.addView(buttons[END_TURN], actionParams());
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -110,18 +189,75 @@ final class PhoneControls {
         return Math.round(value * activity.getResources().getDisplayMetrics().density);
     }
 
-    private Button button(int label) {
-        Button result = new Button(activity);
-        result.setText(label);
-        result.setContentDescription(activity.getString(label));
-        result.setAllCaps(false);
-        result.setTextSize(14);
-        result.setMinHeight(dp(48));
-        result.setMinimumHeight(dp(48));
-        result.setMinWidth(dp(64));
-        result.setTextColor(Color.WHITE);
-        result.setPadding(dp(12), dp(4), dp(12), dp(4));
-        return result;
+    private void haptic(View view) {
+        view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+    }
+
+    private int caption(int action) {
+        if (action < 0) return 0;
+        int shortLabel = SHORT_LABELS[action];
+        return shortLabel != 0 ? shortLabel : LABELS[action];
+    }
+
+    private void setIcon(Button view, int icon, int tint) {
+        Resources resources = activity.getResources();
+        Drawable drawable = resources.getDrawable(icon, activity.getTheme());
+        drawable.setTint(activity.getColor(tint));
+        int size = dp(18);
+        drawable.setBounds(0, 0, size, size);
+        view.setCompoundDrawablePadding(dp(6));
+        view.setCompoundDrawablesRelative(drawable, null, null, null);
+    }
+
+    /** One bar control: at least 48 dp tall and wide, with an icon and a caption. */
+    private Button barButton(int action, int textColor, int background) {
+        Button view = new Button(activity);
+        if (action >= 0) {
+            view.setId(VIEW_IDS[action]);
+            view.setText(caption(action));
+            view.setContentDescription(activity.getString(LABELS[action]));
+            setIcon(view, ICONS[action], textColor);
+        }
+        view.setAllCaps(false);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, CAPTION_SP);
+        view.setMaxLines(2);
+        view.setIncludeFontPadding(false);
+        view.setGravity(Gravity.CENTER);
+        view.setTextColor(activity.getColor(textColor));
+        view.setMinHeight(dp(48));
+        view.setMinimumHeight(dp(48));
+        view.setMinWidth(dp(48));
+        view.setPaddingRelative(dp(10), dp(2), dp(10), dp(2));
+        view.setStateListAnimator(null);
+        view.setBackgroundResource(background);
+        return view;
+    }
+
+    private LinearLayout.LayoutParams actionParams() {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMarginStart(dp(4));
+        return params;
+    }
+
+    /** One More-sheet row: full action name, icon, and a comfortable height. */
+    private Button sheetButton(int label, int id, int icon) {
+        Button view = new Button(activity);
+        view.setId(id);
+        view.setText(label);
+        view.setContentDescription(activity.getString(label));
+        view.setAllCaps(false);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_SP, SHEET_CAPTION_SP);
+        view.setIncludeFontPadding(false);
+        view.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        view.setTextColor(activity.getColor(R.color.phone_text));
+        setIcon(view, icon, R.color.phone_text);
+        view.setMinHeight(dp(56));
+        view.setMinimumHeight(dp(56));
+        view.setPaddingRelative(dp(16), dp(8), dp(16), dp(8));
+        view.setStateListAnimator(null);
+        view.setBackgroundResource(R.drawable.phone_sheet_item);
+        return view;
     }
 
     private final Runnable poll = new Runnable() {
@@ -139,7 +275,7 @@ final class PhoneControls {
                 }
                 updateLayout(mask);
             }
-            handler.postDelayed(this, 250);
+            handler.postDelayed(this, POLL_MS);
         }
     };
 
@@ -152,19 +288,16 @@ final class PhoneControls {
     void pause() {
         running = false;
         handler.removeCallbacksAndMessages(null);
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
-        }
+        dismissDialog();
     }
 
     private void updateLayout(int mask) {
         bar.setVisibility(mask >= 0 ? View.VISIBLE : View.GONE);
-        toggle.setText(expanded ? R.string.phone_hide : R.string.phone_controls);
+        toggle.setImageResource(expanded ? R.drawable.phone_ic_collapse : R.drawable.phone_ic_expand);
         toggle.setContentDescription(activity.getString(
             expanded ? R.string.phone_hide : R.string.phone_controls));
         ((View) actions.getParent()).setVisibility(expanded ? View.VISIBLE : View.GONE);
-        buttons[3].setVisibility(expanded ? View.VISIBLE : View.GONE);
+        buttons[END_TURN].setVisibility(expanded ? View.VISIBLE : View.GONE);
         more.setVisibility(expanded ? View.VISIBLE : View.GONE);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bar.getLayoutParams();
         params.width = expanded ? ViewGroup.LayoutParams.MATCH_PARENT : ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -174,6 +307,7 @@ final class PhoneControls {
     }
 
     private void reserveSurface() {
+        // A collapsed bar keeps no strip: the toggle floats, so the map gains the space.
         int height = bar.getVisibility() == View.VISIBLE && expanded ? bar.getHeight() : 0;
         if (height == reservedHeight) return;
         reservedHeight = height;
@@ -183,60 +317,105 @@ final class PhoneControls {
         surface.setLayoutParams(params);
     }
 
-    private void send(int action) {
-        final long deadline = SystemClock.uptimeMillis() + 1000;
+    private void send(final int action) {
+        final long deadline = SystemClock.uptimeMillis() + FOCUS_WAIT_MS;
         handler.post(new Runnable() {
             @Override public void run() {
                 if (!running) return;
-                // Android 6 pauses SDL when a native dialog takes focus. Wait
-                // for focus and a fresh game snapshot after dismissing it.
+                // The buttons already follow this mask, so refusing here matches
+                // what the player sees rather than waiting for a lost action.
+                int mask = WesnothActivity.nativeGetPhoneActions();
+                if (mask < 0 || (mask & (1 << action)) == 0) {
+                    unavailable();
+                    return;
+                }
+                // Android 6 pauses SDL when a dialog takes focus. Wait for focus
+                // and a fresh game snapshot before giving up.
                 if (activity.hasWindowFocus()
                     && WesnothActivity.nativeQueuePhoneAction(action)) return;
                 if (SystemClock.uptimeMillis() < deadline) {
                     handler.postDelayed(this, 50);
                 } else {
-                    Toast.makeText(activity, R.string.phone_unavailable, Toast.LENGTH_SHORT).show();
+                    unavailable();
                 }
             }
         });
     }
 
+    private void unavailable() {
+        Toast.makeText(activity, R.string.phone_unavailable, Toast.LENGTH_SHORT).show();
+    }
+
+    private void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
     private void confirm(int action) {
         dialog = new AlertDialog.Builder(activity)
             .setTitle(LABELS[action])
-            .setMessage(action == 3 ? R.string.phone_end_confirm : R.string.phone_quit_confirm)
+            .setMessage(action == END_TURN ? R.string.phone_end_confirm : R.string.phone_quit_confirm)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(LABELS[action], (d, which) -> send(action)).create();
+            .setPositiveButton(LABELS[action], (d, which) -> {
+                dialog = null;
+                send(action);
+            }).create();
         dialog.show();
     }
 
     private void showMore() {
         LinearLayout list = new LinearLayout(activity);
         list.setOrientation(LinearLayout.VERTICAL);
+        list.setPadding(dp(10), dp(10), dp(10), dp(10));
         int mask = WesnothActivity.nativeGetPhoneActions();
-        for (int id = 6; id < 14; ++id) {
+        for (int id : SHEET_ACTIONS) {
             final int action = id;
-            Button entry = button(LABELS[id]);
-            entry.setEnabled(mask >= 0 && (mask & (1 << id)) != 0);
-            entry.setOnClickListener(v -> {
-                dialog.dismiss();
-                if (action == 13) confirm(action); else send(action);
+            Button entry = sheetButton(LABELS[action], VIEW_IDS[action], ICONS[action]);
+            boolean enabled = mask >= 0 && (mask & (1 << action)) != 0;
+            entry.setEnabled(enabled);
+            entry.setAlpha(enabled ? 1f : 0.4f);
+            entry.setOnClickListener(view -> {
+                haptic(view);
+                dismissDialog();
+                if (action == QUIT) confirm(action); else send(action);
             });
             list.addView(entry);
         }
-        Button help = button(R.string.phone_help);
-        help.setOnClickListener(v -> {
-            dialog.dismiss();
-            dialog = new AlertDialog.Builder(activity).setTitle(R.string.phone_help)
-                .setMessage(R.string.phone_help_text)
-                .setPositiveButton(android.R.string.ok, null).create();
-            dialog.show();
+        Button help = sheetButton(R.string.phone_help, R.id.phone_action_help, R.drawable.phone_ic_help);
+        help.setOnClickListener(view -> {
+            haptic(view);
+            dismissDialog();
+            showHelp();
         });
         list.addView(help);
-        android.widget.ScrollView scroll = new android.widget.ScrollView(activity);
+
+        ScrollView scroll = new ScrollView(activity);
         scroll.addView(list);
-        dialog = new AlertDialog.Builder(activity).setTitle(R.string.phone_more)
-            .setView(scroll).setNegativeButton(android.R.string.cancel, null).create();
+        dialog = new AlertDialog.Builder(activity)
+            .setTitle(R.string.phone_more)
+            .setView(scroll)
+            .setNegativeButton(android.R.string.cancel, null)
+            .create();
         dialog.show();
+        stretchToScreen(dialog);
+    }
+
+    private void showHelp() {
+        dialog = new AlertDialog.Builder(activity)
+            .setTitle(R.string.phone_help)
+            .setMessage(R.string.phone_help_text)
+            .setPositiveButton(android.R.string.ok, null)
+            .create();
+        dialog.show();
+    }
+
+    /** Keeps a long list scrollable in landscape instead of running off screen. */
+    private void stretchToScreen(AlertDialog target) {
+        Window window = target.getWindow();
+        if (window == null) return;
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+            Math.round(activity.getResources().getDisplayMetrics().heightPixels * 0.85f));
     }
 }

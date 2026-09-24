@@ -1,25 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
 <resources>
     <string name="app_name">Wesnoth Phone</string>
-    <string name="phone_install_failed">No se pudo preparar el juego</string>
-    <string name="phone_install_retry">Comprueba que haya espacio libre y vuelve a intentarlo. Las partidas se guardan por separado.</string>
-    <string name="phone_retry">Reintentar</string>
-    <string name="phone_game_data">Contenido del juego</string>
-    <string name="phone_preparing">Preparando el juego…</string>
+    <string name="phone_version">Versión %1$s</string>
+
+    <!-- Launcher -->
+    <string name="phone_welcome">Un mundo de estrategia al alcance de tus dedos</string>
+    <string name="phone_first_launch">El primer inicio prepara las campañas, la música y los textos incluidos. No se descarga nada.</string>
     <string name="phone_play">Jugar a Wesnoth</string>
     <string name="phone_tutorial">Aprender a jugar</string>
     <string name="phone_campaigns">Campañas originales</string>
-    <string name="phone_welcome">Un mundo de estrategia al alcance de tus dedos</string>
-    <string name="phone_first_launch">El primer inicio prepara las campañas y la música incluidas. No necesitas descargar nada más.</string>
     <string name="phone_settings">Contenido y partidas guardadas</string>
+
+    <!-- Progress -->
+    <string name="phone_game_data">Contenido del juego</string>
+    <string name="phone_preparing">Preparando el juego…</string>
+    <string name="phone_launching">Iniciando Wesnoth…</string>
+    <string name="phone_checking">Buscando actualizaciones…</string>
+    <string name="phone_downloading">Descargando %1$s · %2$s de %3$s (%4$d%%)</string>
+    <string name="phone_downloading_unknown">Descargando %1$s · %2$s</string>
+    <string name="phone_unpacking">Preparando %1$s · %2$d / %3$d (%4$d%%)</string>
+    <string name="phone_unpacking_bytes">Preparando %1$s · %2$s / %3$s (%4$d%%)</string>
+    <string name="phone_unpacking_unknown">Preparando %1$s · %2$d</string>
+    <string name="phone_patching">Aplicando actualización · %1$d</string>
+    <string name="phone_importing">Importando %1$s…</string>
+    <string name="phone_exporting">Exportando %1$s…</string>
+
+    <!-- Failures -->
+    <string name="phone_install_failed">No se pudo preparar el juego</string>
+    <string name="phone_install_retry">Comprueba que haya espacio libre y vuelve a intentarlo. Las partidas se guardan por separado.</string>
+    <string name="phone_install_failed_toast">No se pudo instalar</string>
+    <string name="phone_retry">Reintentar</string>
+    <string name="phone_data_missing_title">Faltan los datos del juego</string>
+    <string name="phone_data_missing_message">El juego necesita sus datos para empezar. Conéctate a internet para descargarlos o instala un archivo ZIP desde el menú de ajustes.</string>
+    <string name="phone_data_missing_download">Descargar</string>
+    <string name="phone_exit">Salir</string>
+    <string name="phone_storage_title">No hay espacio libre suficiente</string>
+    <string name="phone_storage_message">Preparar el juego necesita unos %1$s y quedan %2$s libres. Libera espacio e inténtalo de nuevo. Las partidas se guardan por separado.</string>
+    <string name="phone_storage_check">Comprobar otra vez</string>
+
+    <!-- Power saver -->
+    <string name="phone_power_title">El ahorro de batería está activado</string>
+    <string name="phone_power_message">Android puede interrumpir la preparación de datos. Permite que esta aplicación funcione sin restricciones de batería o continúa igualmente.</string>
+    <string name="phone_power_settings">Ajustes de batería</string>
+    <string name="phone_power_ignore">Continuar</string>
+
+    <!-- Settings menu -->
+    <string name="phone_menu_clear">Borrar el contenido del juego</string>
+    <string name="phone_menu_zip">Instalar datos desde un archivo ZIP</string>
+    <string name="phone_menu_userdata">Importar o exportar partidas y complementos</string>
+    <string name="phone_clear_title">¿Borrar el contenido del juego?</string>
+    <string name="phone_clear_message">Se borran todos los datos del juego, incluidos los que vienen con la aplicación. Las partidas guardadas, las preferencias y los complementos se conservan aparte.</string>
+    <string name="phone_clear_confirm">Borrar</string>
+    <string name="phone_clear_working">Borrando el contenido del juego…</string>
+    <string name="phone_clear_done">Contenido del juego borrado</string>
+    <string name="phone_clear_failed">No se pudo borrar el contenido del juego</string>
+    <string name="phone_zip_title">Instalar desde un archivo ZIP</string>
+    <string name="phone_zip_message">El ZIP debe contener las carpetas data, fonts, images, sounds y translations de una instalación de Wesnoth. Las actualizaciones automáticas quedan desactivadas hasta que borres el contenido del juego.</string>
+    <string name="phone_zip_proceed">Elegir archivo ZIP</string>
+    <string name="phone_userdata_title">Partidas y complementos</string>
+    <string name="phone_userdata_message">Importa o exporta tu carpeta de usuario, que contiene partidas guardadas, complementos, registros y preferencias. Pensado para usuarios avanzados.</string>
+    <string name="phone_import">Importar</string>
+    <string name="phone_export">Exportar</string>
+    <string name="phone_import_done">Importación terminada</string>
+    <string name="phone_export_done">Exportación terminada</string>
+    <string name="phone_installed">Datos del juego instalados</string>
+
+    <!-- Campaign picker -->
+    <string name="phone_campaigns_title">Elige una historia</string>
+    <string name="phone_campaigns_intro">Seis historias independientes escritas en español. Toca una para jugarla.</string>
+    <string-array name="phone_campaign_titles">
+        <item>La última luz de Valdara</item>
+        <item>Los que escuchan la piedra</item>
+        <item>La deuda del cielo</item>
+        <item>El trono de ceniza</item>
+        <item>Las mareas sin nombre</item>
+        <item>El pacto de las siete brasas</item>
+    </string-array>
+    <string-array name="phone_campaign_meta">
+        <item>Alba · 3 escenarios</item>
+        <item>Sira de las Siete Vetas · 5 escenarios</item>
+        <item>Iria Salcedo · 7 escenarios</item>
+        <item>Maura Vey · 9 escenarios · encarnas a la villana</item>
+        <item>Nerea Vado · 12 escenarios</item>
+        <item>Darian de Linde · 16 escenarios</item>
+    </string-array>
+    <string-array name="phone_campaign_hooks">
+        <item>Rescatar a tiempo a una ciudad costera y evacuarla</item>
+        <item>Un pueblo de piedra viva defiende la memoria que guarda</item>
+        <item>Combatir a los velarios alados que cosechan la luz</item>
+        <item>Encarnar a una villana y construir su tiranía paso a paso</item>
+        <item>Explorar un archipiélago que pierde sus recuerdos</item>
+        <item>Reunir una alianza contra el imperio de Maura</item>
+    </string-array>
+
+    <!-- In-game control bar -->
     <string name="phone_controls">Controles</string>
     <string name="phone_hide">Ocultar</string>
     <string name="phone_next">Otra unidad</string>
+    <string name="phone_next_short">Otra</string>
     <string name="phone_move_action">Mover / atacar</string>
     <string name="phone_recruit">Reclutar</string>
+    <string name="phone_recruit_short">Reclutar</string>
     <string name="phone_undo">Deshacer</string>
+    <string name="phone_undo_short">Deshacer</string>
     <string name="phone_end_turn">Terminar turno</string>
-    <string name="phone_zoom_in">Zoom +</string>
-    <string name="phone_zoom_out">Zoom −</string>
+    <string name="phone_end_turn_short">Terminar</string>
+    <string name="phone_zoom_in">Acercar</string>
+    <string name="phone_zoom_in_short">Zoom +</string>
+    <string name="phone_zoom_out">Alejar</string>
+    <string name="phone_zoom_out_short">Zoom −</string>
     <string name="phone_more">Más</string>
     <string name="phone_objectives">Objetivos</string>
     <string name="phone_save">Guardar partida</string>
@@ -33,5 +123,5 @@
     <string name="phone_end_confirm">¿Terminar el turno? Las unidades que aún puedan moverse esperarán hasta tu próximo turno.</string>
     <string name="phone_quit_confirm">¿Volver al menú principal? Guarda antes la partida para conservar tu progreso más reciente.</string>
     <string name="phone_help">Controles táctiles</string>
-    <string name="phone_help_text">Toca tu unidad y después un destino para ver la ruta. Pulsa Mover / atacar para confirmar. Para atacar, toca un enemigo al alcance y pulsa Mover / atacar; podrás revisar las armas y probabilidades antes de confirmar.\n\nToca otra vez la unidad seleccionada para deseleccionarla y arrastra para explorar el mapa. Usa Zoom + y Zoom − para cambiar la escala. Mantén pulsada una casilla para abrir su menú.\n\nOtra unidad busca una unidad disponible. Reclutar abre el reclutamiento. Deshacer revierte movimientos cuando las reglas lo permiten. Terminar turno pide confirmación.\n\nOcultar reduce esta barra. Más contiene objetivos, partidas guardadas, información de unidades y preferencias.</string>
+    <string name="phone_help_text">Toca tu unidad y después un destino para ver la ruta. Pulsa Mover / atacar para confirmar. Para atacar, toca un enemigo al alcance y pulsa Mover / atacar; podrás revisar las armas y probabilidades antes de confirmar.\n\nToca otra vez la unidad seleccionada para deseleccionarla y arrastra para explorar el mapa. Zoom + y Zoom − cambian la escala. Mantén pulsada una casilla para abrir su menú.\n\nOtra unidad, Reclutar, Deshacer y Terminar actúan sobre la partida actual. Los controles en gris aún no están disponibles, y Terminar y Volver al menú piden confirmación.\n\nLa flecha de la izquierda oculta la barra y deja más espacio al mapa; tócala otra vez para recuperar los controles. Más contiene objetivos, partidas guardadas, información de unidades, preferencias y esta ayuda.</string>
 </resources>

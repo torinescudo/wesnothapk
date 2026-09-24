@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
+<!-- Resource ids for views built in code: stable handles for tests and automation. -->
+<resources>
+    <item name="phone_bar" type="id" />
+    <item name="phone_bar_toggle" type="id" />
+    <item name="phone_bar_actions" type="id" />
+    <item name="phone_action_cycle" type="id" />
+    <item name="phone_action_recruit" type="id" />
+    <item name="phone_action_undo" type="id" />
+    <item name="phone_action_endturn" type="id" />
+    <item name="phone_action_zoomin" type="id" />
+    <item name="phone_action_zoomout" type="id" />
+    <item name="phone_action_moveaction" type="id" />
+    <item name="phone_action_objectives" type="id" />
+    <item name="phone_action_save" type="id" />
+    <item name="phone_action_recall" type="id" />
+    <item name="phone_action_unitlist" type="id" />
+    <item name="phone_action_leader" type="id" />
+    <item name="phone_action_describeunit" type="id" />
+    <item name="phone_action_preferences" type="id" />
+    <item name="phone_action_quit" type="id" />
+    <item name="phone_action_help" type="id" />
+    <item name="phone_action_more" type="id" />
+</resources>
