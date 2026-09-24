@@ -34,7 +34,10 @@ class PhoneContractTest(unittest.TestCase):
         self.assertEqual(cpp_ids, java_ids, 'Wire drift could execute the wrong game action')
         self.assertEqual(len(cpp_ids), len(set(cpp_ids)))
         self.assertLessEqual(len(cpp_ids), 31, 'JNI availability mask is a signed int')
-        commands = (ROOT / 'src/hotkey/hotkey_command.cpp').read_text(encoding='utf-8')
+        source = ROOT / 'src/hotkey/hotkey_command.cpp'
+        if not source.is_file():
+            self.skipTest('the native source only exists in a reconstructed tree')
+        commands = source.read_text(encoding='utf-8')
         for command in cpp_ids:
             self.assertIn('"' + command + '"', commands)
 
