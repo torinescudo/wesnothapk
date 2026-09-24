@@ -47,13 +47,13 @@ std::atomic<Uint64> phone_actions_updated{0};
 // never has to know about fingers beyond "do not pan while pinching".
 struct pinch_state {
 	static constexpr int max_fingers = 2;
-	int ids[max_fingers] = {-1, -1};
+	Uint64 ids[max_fingers] = {0, 0};
 	float x[max_fingers] = {0.f, 0.f};
 	float y[max_fingers] = {0.f, 0.f};
 	float last_distance_sq = 0.f;
 	bool pinching = false;
 
-	int slot_for(int id) const
+	int slot_for(Uint64 id) const
 	{
 		for(int i = 0; i < max_fingers; ++i) {
 			if(ids[i] == id) return i;
@@ -63,14 +63,17 @@ struct pinch_state {
 
 	int free_slot() const
 	{
-		return slot_for(-1);
+		for(int i = 0; i < max_fingers; ++i) {
+			if(ids[i] == 0) return i;
+		}
+		return -1;
 	}
 
 	int fingers() const
 	{
 		int count = 0;
 		for(int i = 0; i < max_fingers; ++i) {
-			if(ids[i] >= 0) ++count;
+			if(ids[i] != 0) ++count;
 		}
 		return count;
 	}
@@ -82,7 +85,7 @@ struct pinch_state {
 		return dx * dx + dy * dy;
 	}
 
-	void begin(int id, float px, float py)
+	void begin(Uint64 id, float px, float py)
 	{
 		const int slot = free_slot();
 		if(slot < 0) return;
@@ -95,7 +98,7 @@ struct pinch_state {
 		}
 	}
 
-	void move(int id, float px, float py)
+	void move(Uint64 id, float px, float py)
 	{
 		const int slot = slot_for(id);
 		if(slot < 0) return;
@@ -103,11 +106,11 @@ struct pinch_state {
 		y[slot] = py;
 	}
 
-	void end(int id)
+	void end(Uint64 id)
 	{
 		const int slot = slot_for(id);
 		if(slot < 0) return;
-		ids[slot] = -1;
+		ids[slot] = 0;
 		if(fingers() < 2) {
 			pinching = false;
 			last_distance_sq = 0.f;
@@ -298,16 +301,16 @@ void controller_base::handle_event(const SDL_Event& event)
 		if(pinch.pinching) {
 			// Two fingers on the map are a zoom, not a pan: the distance
 			// between them drives the zoom and the map does not scroll.
-			const float distance_sq = pinch.distance_sq();
-			if(pinch.last_distance_sq > 0.f && distance_sq > 0.f) {
+			const float current = pinch.distance_sq();
+			if(pinch.last_distance_sq > 0.f && current > 0.f) {
 				auto* executor = get_hotkey_command_executor();
 				if(executor != nullptr) {
-					if(distance_sq > pinch.last_distance_sq * 1.32f) {
-						executor->execute_action({"zoomin"});
-						pinch.last_distance_sq = distance_sq;
-					} else if(distance_sq < pinch.last_distance_sq * 0.76f) {
-						executor->execute_action({"zoomout"});
-						pinch.last_distance_sq = distance_sq;
+					if(current > pinch.last_distance_sq * 1.32f) {
+						executor->execute_action({std::string("zoomin")});
+						pinch.last_distance_sq = current;
+					} else if(current < pinch.last_distance_sq * 0.76f) {
+						executor->execute_action({std::string("zoomout")});
+						pinch.last_distance_sq = current;
 					}
 				}
 			}

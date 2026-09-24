@@ -227,6 +227,59 @@ def mechanics_for(chapter, index, total):
     return mechanics
 
 
+# The second thing each chapter asks of the player. Winning is never only the
+# headline: these are the conditions that make a map a decision and not a march.
+# Each one is checked where the scenario would be won, and losing it loses.
+def secondary_condition(chapter, index, turns):
+    kind = ('deaths', 'villages', 'hero_health', 'deadline')[index % 4]
+    if kind == 'deaths':
+        limit = 3 + index % 3
+        return dict(kind=kind, limit=limit,
+                    description='No pierdas más de %d unidades.' % limit)
+    if kind == 'villages':
+        limit = 2 + index % 2
+        return dict(kind=kind, limit=limit,
+                    description='Conserva al menos %d aldeas.' % limit)
+    if kind == 'hero_health':
+        return dict(kind=kind,
+                    description='Mantén a tu protagonista por encima de la mitad de vida.')
+    limit = max(6, turns - 4)
+    return dict(kind=kind, limit=limit,
+                description='Cumple el objetivo antes del turno %d.' % limit)
+
+
+def strategy_for(chapter, index, total):
+    """Give the enemy a plan that fits the fight, not a fixed set of numbers.
+
+    A siege holds and waits, a battle presses the middle, a voyage harasses the
+    column and a hunt chases: the AI's aggression, caution and goals follow the
+    tactical situation the chapter is built around.
+    """
+    third = max(1, total // 3)
+    if index <= third:
+        name = 'skirmish'
+    elif chapter['goal'] in ('escape', 'escort', 'rescue'):
+        name = 'voyage'
+    elif chapter['goal'] in ('survive', 'beacons'):
+        name = 'siege'
+    else:
+        name = 'battle'
+    return {
+        'skirmish': dict(aggression=0.5, caution=0.4, attack_depth=2,
+                         leader_value=6, village_value=2,
+                         recruitment_pattern='fighter,archer,fighter'),
+        'battle':   dict(aggression=0.8, caution=0.25, attack_depth=4,
+                         leader_value=6, village_value=3,
+                         recruitment_pattern='fighter,archer,fighter,scout'),
+        'siege':    dict(aggression=0.35, caution=0.55, attack_depth=2,
+                         leader_value=9, village_value=2,
+                         recruitment_pattern='fighter,fighter,archer'),
+        'voyage':   dict(aggression=0.5, caution=0.6, attack_depth=2,
+                         leader_value=4, village_value=4,
+                         recruitment_pattern='scout,fighter,archer'),
+    }[name]
+
+
 HERO_TITLES = {
     'alba': 'guardiana del faro',
     'sira': 'voz de las siete vetas',
@@ -328,6 +381,8 @@ def scenario(c, index, chapter, manifest):
     turns = 12 if chapter['goal'] == 'survive' else 32
     mechanics = mechanics_for(chapter, index, len(c['chapters']))
     turns = mechanics['turns']
+    secondary = secondary_condition(chapter, index, turns)
+    strategy = strategy_for(chapter, index, len(c['chapters']))
     layout = generate_map(key, index, chapter['biome'], chapter['goal'], size=mechanics['size'])
     write('maps/%s_%02d.map' % (key, index), layout['rows'])
     start, enemy = layout['start'], layout['enemy']
@@ -379,7 +434,11 @@ def scenario(c, index, chapter, manifest):
                         'id': ids['antagonist'], 'name': chapter['antagonist'],
                         'canrecruit': 'yes', 'recruit': recruits,
                         'gold': 100 + index * 6, 'income': 2, 'village_gold': 2},
-                tag('ai', {'aggression': .6, 'caution': .25, 'passive_leader': 'yes'}))
+                tag('ai', strategy) +
+                tag('goal', {'name': 'Proteger al líder', 'value': 100000},
+                    tag('criteria', {'id': ids['antagonist']})) +
+                tag('goal', {'name': 'Alcanzar al protagonista', 'value': 20000},
+                    tag('criteria', {'id': ids['hero']})))
 
     # --- prestart: conditions, recruit list, markers ---
     conditions = tag('objective', {'description': GOALS[chapter['goal']], 'condition': 'win'})
@@ -391,12 +450,13 @@ def scenario(c, index, chapter, manifest):
     if chapter['goal'] != 'survive':
         conditions += tag('objective', {'description': 'Se agotan los turnos', 'condition': 'lose'})
     conditions += tag('gold_carryover', {'bonus': 'yes', 'carryover_percentage': 40})
+    conditions += tag('note', {'description': secondary['description']})
     conditions += tag('note', {'description': 'Toca una casilla para preparar el movimiento y '
                                               'pulsa Mover/atacar. Puedes revisar estos objetivos '
                                               'desde Más.'})
     pre = tag('objectives', {'side': 1}, conditions)
     pre += tag('allow_recruit', {'side': 1, 'type': recruit})
-    pre += '{VARIABLE cbm_points 0}\n{VARIABLE cbm_rescued no}\n'
+    pre += '{VARIABLE cbm_points 0}\n{VARIABLE cbm_rescued no}\n{VARIABLE cbm_losses 0}\n'
     if chapter['goal'] in ('escort', 'rescue', 'escape'):
         pre += tag('item', {'x': destination[0], 'y': destination[1], 'image': 'items/gohere.png'})
         pre += tag('label', {'x': destination[0], 'y': destination[1], 'text': 'Destino'})
@@ -407,6 +467,10 @@ def scenario(c, index, chapter, manifest):
         pre += tag('item', {'x': prison[0], 'y': prison[1], 'image': 'items/cage.png'})
         pre += tag('label', {'x': prison[0], 'y': prison[1], 'text': 'Prisión'})
     body += event('prestart', pre)
+    if secondary['kind'] == 'deaths':
+        # A nested [event] would swallow its siblings in the WML tree: this
+        # counter belongs at the top level like every other handler.
+        body += event('die', tag('filter', {'side': 1}) + '{VARIABLE_OP cbm_losses add 1}\n')
 
     # --- start: companions, the protected character, and the opening dialogue ---
     companion = tag('unit', {'type': c['companion_type'], 'id': ids['companion'],
@@ -436,6 +500,25 @@ def scenario(c, index, chapter, manifest):
         body += triggered_event(trigger, beats, ids, chapter, turns)
 
     # --- objective handlers ---
+    def victory_gate():
+        """Winning takes the headline and the second condition: losing either loses."""
+        check = secondary['kind']
+        if check == 'deaths':
+            fail = tag('variable', {'name': 'cbm_losses', 'numerical_greater_than': secondary['limit']})
+        elif check == 'villages':
+            fail = (tag('store_locations', {'terrain': '*^V*', 'owner': 1, 'variable': 'cbm_villages'},
+                        body='') +
+                    tag('variable', {'name': 'cbm_villages.length',
+                                     'numerical_less_than': secondary['limit']}))
+        elif check == 'hero_health':
+            fail = tag('have_unit', {'id': ids['hero'], 'formula': 'hitpoints * 2 < max_hitpoints'})
+        else:
+            fail = tag('variable', {'name': 'turn_number',
+                                    'numerical_greater_than': secondary['limit']})
+        return tag('if', body=fail + tag('then', body=dialogue(
+            [('narrator', secondary['description'] + ' La condición se ha incumplido.')], ids, chapter)
+            + endlevel('defeat')) + tag('else', body=endlevel('victory')))
+
     def protected_unit(x, y):
         return tag('unit', {'type': protected_type, 'id': escort_id, 'name': protected_name,
                            'side': 1, 'x': x, 'y': y, 'random_traits': 'no',
@@ -454,7 +537,7 @@ def scenario(c, index, chapter, manifest):
         who = ids['hero'] if chapter['goal'] == 'escape' else escort_id
         body += event('moveto', tag('filter', {'id': who, 'x': destination[0],
                                               'y': destination[1]}) +
-                      tag('sound', {'name': 'gold.ogg'}) + endlevel('victory'))
+                      tag('sound', {'name': 'gold.ogg'}) + victory_gate())
     elif chapter['goal'] == 'beacons':
         for number, (px, py) in enumerate(points, 1):
             handler = tag('remove_item', {'x': px, 'y': py})
@@ -469,15 +552,15 @@ def scenario(c, index, chapter, manifest):
             if number == len(points):
                 handler += tag('if', body=tag('variable', {'name': 'cbm_points',
                                                            'numerical_equals': len(points)}) +
-                               tag('then', body=endlevel('victory')))
+                               tag('then', body=victory_gate()))
             body += event('moveto', tag('filter', {'side': 1, 'x': px, 'y': py}) + handler)
     elif chapter['goal'] == 'survive':
         body += event('turn %d' % turns,
                       dialogue([('hero', 'Se ha cumplido el plazo. Podemos completar la retirada.')],
-                               ids, chapter) + endlevel('victory'))
+                               ids, chapter) + victory_gate())
     else:
         body += event('enemies defeated', dialogue([('narrator', 'La oposición se ha roto.')],
-                                                  ids, chapter) + endlevel('victory'))
+                                                  ids, chapter) + victory_gate())
 
     # --- pressure: two bounded reinforcements and an escalation, never infinite ---
     for turn in (4, 8):

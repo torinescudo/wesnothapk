@@ -32,12 +32,21 @@ CAMPAIGN = dict(
             antagonist='Recaudador de Ceniza',
             opening=(
                 'Darian salió de Linde con siete cartas y un caballo que perdió en el primer control '
-                'imperial. Las cartas proponían reunir a quienes Maura todavía no había sometido. '
+                'imperial. Era correo de oficio y llevaba nueve años repartiendo cartas ajenas por la '
+                'ruta de Linde. Lo que Darian quería cabía en una línea de nombramiento: plaza de '
+                'titular, con sueldo fijo y un catre que no fuera de la posada. Necesitaba cruzar '
+                'Alda con las siete cartas y sin un nombre nuevo en el registro, porque un correo '
+                'declarado espía no vuelve a llevar cartas, ni ajenas ni propias. Las cartas '
+                'proponían reunir a quienes Maura todavía no había sometido. '
                 'Ninguna llevaba un sello real. El control estaba en el bosque de Alda, donde los '
                 'alguaciles del Recaudador de Ceniza registraban hasta las sillas de montar. Bastaba '
                 'una carta sin sello para declarar espía a quien la llevara. Ena contó los puestos de '
                 'guardia y Darian eligió un paso que nadie vigilaba. Ninguno de los dos sabía todavía '
-                'que aquellas siete cartas iban a ser contestadas por siete pueblos distintos.'),
+                'que aquellas siete cartas iban a ser contestadas por siete pueblos distintos. Junto '
+                'al control, el libro de requisas quedó abierto sobre un banco: la primera línea '
+                'estaba en blanco y la tinta todavía fresca, esperando un nombre. Cruzar el bosque '
+                'de Alda ya no era solo entregar siete cartas: era salir de allí antes de que '
+                'aquella línea en blanco se llenara.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Sin un rey detrás, dirán que no representamos a nadie.'),
@@ -78,6 +87,12 @@ CAMPAIGN = dict(
                              'dueños perderán la cosecha.'),
                     ('hero', 'Lo usaremos como puesto de agua y nada más. Anotadlo en la carta de '
                              'Sela.'),
+                    ('antagonist', 'El registro imperial ya tiene una línea para cada aldea de este '
+                                   'bosque. Sin ese orden, la oscuridad vuelve a Alda cada '
+                                   'generación y se lleva hasta los nombres.'),
+                    ('narrator', 'El bosque de Alda cierra la vista a diez pasos y deja los tres '
+                                 'vados a la vista del mismo mirador. Por la maleza se va a media '
+                                 'velocidad, pero los ballesteros valen allí la mitad.'),
                 ]),
                 ('turn 6', [
                     ('companion', 'Las cartas pesan menos que un herido. Dadme dos turnos para '
@@ -92,6 +107,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que el cerco se cierre del todo. La '
                                  'bandera del arroyo sigue al este.'),
+                    ('antagonist', 'Al amanecer entrarán mis alguaciles en la primera aldea con el '
+                                   'libro abierto. Cada carta que no aparezca se cobrará en vecinos: '
+                                   'así funciona el orden que os sobra.'),
+                    ('narrator', 'El cerco se cierra por el norte y la salida sigue al este. Decidid '
+                                 'si cruzáis ya por el paso de Sela o si sostenéis el molino una '
+                                 'hora más mientras Ena venda a los heridos.'),
                 ]),
             ],
             victory=[
@@ -108,7 +129,10 @@ CAMPAIGN = dict(
                 'mar ya se había llevado, y su destinatario había muerto antes de abrirla. Darian no '
                 'la reescribió: anotó al dorso que el pacto debía alcanzar también a quienes ya no '
                 'podían contestar. Sela guardó el pliego en un zurrón de cuero y prometió leerlo en '
-                'voz alta ante su aldea.'),
+                'voz alta ante su aldea. La segunda carta olía a salitre aunque nunca había visto el '
+                'mar, y su dirección era un puerto nuevo levantado sobre pilotes, sin murallas. La '
+                'siguiente entrega se jugaría allí contra un Teniente que medía a las familias con '
+                'cadenas vacías.'),
         ),
         dict(
             title='La luz que emigró',
@@ -121,7 +145,12 @@ CAMPAIGN = dict(
                 'cuerpos del imperio. El puerto se levantaba sobre pilotes, sin murallas, con una '
                 'lámpara encendida por cada familia que el mar había devuelto. El Teniente del '
                 'Tributo llamaba a eso una ciudad sin dueño y traía listas para demostrarlo. Cada '
-                'barca que atracaba añadía un nombre a sus registros y una razón más para cobrar.'),
+                'barca que atracaba añadía un nombre a sus registros y una razón más para cobrar. '
+                'Darian seguía sin caballo y sin nombramiento, con dos cartas de siete todavía '
+                'cerradas en la alforja. Al caer la tarde, una de las lámparas del puerto se apagó '
+                'sola: una familia había vuelto a la barca a buscar a un abuelo que faltaba. Que '
+                'ninguna lámpara se apagara otra vez antes del turno doce era todo lo que Alba pedía '
+                'para escuchar la carta.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Alba no necesita promesas. Necesita tiempo para desembarcar familias.'),
@@ -166,10 +195,23 @@ CAMPAIGN = dict(
                     ('Alba', 'Los recién llegados no saben remar. Dadme dos turnos y pondré a los '
                              'suyos en los remos.'),
                     ('hero', 'Tómalos. Defenderemos tu muelle mientras enseñas a tu gente.'),
+                    ('antagonist', 'Apuntad a esas familias en mi libro y el imperio responderá por '
+                                   'ellas cuando la marea traiga de vuelta lo suyo. Lo que nadie '
+                                   'cuenta no existe, y lo que no existe se lo queda la oscuridad.'),
+                    ('narrator', 'El puerto está sobre pilotes y el agua pasa por debajo de todo: '
+                                 'nadie puede cerrarlo entero, pero tampoco nadie defiende los tres '
+                                 'muelles a la vez.'),
                 ]),
                 ('village captured', [
                     ('narrator', 'La primera casa del puerto izó una lámpara encendida. Esa lámpara '
                                  'marca a los vuestros como refugiados, no como carga.'),
+                    ('antagonist', 'Esa lámpara encendida me dice dónde queda una familia más que '
+                                   'reclamar. La tasa no es dinero: es que nadie de esta costa '
+                                   'amanezca sin un nombre en un registro.'),
+                    ('narrator', 'El Teniente avanza por el muelle largo y deja el corto encadenado: '
+                                 'quiere empujaros contra el faro y agotaros entre las pasarelas. '
+                                 'Elegid qué muelle sostenéis antes de que las familias queden en '
+                                 'medio de las cadenas.'),
                 ]),
                 ('enemy leader defeated', [
                     ('antagonist', 'No era una tasa. Era un registro para saber a quién llamar '
@@ -197,7 +239,10 @@ CAMPAIGN = dict(
                 'no aceptaría volver a ser un muro que encerrara a su gente. Esa misma noche los '
                 'recién llegados preguntaron si podían devolver el favor remando. El Teniente había '
                 'anotado sus nombres en un registro; el puerto respondió escribiéndolos en una lista '
-                'de vecinos, que cualquiera podía leer y tachar.'),
+                'de vecinos, que cualquiera podía leer y tachar. En el cuaderno de correo, Darian '
+                'anotó la segunda entrega y, al lado, la única condición de Alba: barcos y camas. La '
+                'tercera carta olía a piedra mojada y llevaba una dirección que solo se abría a una '
+                'petición repetida tres veces.'),
         ),
         dict(
             title='La puerta que escucha',
@@ -211,7 +256,10 @@ CAMPAIGN = dict(
                 'Tarek del Eco contaba las columnas enemigas desde la ladera. El imperio había '
                 'tasado la montaña veta por veta y había clavado postes con precios hasta la nieve. '
                 'Los litarios no pedían ejército: pedían que alguien escuchara tres veces la misma '
-                'pregunta.'),
+                'pregunta. Cuando Darian golpeó la puerta, la piedra repitió su pregunta con otra '
+                'voz, como si la montaña la tradujera antes de contestar. Pedir tres veces lo mismo '
+                'costaba un tiempo que los postes con precios no iban a devolver, y el Tasador ya '
+                'subía por el desfiladero con su libro de cifras.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Podrías exigir entrada en nombre de la alianza.'),
@@ -244,6 +292,11 @@ CAMPAIGN = dict(
                     ('Sira', 'El primer resonador repite vuestra voz. Ahora la montaña ya sabe que '
                              'habéis venido.'),
                     ('narrator', 'Dos puntos siguen apagados en las laderas del norte y del este.'),
+                    ('antagonist', 'Cada veta de esta montaña está apuntada con su precio, y por eso '
+                                   'la oscuridad no sube de las galerías. Lo que se tasó una vez no '
+                                   'se discute dos.'),
+                    ('narrator', 'La nieve borra los senderos hasta las rodillas: por la ladera alta '
+                                 'se va a medio paso y la guardia del este baja por pista dura.'),
                 ]),
                 ('beacon lit 2', [
                     ('antagonist', 'Seguid encendiendo piedras. Cada una que activéis me dice cuánto '
@@ -261,6 +314,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que el tasador cierre el desfiladero. '
                                  'El último resonador sigue en la ladera.'),
+                    ('antagonist', 'Cierro el desfiladero con la piedra que os he tasado. Lo que '
+                                   'quede dentro del valle se pagará en mineral, como siempre, y el '
+                                   'resto será cuestión de contabilidad.'),
+                    ('narrator', 'Los tres resonadores están en laderas que no se ven entre sí y el '
+                                 'desfiladero se cierra en dos turnos. Decidid quién despierta el '
+                                 'del este, con su guardia, y quién reúne los dos que faltan.'),
                 ]),
             ],
             victory=[
@@ -277,7 +336,10 @@ CAMPAIGN = dict(
                 'Sira abrió la puerta pequeña. Los litarios enviarían guardianes si el pacto '
                 'reconocía que una montaña podía pertenecer a sus habitantes. Antes de cerrarla, la '
                 'puerta repitió la petición en la lengua de las vetas, y ninguna de las siete cartas '
-                'volvió a sonar igual cuando se leyó en voz alta.'),
+                'volvió a sonar igual cuando se leyó en voz alta. La cuarta carta esperaba en una '
+                'ciudad velaria sostenida sobre las mismas acequias de los campos, y su intérprete '
+                'llevaba días en una jaula junto al canal. Iria no firmaría nada hasta oírla hablar '
+                'sin cadenas.'),
         ),
         dict(
             title='Los hijos de la sombra',
@@ -290,7 +352,12 @@ CAMPAIGN = dict(
                 'La ciudad se sostenía sobre las mismas acequias que regaban los campos de abajo, y '
                 'sus consejos llevaban veinte años discutiendo por el agua. El carcelero encerraba a '
                 'los que habían perdido las alas en la guerra, y llamaba carga a un pueblo entero. '
-                'Iria Salcedo y Belis esperaban en el canal, contando lámparas encendidas.'),
+                'Iria Salcedo y Belis esperaban en el canal, contando lámparas encendidas. Para un '
+                'correo, una carta sin intérprete se entrega cerrada, y Darian no estaba dispuesto a '
+                'entregar la tercera así. En la baranda del canal colgaba un ala cortada, con el '
+                'nombre del dueño escrito en la pluma para que su familia fuera a buscarla. Sacar a '
+                'la intérprete antes del alba era la única forma de que nadie tuviera que pagar otra '
+                'letra con un ala.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Los campesinos recuerdan los inviernos sin luz. No todos querrán '
@@ -337,6 +404,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Iria', 'Los vecinos dejan lámparas en las ventanas. Son las mismas que '
                              'encendían cuando vuestros abuelos llegaban al mercado.'),
+                    ('antagonist', 'Sin censo no hay orden, y sin orden la oscuridad vuelve a las '
+                                   'llanuras cada generación. Yo no guardo personas: guardo la lista '
+                                   'que impide que se las lleve.'),
+                    ('narrator', 'Las pasarelas cruzan el canal sobre suelo blando y la jaula pesa '
+                                 'más de lo que parece: el barro devuelve cada paso. La puerta de '
+                                 'servicio se abre con dos personas encima, no con llaves.'),
                 ]),
                 ('enemy leader defeated', [
                     ('narrator', 'Las llaves del carcelero quedaron dentro del canal, y el agua las '
@@ -345,6 +418,11 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que el canal cubra la jaula. La bandera '
                                  'está al otro lado de la pasarela.'),
+                    ('antagonist', 'Cierro las compuertas del canal. Prefiero una jaula sin voces a '
+                                   'una ciudad que discuta quién manda cuando vuelva la noche.'),
+                    ('narrator', 'El Carcelero guarda las pasarelas, no la puerta de servicio, y su '
+                                 'jaula da al canal. Decidid si liberáis por el agua o por la '
+                                 'fuerza: la intérprete paga en nombre cada golpe que se dé.'),
                 ]),
             ],
             victory=[
@@ -363,7 +441,10 @@ CAMPAIGN = dict(
                 'La intérprete llevó la carta al consejo. Iria añadió un mapa donde los campos y las '
                 'ciudades aladas compartían las mismas acequias. Belis hizo copiar el mapa en las dos '
                 'lenguas, y Seyth exigió que su nombre apareciera escrito al pie, sin grilletes y sin '
-                'traducción que lo suavizara.'),
+                'traducción que lo suavizara. La lista de nombres alados viajó cosida al mapa de las '
+                'acequias, junto a los pliegos de Darian. La siguiente entrega cruzaba un antiguo '
+                'frente: una delegada con una lista de daños bajo el brazo y un puente alquilado por '
+                'un capitán que vendía treguas viejas.'),
         ),
         dict(
             title='El puente de los agravios',
@@ -376,7 +457,11 @@ CAMPAIGN = dict(
                 'traición a los muertos. El puente de los agravios unía dos orillas que llevaban veinte '
                 'años llamándose enemigas, y Rusk cobraba peaje por cada carro que lo cruzaba. Rella '
                 'llevaba en la mano una lista de daños escrita por su propia aldea. Darian no podía '
-                'negociar por ella: solo podía conseguir que llegara viva al otro lado.'),
+                'negociar por ella: solo podía conseguir que llegara viva al otro lado. La lista de '
+                'daños de Rella traía una hoja en blanco al final, para los muertos que aún no se '
+                'habían contado del otro lado. Llegar viva al puente era la única forma de que esa '
+                'hoja se llenara con nombres en vez de con rencores. Y en la otra orilla, un capitán '
+                'cobraba peaje hasta por mirar el tablazón.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'La delegada perdió a dos hermanos durante la oscuridad.'),
@@ -421,6 +506,11 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('narrator', 'La aldea del vado izó la bandera de los campos. Los carros de Rusk '
                                  'ya no pueden cobrar peaje aquí.'),
+                    ('antagonist', 'Mantengo este puente en pie desde antes de que supierais firmar. '
+                                   'Quitadme el peaje y la próxima oscuridad se encontrará un '
+                                   'barranco sin tablas y a vosotros sin paso.'),
+                    ('narrator', 'El barranco no se vadea ni en seco y el tablazón es de un solo '
+                                 'carro: aquí una escolta cerrada estorba más de lo que cubre.'),
                 ]),
                 ('enemy leader defeated', [
                     ('narrator', 'Rusk cayó junto al tablero donde firmaba sus treguas. Nadie '
@@ -429,6 +519,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos para cruzar. La bandera está al final del '
                                  'puente.'),
+                    ('antagonist', 'He subido la brea a las dos torres. Cruzad ahora y quemaréis la '
+                                   'única tabla que os queda hacia el este.'),
+                    ('narrator', 'Rusk guarda la torre del sur con ballesteros y carga la del norte '
+                                 'con brea: quiere detener a la comitiva en el centro y cobrarla '
+                                 'entera. Elegid quién toma las torres y quién cruza sin parar con '
+                                 'Rella.'),
                 ]),
             ],
             victory=[
@@ -447,7 +543,10 @@ CAMPAIGN = dict(
                 'La negociación comenzó con una lista de daños y terminó con un calendario de '
                 'reparaciones. Nadie lo llamó perdón. Rella hizo copiar el calendario en las dos '
                 'orillas, y sobre el puente quedó una tercera copia clavada para que cualquiera '
-                'pudiera añadir lo que faltaba.'),
+                'pudiera añadir lo que faltaba. La copia clavada sobre el puente amaneció con una '
+                'línea nueva, escrita por otra mano: una capitana pedía barcos y ponía una sola '
+                'condición. La cuarta brasa se encendería en un faro pequeño, si alguien conseguía '
+                'abrir un estrecho que un almirante cerraba con una cadena.'),
         ),
         dict(
             title='La cuarta brasa',
@@ -461,7 +560,11 @@ CAMPAIGN = dict(
                 'y cobraba un registro de almas por cada bodega. Nerea Vado no prestaba un solo barco '
                 'sin una cláusula escrita: ninguna nave de la alianza transportaría cautivos, ni '
                 'vivos ni muertos. La cuarta brasa iba a encenderse en un faro pequeño, con aceite de '
-                'puerto libre.'),
+                'puerto libre. Para un correo, una flota entera era solo un sobre muy grande: lo que '
+                'importaba seguía siendo la cláusula escrita dentro. La cadena del estrecho estaba '
+                'forjada con eslabones de dos tamaños, y los grandes llevaban nombre grabado. '
+                'Despejar el paso antes del anochecer decidiría si los refugiados del interior '
+                'entraban en la rada o esperaban otra noche al otro lado del metal.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'La capitana exige que ninguna nave de la alianza transporte cautivos.'),
@@ -501,6 +604,11 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Nerea', 'Ese muelle era de mi padre. Que nadie lo queme: si arde, la alianza '
                               'no tendrá dónde descargar.'),
+                    ('antagonist', 'El registro de almas mantiene a los muertos de Valdara remando '
+                                   'con dueño. Sin registro, la marea devuelve cuerpos sin nombre, '
+                                   'y eso es lo que llamáis oscuridad.'),
+                    ('narrator', 'El estrecho deja pasar dos barcos de frente y niega toda maniobra: '
+                                 'aquí una flota grande estorba más de lo que ayuda.'),
                 ]),
                 ('turn 7', [
                     ('companion', 'Las fragatas están separadas. Si atacamos la del norte, la del '
@@ -515,6 +623,12 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que llegue el convoy de refugiados.'),
+                    ('antagonist', 'Alzo la cadena antes de la marea. Quien no haya pagado su alma '
+                                   'se quedará fuera, y la noche del estrecho no perdona a los que '
+                                   'flotan sin nombre.'),
+                    ('narrator', 'La cadena se ancla al faro pequeño y el Almirante manda desde la '
+                                 'fragata norte. Decidid si soltáis la cadena en el faro o si '
+                                 'forzáis la fragata antes de que la del sur cierre el paso.'),
                 ]),
             ],
             victory=[
@@ -534,7 +648,10 @@ CAMPAIGN = dict(
                 'El estrecho quedó abierto. Nerea firmó con tinta común, para que cualquiera pudiera '
                 'leer las condiciones. Antes de zarpar hizo revisar cada bodega delante de dos '
                 'testigos de la alianza, y la cláusula de los cautivos quedó grabada en la piedra '
-                'del faro pequeño, a la vista de quien llegara a apagarlo.'),
+                'del faro pequeño, a la vista de quien llegara a apagarlo. Al amanecer, la cláusula '
+                'estaba rodeada de nombres que los marineros habían escrito al pie, uno por uno. La '
+                'quinta brasa no se encendería en ningún puerto: esperaba bajo tierra, en las '
+                'canteras donde se habían escondido los que no querían volver a empuñar una lanza.'),
         ),
         dict(
             title='Quienes no firmaron',
@@ -547,7 +664,12 @@ CAMPAIGN = dict(
                 'recogerlos. En las galerías vivían mineros que habían dejado una lanza y no '
                 'pensaban tomar otra, con herramientas propias y un censo que nadie había firmado. '
                 'Arven traía cadenas contadas según su propio registro y piqueros para cobrarlas. '
-                'Darian necesitaba aguantar la cantera sin convertirla en cuartel.'),
+                'Darian necesitaba aguantar la cantera sin convertirla en cuartel. Un correo aprende '
+                'pronto qué nombres sobran en una lista, y la de Arven no sobraba ninguno. Sus '
+                'carromatos traían dos clases de cadenas, una numerada para las manos y otra, más '
+                'corta, para los papeles que los mineros no habían firmado. Aguantar la cantera '
+                'hasta el turno doce decidiría si la quinta brasa se escribía sin un solo nombre de '
+                'por medio.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Si los defendemos, quizá se marchen sin darnos nada.'),
@@ -584,6 +706,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Halen', 'Esa casa de aperos tiene agua limpia. Dejadla para los heridos y no '
                               'como puesto de mando.'),
+                    ('antagonist', 'El Estado los vistió, los contó y los enterró cuando hizo falta. '
+                                   'Un hombre sin censo es un hueco en la muralla, y por los '
+                                   'huecos entra la oscuridad.'),
+                    ('narrator', 'La cantera está cavada en terrazas: el que sube la rampa se expone '
+                                 'a la piedra, y el que defiende la plaza no cambia de boca sin '
+                                 'bajar entero.'),
                 ]),
                 ('turn 8', [
                     ('companion', 'Han empezado a contar en voz alta. Los nuestros ya no distinguen '
@@ -597,6 +725,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos de asedio. La plaza de la cantera sigue en '
                                  'pie.'),
+                    ('antagonist', 'Subo el censo por la rampa con una cadena por cabeza contada. '
+                                   'Volved al registro y ahorraréis la cadena: es lo más parecido a '
+                                   'un perdón que firmaré hoy.'),
+                    ('narrator', 'Arven tira toda su fuerza a la rampa y confía en que la piedra '
+                                 'haga el resto; la boca del norte sigue sin vigilar. Decidid si '
+                                 'salís por ella o si aguantáis la plaza hasta el turno doce.'),
                 ]),
             ],
             victory=[
@@ -613,7 +747,11 @@ CAMPAIGN = dict(
             resolution=(
                 'Los desertores no juraron lealtad. Ofrecieron herramientas, guías y un lugar donde '
                 'descansar. Darian anotó la quinta brasa sin añadir un juramento. Halen mandó tallar '
-                'en la pared de la cantera una sola frase: aquí nadie fue contado dos veces.'),
+                'en la pared de la cantera una sola frase: aquí nadie fue contado dos veces. Al '
+                'amanecer, esa frase tenía debajo una raya nueva por cada uno de los que se había '
+                'marchado sin firmar. La siguiente parada no era ningún pueblo: era el archivo de '
+                'Maura, donde un antiguo general encadenado a su propio contrato pedía ser '
+                'escuchado, no perdonado.'),
         ),
         dict(
             title='El mensajero de hueso',
@@ -626,7 +764,11 @@ CAMPAIGN = dict(
                 'cómo romper el sello central. El archivo guardaba los contratos funerarios por '
                 'orden de firma, y el suyo era el número doscientos. El Custodio lo llamaba '
                 'prisionero voluntario y repetía que un contrato firmado no se rompe, se cumple. '
-                'Darian necesitaba su testimonio, no su arrepentimiento.'),
+                'Darian necesitaba su testimonio, no su arrepentimiento. En el margen de su petición '
+                'de auxilio, Sevrin había escrito su número de contrato: doscientos, con la misma '
+                'letra que los otros once mil. Sacarlo antes de que la tercera sala se cerrara dos '
+                'veces, como todas las del archivo, era la única forma de leer el nombre del sello '
+                'antes de entrar en palacio.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Ha dirigido ejércitos contra todos nuestros aliados.'),
@@ -659,6 +801,12 @@ CAMPAIGN = dict(
                 ('half strength', [
                     ('protected', 'Corta el libro, no la cadena. La cadena me sostiene de pie.'),
                     ('hero', 'Ena, cúralo. Yo corto el libro con la mano libre.'),
+                    ('antagonist', 'Veis cómo se rompe lo que se suelta. Cada contrato de mis '
+                                   'anaqueles frena a un muerto, y uno solo abierto le da a la '
+                                   'oscuridad un nombre menos que respetar.'),
+                    ('narrator', 'Las tres salas se cierran con llave de hierro viejo y las '
+                                 'estanterías hacen de muralla: aquí el fuego deja sin pruebas y '
+                                 'sin techo a la vez.'),
                 ]),
                 ('turn 4', [
                     ('antagonist', 'He quemado el índice. Ahora nadie sabrá nunca cuántos nombres '
@@ -677,6 +825,12 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que sellen la tercera sala. La bandera '
                                  'está en el patio exterior.'),
+                    ('antagonist', 'Sello la tercera sala con vosotros dentro. Un archivo ordenado '
+                                   'sobrevive a las hogueras; uno abierto se lo come todo, '
+                                   'empezando por vosotros.'),
+                    ('narrator', 'El Custodio guarda la tercera sala con la reja y el libro, no con '
+                                 'hombres, y la cadena tira de quien lleva el contrato. Decidid si '
+                                 'cortáis el libro al entrar o al salir de la sala.'),
                 ]),
             ],
             victory=[
@@ -693,7 +847,10 @@ CAMPAIGN = dict(
             resolution=(
                 'Sevrin entregó el nombre verdadero del sello. No pidió absolución; pidió que su '
                 'testimonio incluyera todo lo que había hecho. Darian guardó las dos páginas en la '
-                'misma funda, para que nadie pudiera leer la primera sin la segunda.'),
+                'misma funda, para que nadie pudiera leer la primera sin la segunda. Al cerrarla, '
+                'Sevrin añadió una hoja en blanco entre las dos páginas, para los nombres que aún no '
+                'se sabían. La guerra contra los contratos se jugaba ahora en tres altares costeros, '
+                'donde las copias esperaban a ser disueltas en agua salada antes de la niebla.'),
         ),
         dict(
             title='La sal de los juramentos',
@@ -706,7 +863,11 @@ CAMPAIGN = dict(
                 'antes de la llegada de la flota. Cada copia era una lista de nombres atados a un '
                 'remo, y las tres se repartían entre la isla del faro, la de las aves y la que no '
                 'tenía nombre. Luar conocía el arrecife mejor que las cartas del imperio, y no '
-                'guiaba a nadie sin un testigo del agua.'),
+                'guiaba a nadie sin un testigo del agua. El agua entre las piedras del primer altar '
+                'era clara hasta el fondo, y en el fondo se veía la copia, con los nombres atados a '
+                'un remo de plomo. Disolver las tres antes de que la niebla cerrara el arrecife '
+                'decidiría cuántos muertos volvían a llamarse por su nombre. Luar marcó los tres '
+                'puntos sobre el mapa y no dijo nada más.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Cada sello roto libera una voz. También avisa a la reina de dónde '
@@ -741,6 +902,12 @@ CAMPAIGN = dict(
                              'propio nombre.'),
                     ('narrator', 'Dos altares siguen intactos. La niebla se cierra sobre el '
                                  'arrecife.'),
+                    ('antagonist', 'Los muertos que reman en mis barcas no reman para mí: reman '
+                                   'para que la costa tenga flota cuando la oscuridad vuelva del '
+                                   'mar.'),
+                    ('narrator', 'Entre islas solo hay dos pasos navegables y la marea los cierra '
+                                 'dos veces al día: de noche el agua baja y las barcas rozan la '
+                                 'roca.'),
                 ]),
                 ('beacon lit 2', [
                     ('antagonist', 'Habéis liberado dos. Ahora la reina ya sabe cuántos os quedan.'),
@@ -757,6 +924,11 @@ CAMPAIGN = dict(
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que suba la niebla. El tercer altar '
                                  'está al este.'),
+                    ('antagonist', 'Mando mis dos barcas al paso del medio. Sin remos no cruzaréis '
+                                   'de noche, y la sal no saca a nadie de un arrecife.'),
+                    ('narrator', 'Los altares se tocan con sal, nunca con hierro, y solo uno de los '
+                                 'tres tiene refugio si la niebla sube. Elegid qué isla atacáis '
+                                 'primero antes de que las barcas del Vigía cierren el paso.'),
                 ]),
             ],
             victory=[
@@ -773,7 +945,10 @@ CAMPAIGN = dict(
             resolution=(
                 'Los muertos liberados señalaron los caminos por los que eran transportados los '
                 'nuevos cautivos. Darian los copió en su mapa antes de que la sal borrara las rutas, '
-                'y Luar exigió que cada trazo llevara el nombre del buceador que lo había visto.'),
+                'y Luar exigió que cada trazo llevara el nombre del buceador que lo había visto. Dos '
+                'de los trazos quedaron sin nombre porque nadie había bajado hasta ellos, y Luar '
+                'los dejó en blanco. La siguiente entrega pesaba más que las siete cartas juntas: un '
+                'registro de once mil condenados, copiado a mano por una escribana que no dormía.'),
         ),
         dict(
             title='La sexta respuesta',
@@ -786,7 +961,11 @@ CAMPAIGN = dict(
                 'impugnar su contrato. El registro tenía once mil nombres, y Myr lo había copiado '
                 'hoja por hoja sin dormir. Los litarios cobraban peaje en piedra y dejaban pasar sin '
                 'mirar; el Cazador de Deudas cobraba en personas. La sexta brasa pertenecía a los '
-                'barrios de la capital, y su respuesta iba a llegar sin un solo nombre.'),
+                'barrios de la capital, y su respuesta iba a llegar sin un solo nombre. Myr había '
+                'cosido una funda de lona alrededor del registro y la había pasado por cera: el '
+                'papel aguantaba dos horas de agua, no más. Cruzar las galerías antes de que la cera '
+                'cediera decidiría si las once mil familias podían impugnar algo o solo heredar la '
+                'deuda. La sexta brasa viajaba dentro, sin un solo nombre a la vista.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'El registro pesa más que nuestras siete cartas juntas.'),
@@ -828,6 +1007,12 @@ CAMPAIGN = dict(
                     ('protected', 'No he perdido el registro. Perdedme a mí, pero no lo abráis '
                                   'aquí.'),
                     ('hero', 'Nadie se pierde. Ena, tapa esa herida y seguimos.'),
+                    ('antagonist', 'Once mil deudas sostienen esta capital de piedra. Perdonadlas y '
+                                   'veréis lo que vale una ciudad cuando la oscuridad ya no le '
+                                   'debe nada a nadie.'),
+                    ('narrator', 'El ramal inundado es de un solo paso y sube un palmo por turno: '
+                                 'aquí la formación estorba y una lámpara mal cubierta cuesta un '
+                                 'registro entero.'),
                 ]),
                 ('village captured', [
                     ('narrator', 'La primera cámara litarias les deja beber y nada más. El peaje '
@@ -839,6 +1024,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que inunden la galería larga.'),
+                    ('antagonist', 'Cierro las dos bocas con ballesteros y dejo que el agua haga el '
+                                   'recuento. Cuando salgáis, firmaréis la devolución hoja por '
+                                   'hoja.'),
+                    ('narrator', 'El Cazador conoce los túneles porque llevaba contratos por ellos '
+                                 'al norte y ha dejado la galería larga abierta a propósito: quiere '
+                                 'el registro entero, no vuestras cabezas. Decidid si vais por el '
+                                 'agua o por la galería, y quién cubre la espalda de Myr.'),
                 ]),
             ],
             victory=[
@@ -856,7 +1048,11 @@ CAMPAIGN = dict(
                 'La sexta brasa perteneció a los barrios de la capital. Su respuesta no llevaba '
                 'nombres: publicarlos habría condenado a quienes seguían dentro. Myr dejó el registro '
                 'en manos de una familia y volvió a las galerías con una copia sin firmas, dispuesta '
-                'a impugnar los contratos uno por uno.'),
+                'a impugnar los contratos uno por uno. Myr numeró las hojas mojadas antes de '
+                'copiarlas otra vez: las once mil seguían enteras, pero dos líneas ilegibles se '
+                'habían quedado sin familia conocida. Al este, un mariscal guardaba las llaves del '
+                'granero central y dejaba que el hambre hiciera su trabajo: sin pan, la sexta brasa '
+                'no serviría de nada.'),
         ),
         dict(
             title='Un ejército de vecinos',
@@ -869,7 +1065,12 @@ CAMPAIGN = dict(
                 'participaban en la guerra. Cuatrocientas familias habían traído carros y ochenta '
                 'lanzas; el mariscal tenía veteranos pagados y las llaves del grano. Los delegados '
                 'discutían todavía quién repartiría la primera ración. Darian necesitaba una victoria '
-                'que nadie pudiera cobrar en nombre de otro.'),
+                'que nadie pudiera cobrar en nombre de otro. Para un correo, repartir no es dar: es '
+                'llegar a cada puerta con lo suyo, y Darian llevaba nueve años aprendiéndolo en '
+                'caminos peores. Bajo el cobertizo, la primera ración seguía sin repartirse: '
+                'cuatrocientas familias miraban una balanza sin mano que la sostuviera. Tomar el '
+                'granero antes del anochecer decidiría si la victoria acababa con otro dueño del '
+                'hambre.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Tenemos soldados de pueblos que hace un año se atacaban entre sí.'),
@@ -909,6 +1110,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Vesh', 'Esa aldea nos ha dado agua sin pedir nada. Devolvedle el doble y '
                              'anotadlo.'),
+                    ('antagonist', 'Ordené este granero cuando las tres provincias comían raíces. '
+                                   'Repartid el grano hoy y la oscuridad volverá a sentarse a '
+                                   'vuestra mesa el invierno que viene.'),
+                    ('narrator', 'El granero se levanta sobre el mercado y su tejado manda sobre '
+                                 'las cuatro calles: por la puerta del sur no se puede disparar '
+                                 'sin barrer la plaza, pero subir cuesta una escalera estrecha.'),
                 ]),
                 ('turn 8', [
                     ('companion', 'Los vecinos empiezan a reconocerse entre las filas enemigas. '
@@ -921,6 +1128,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que el mariscal queme el granero.'),
+                    ('antagonist', 'He untado de pez los carros del cobertizo. Si sigo '
+                                   'retrocediendo, quemaréis el grano defendiéndolo y vuestra '
+                                   'asamblea cenará ceniza.'),
+                    ('narrator', 'Los ballesteros del tejado y el carro blindado de la puerta norte '
+                                 'quieren empujaros al mercado para cobraros cara cada vara. '
+                                 'Decidid si tomáis la escalera del tejado o la puerta antes de que '
+                                 'suba la pez.'),
                 ]),
             ],
             victory=[
@@ -938,7 +1152,9 @@ CAMPAIGN = dict(
                 'Los carros de grano salieron con escoltas mezcladas. Ningún pueblo recibió permiso '
                 'para decidir la ración de otro. La asamblea se reunió bajo el cobertizo y acordó '
                 'que la balanza viajara cada mes a una aldea distinta, para que nadie pesara siempre '
-                'en su propia casa.'),
+                'en su propia casa. La balanza viajó esa misma noche en un carro sin bandera. Antes '
+                'de que la séptima brasa se decidiera, llegaron al campamento dos órdenes '
+                'distintas, cada una con un sello que parecía verdadero.'),
         ),
         dict(
             title='La noche de las dos órdenes',
@@ -951,7 +1167,11 @@ CAMPAIGN = dict(
                 'capturarlos por separado. Cada contingente había recibido una carta distinta, y '
                 'todas parecían escritas por un mando legítimo. Vael no buscaba matarlos: buscaba que '
                 'se acusaran entre ellos antes del amanecer. La séptima brasa iba a decidirse '
-                'alrededor de un fuego, no en un campo de batalla.'),
+                'alrededor de un fuego, no en un campo de batalla. La orden falsa llevaba el sello '
+                'de Vesh, pero la cera estaba fría al tacto: se había sellado lejos de la mano que '
+                'la firmaba. Aguantar juntos hasta el turno doce decidiría si la séptima brasa era '
+                'una regla escrita o solo una noche buena alrededor del fuego. Y Darian ya sabía lo '
+                'que cuesta un nombre puesto donde no va.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Si cada contingente obedece su propia carta, no resistiremos.'),
@@ -993,6 +1213,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Vesh', 'La aldea nos ha dado mantas sin pedir juramento. Devolvedlas lavadas '
                              'al amanecer.'),
+                    ('antagonist', 'Vuestras siete ambiciones no hacen una guardia. Sin un mando que '
+                                   'decida, la noche se queda sin centinela, y la oscuridad entra '
+                                   'preguntando nombres.'),
+                    ('narrator', 'El claro es la única luz y la única explanada: a tres pasos de las '
+                                 'brasas el bosque se cierra y nadie ve a nadie. Un tronco tumbado '
+                                 'basta para cortar el camino del este.'),
                 ]),
                 ('turn 8', [
                     ('companion', 'Han cortado el camino del este. Los contingentes tendrán que pasar '
@@ -1005,6 +1231,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos hasta el amanecer. El claro sigue iluminado.'),
+                    ('antagonist', 'Al amanecer leeré vuestras cartas cruzadas ante las columnas. '
+                                   'Quien dude primero será mi prueba de que el orden necesita '
+                                   'dueño.'),
+                    ('narrator', 'Vael no viene a mataros: viene a separaros, y sus patrullas '
+                                 'entran por tres caminos contando con que discutáis. Decidid si '
+                                 'defendéis los tres senderos o si dejáis las brasas al centro y '
+                                 'aguantáis reunidos.'),
                 ]),
             ],
             victory=[
@@ -1024,7 +1257,10 @@ CAMPAIGN = dict(
                 'Las falsificaciones fallaron porque los delegados se conocían. La séptima brasa fue '
                 'una regla: ninguna voz hablaría por todas sin poder ser contradicha. Darian hizo '
                 'grabar la regla en las siete copias del pacto, y la inquisidora no volvió a enviar '
-                'dos órdenes al mismo campamento.'),
+                'dos órdenes al mismo campamento. Antes de marcharse, Neth copió la regla en la faja '
+                'de su espada: dijo que las palabras duran más donde se han usado poco. Quedaba por '
+                'averiguar el nombre del sello, repartido entre tres archivos que nadie podía leer '
+                'enteros. Sevrin era el único que recordaba dónde estaban.'),
         ),
         dict(
             title='El nombre del sello',
@@ -1037,7 +1273,13 @@ CAMPAIGN = dict(
                 'inscripciones antes de entrar en palacio. Una estaba en un muro vivo, otra bajo un '
                 'sello de cera y la tercera en una sala que ya no figuraba en los planos. Nadie '
                 'había leído el nombre entero desde que Maura lo partió, y los escribientes del '
-                'Notario Inmortal copiaban los mismos fragmentos desde hacía doscientos años.'),
+                'Notario Inmortal copiaban los mismos fragmentos desde hacía doscientos años. Sevrin '
+                'trazó las tres ubicaciones de memoria y tachó la tercera antes de escribirla: la '
+                'sala había dejado de existir en los planos, no en las piernas de quien la había '
+                'recorrido. Reunir las tres inscripciones antes de que los escribientes las '
+                'copiaran para siempre decidiría si el nombre del sello se leía una vez o se '
+                'repetía otros doscientos años. Y el Notario Inmortal no corre nunca: el papel '
+                'espera más que la piedra.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -1073,6 +1315,12 @@ CAMPAIGN = dict(
                     ('Sevrin', 'La primera parte dice "Vey". Quedan dos, y ya sé lo que significa.'),
                     ('narrator', 'Dos inscripciones siguen cerradas. Los escribientes no han dejado '
                                  'de copiar.'),
+                    ('antagonist', 'Copiamos el mismo párrafo desde hace doscientos años porque un '
+                                   'nombre escrito no se pierde ni se subleva. Ahora lo leéis en '
+                                   'voz alta: la oscuridad también sabe leer.'),
+                    ('narrator', 'Los tres muros no se ven entre sí: el del oeste tiene escalera '
+                                 'estrecha y guardia, el del norte hielo que ralentiza el paso, y '
+                                 'el del sur se llega por una sala que no figura en los planos.'),
                 ]),
                 ('beacon lit 2', [
                     ('antagonist', 'Habéis leído dos tercios. Con eso ya no podéis fingir que no '
@@ -1089,6 +1337,12 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que llegue la guardia del archivo.'),
+                    ('antagonist', 'Llamo a la guardia del archivo con mi último folio. Lo que no se '
+                                   'haya sellado hoy se archivará con vosotros dentro.'),
+                    ('narrator', 'El Notario no ataca: copia y borra, y cada hoja que pega sobre '
+                                 'una inscripción la vuelve ilegible para siempre. Decidid qué muro '
+                                 'rompéis primero, porque a los tres no llegaremos antes de la '
+                                 'guardia.'),
                 ]),
             ],
             victory=[
@@ -1106,7 +1360,10 @@ CAMPAIGN = dict(
             resolution=(
                 'Los muertos de la alianza eligieron sostener la última marcha. Cada uno pidió algo '
                 'distinto para después. Sevrin anotó cada petición en una hoja aparte, y Darian '
-                'prohibió que ninguna se resumiera en una sola frase.'),
+                'prohibió que ninguna se resumiera en una sola frase. La última petición pedía un '
+                'plazo, y Darian la copió con la fecha en blanco. La carta de la capital ya estaba '
+                'en camino: los barrios se habían alzado y el gobernador guardaba rehenes en la '
+                'aduana, con los arietes ya en la puerta norte.'),
         ),
         dict(
             title='La ciudad que abrió sus puertas',
@@ -1119,7 +1376,12 @@ CAMPAIGN = dict(
                 'alianza decía venir a salvar. La ceniza cubría las calles y las lámparas apagadas '
                 'señalaban casa abierta y sin armas. Los arietes imperiales ya estaban en la puerta '
                 'norte, y un correo tardaba menos en llegar que una orden. Irena llevaba dos días '
-                'hablando con los rehenes para que no perdieran la calma.'),
+                'hablando con los rehenes para que no perdieran la calma. Para un correo, una ciudad '
+                'con rehenes es un envío con la dirección tachada: hay que escribirla otra vez '
+                'entera. De las lámparas apagadas de la calle mayor, una estaba todavía tibia: '
+                'alguien había salido de casa esa misma noche y volvería a por ella. Llegar a la '
+                'aduana antes que los arietes decidiría si las puertas interiores se abrían con una '
+                'voz o con un fuego.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Los arietes llegarán antes que nosotros si tomamos el camino largo.'),
@@ -1166,6 +1428,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('narrator', 'El primer barrio izó una lámpara apagada. Es la señal de los '
                                  'vecinos: casa abierta, sin armas.'),
+                    ('antagonist', 'Dos provincias arden en paz porque nadie discutió mis órdenes. '
+                                   'Una ciudad que se gobierna a sí misma es un fuego sin dueño, y '
+                                   'la oscuridad se acerca a lo que arde.'),
+                    ('narrator', 'Las calles de la aduana son angostas y la ceniza resbala bajo las '
+                                 'sandalias: aquí dentro los arietes no corren, pero tampoco cabe '
+                                 'una formación cerrada.'),
                 ]),
                 ('enemy leader defeated', [
                     ('narrator', 'El gobernador huyó por el muelle. Las puertas interiores se '
@@ -1173,6 +1441,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que los arietes lleguen a la aduana.'),
+                    ('antagonist', 'Los arietes llegan a la aduana en dos turnos y he untado la '
+                                   'puerta de sebo. Salid con las manos visibles o entrarán '
+                                   'buscando carbón.'),
+                    ('narrator', 'El patio de la aduana está lleno de rehenes y su ariete solo '
+                                 'defiende la puerta principal; la escalera de servicio sube junto '
+                                 'a las lámparas apagadas. Decidid por dónde entráis, porque por la '
+                                 'puerta grande pagan los rehenes.'),
                 ]),
             ],
             victory=[
@@ -1188,7 +1463,11 @@ CAMPAIGN = dict(
             resolution=(
                 'La portavoz abrió las puertas desde dentro. Los vecinos guiaron a la alianza por '
                 'calles donde colgaban las lámparas apagadas. Nadie encendió ninguna: eran las '
-                'señales de los barrios, y esa noche indicaban camino libre.'),
+                'señales de los barrios, y esa noche indicaban camino libre. La huella de sandalias '
+                'amaneció doblada por otra huella más pequeña: la de un niño que había ido a por '
+                'agua sin pedir permiso a nadie. En el palacio en ruinas, la reina que no dormía '
+                'tenía ya escritos siete tratados y una silla vacía para cada pueblo de la '
+                'alianza.'),
         ),
         dict(
             title='La reina que no descansaba',
@@ -1201,7 +1480,12 @@ CAMPAIGN = dict(
                 'ambiciones comprables. Cada tratado estaba escrito para un pueblo concreto, con '
                 'fronteras generosas y una cláusula que dejaba a los demás fuera de la mesa. La '
                 'reina no había dormido desde el comienzo de la guerra y seguía firmando de memoria. '
-                'Darian entró en el palacio en ruinas con las siete respuestas en la mano.'),
+                'Darian entró en el palacio en ruinas con las siete respuestas en la mano. Para un '
+                'correo, siete tratados eran siete cartas sin remitente: la letra cambia, pero '
+                'siempre se pide lo mismo. Los siete documentos estaban escritos con la misma tinta '
+                'y fronteras distintas, y las cifras de trigo del de Valdara eran las mismas del de '
+                'los campos. Entrar en la sala con las siete respuestas decidiría si la alianza '
+                'salía de allí con una regla o con siete sobornos contados en voz alta.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', 'Sus ofertas son reales. Algunos podrían salvar a su pueblo marchándose '
@@ -1244,6 +1528,12 @@ CAMPAIGN = dict(
                 ('village captured', [
                     ('Nerea', 'Ese patio tiene pozo. Dejadlo abierto a los vecinos y no lo uséis '
                               'como puesto.'),
+                    ('antagonist', 'Todo pacto es un puñado de ambiciones atadas con un precio. El '
+                                   'vuestro se romperá cuando uno de los siete encuentre una '
+                                   'moneda más alta que su palabra.'),
+                    ('narrator', 'La sala del archivo conserva techo y las crujías están al aire: '
+                                 'entre columnas la guardia real vale el doble, y en los patios '
+                                 'abiertos la alianza es más que ellos.'),
                 ]),
                 ('turn 8', [
                     ('Sevrin', 'La reina ofrece lo mismo que me ofreció a mí. Firmé por miedo y '
@@ -1256,6 +1546,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que la guardia real cierre la sala.'),
+                    ('antagonist', 'Quemaré un tratado por turno hasta que os peleéis por el que '
+                                   'quede. A cada pueblo le duele lo suyo, y yo tengo siete '
+                                   'dolores escritos.'),
+                    ('narrator', 'Maura manda desde el archivo intacto y ya ha quemado un tratado '
+                                 'para probar que puede. Decidid si la sacáis de su sala o si '
+                                 'sostenéis la mesa: si los documentos se pierden, se pierde lo que '
+                                 'cada pueblo iba a poder rechazar.'),
                 ]),
             ],
             victory=[
@@ -1274,7 +1571,9 @@ CAMPAIGN = dict(
                 'Maura perdió el trono y fue llevada ante representantes de sus víctimas. Darian '
                 'prohibió que su nombre se añadiera a ningún contrato funerario. Los siete tratados '
                 'se archivaron sin firmas, y cada pueblo guardó el suyo como recordatorio de lo que '
-                'había podido rechazar.'),
+                'había podido rechazar. En la mesa del consejo quedó una silla de más, y nadie se '
+                'atrevió a quitarla. Quedaba el sello central, tallado en una montaña sin techo, y '
+                'un guardián que seguía jurando por una reina que ya no mandaba.'),
         ),
         dict(
             title='La última entrega',
@@ -1287,7 +1586,11 @@ CAMPAIGN = dict(
                 'Darian hasta la cámara abierta. El camino subía en cuatro revueltas, y en cada una '
                 'esperaba una guardia que había jurado antes de que Maura naciera. Sevrin subía '
                 'detrás, contando las cadenas que iban a romperse con el sello. La cima estaba '
-                'cubierta de nieve y no tenía techo: allí no había archivo donde guardar nada.'),
+                'cubierta de nieve y no tenía techo: allí no había archivo donde guardar nada. Al '
+                'salir del último refugio, la nieve empezó a borrar las huellas de la guardia '
+                'jurada: en la cima no quedaría rastro de quién había prometido qué. Subir el sello '
+                'hasta la cámara abierta antes de que cerrara el temporal decidiría si el último '
+                'correo de la guerra era una entrega o una rendición.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -1325,6 +1628,12 @@ CAMPAIGN = dict(
                     ('companion', 'Los esqueletos del sello no atacan a quien no lleva el nombre. '
                                   'Sevrin, camina detrás de mí.'),
                     ('Sevrin', 'Detrás de ti o delante, da igual. Tampoco a mí me queda sombra.'),
+                    ('antagonist', 'El sello contiene el juramento de mil muertos. Rompedlo y la '
+                                   'oscuridad volverá a tener nombres sin dueño, y yo habré '
+                                   'prometido guardar algo que ya no existe.'),
+                    ('narrator', 'La subida es de una sola fila: la nieve cubre los bordes y un '
+                                 'solo desliz se lleva al que pisa fuera del paso. Por eso el sello '
+                                 'va delante y Sevrin camina detrás de Ena.'),
                 ]),
                 ('village captured', [
                     ('narrator', 'Un refugio de pastores les deja pasar. No hay peaje: la montaña no '
@@ -1336,6 +1645,13 @@ CAMPAIGN = dict(
                 ]),
                 ('time limit', [
                     ('narrator', 'Quedan dos turnos antes de que la nieve cierre la cámara.'),
+                    ('antagonist', 'He subido las cadenas a la última revuelta. Si el sello llega a '
+                                   'la cima, lo que salga de él no tendrá nombre, ni dueño, ni '
+                                   'censo donde esconderse.'),
+                    ('narrator', 'El Guardián ha sellado el camino bajo y puesto esqueletos en '
+                                 'cada revuelta: no persigue el sello, persigue la fila que lo '
+                                 'lleva. Decidid quién abre la nieve y quién cierra la marcha junto '
+                                 'a Sevrin.'),
                 ]),
             ],
             victory=[
@@ -1353,7 +1669,10 @@ CAMPAIGN = dict(
                 'Darian depositó el sello entre las brasas. El último correo de la guerra fue una '
                 'lista de nombres liberados, enviada a todos los pueblos sin exigir respuesta. '
                 'Sevrin eligió quedarse en la cámara hasta que la nieve borró el camino, y nadie '
-                'escribió su nombre en ningún registro.'),
+                'escribió su nombre en ningún registro. Darian bajó con la alforja vacía de preguntas '
+                'y sin una sola deuda pendiente: nueve años de caminos para aprender que una entrega '
+                'también puede no cobrarse. La nieve cubrió el camino antes de que nadie pudiera '
+                'clavar en él un precio.'),
         ),
     ],
 )

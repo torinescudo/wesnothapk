@@ -82,7 +82,7 @@ CAMPAIGN = dict(
                     ('hero', 'La tablilla pesa menos que tú. Camina y no discutas con quien te saca de una celda.'),
                 ]),
                 ('turn 6', [
-                    ('narrator', 'En un turno la escalera de servicio queda inundada y solo quedará la puerta encadenada. Elige el paso ahora: el agua sube más rápido que tus hombres.'),
+                    ('narrator', 'Vaska solo tiene que esperar: en un turno la escalera de servicio queda inundada y solo quedará la puerta encadenada. Decide el paso ahora, que el agua sube más rápido que tus hombres.'),
                     ('Recaudadora Vaska', 'Detrás de cada precio hay un nombre guardado. Quitadme el libro y esos nombres se los come el canal, no yo.'),
                     ('hero', 'Los nombres viven en las calles, no en tus renglones.'),
                 ]),
@@ -152,7 +152,7 @@ CAMPAIGN = dict(
             events=[
                 ('turn 2', [
                     ('Naga Kess', 'Nuestra ley dice que quien nombra una cosa la posee. Vosotros nombráis bancos y calas y por eso os parece que el mar os debe algo.'),
-                    ('narrator', 'Dos filas de lanzas flanquean el hueco del arrecife y la resaca lo ensancha a cada ronda. Pasa ahora por el centro o rodea por la poza honda, que te costará dos turnos.'),
+                    ('narrator', 'Dos filas de lanzas flanquean el hueco del arrecife y la resaca lo ensancha a cada ronda. Kess lo cierra en cuanto se calma el agua: decide si pasas ahora por el centro o rodeas por la poza honda, que cuesta dos turnos.'),
                 ]),
                 ('turn 4', [
                     ('companion', 'Sus lanzas se mueven con la resaca, no contra ella. Están dejando pasar el agua.'),
@@ -246,7 +246,7 @@ CAMPAIGN = dict(
                     ('companion', 'Está empezado por la mitad. Alguien se arrepintió.'),
                 ]),
                 ('turn 6', [
-                    ('narrator', 'El chorro dulce empuja hacia el norte y resbala a quien nada contra él. Los de Issar atacan a favor de corriente: rema con ella y no de frente.'),
+                    ('narrator', 'El chorro dulce empuja hacia el norte y resbala a quien nada contra él, y los de Issar atacan a favor de corriente. Decide si usas el chorro para ganarles la espalda o aguantas la calzada sin moverte.'),
                     ('Custodio Issar', 'No guardo estas balizas por gusto: las guardo porque fuimos los primeros en pagarlas. Si encendéis las tres, mi deuda crece, y una deuda sin nombre se cobra en la primera casa que encuentre.'),
                     ('hero', 'Tu deuda la apuntamos con nosotros. Pero hoy encendemos las tres.'),
                 ]),
@@ -324,7 +324,7 @@ CAMPAIGN = dict(
                     ('hero', 'La guardamos. Servirá de prueba cuando alguien pregunte por los baúles.'),
                 ]),
                 ('turn 6', [
-                    ('narrator', 'Al caer la tarde el agua cubre la calzada del este y corta la retirada de ese lado. Decide qué puerta cierras antes: la del almacén de armas o la de la torre.'),
+                    ('narrator', 'Al caer la tarde el agua cubre la calzada del este y corta la retirada, y Serkos juntará sus hombres en la torre. Decide qué puerta cierras antes: la del almacén de armas o la de la torre.'),
                     ('Almirante Serkos', 'No borré esta isla para quedármela: la borré para que no vinieran a repartirla. Mañana firmaré su nombre de nuevo, y será el que yo elija.'),
                     ('hero', 'Mañana firmará quien la habite. Y ya somos demasiados para tu firma.'),
                 ]),
@@ -488,7 +488,7 @@ CAMPAIGN = dict(
                     ('companion', 'Sin redes no hay excusa para quedarse. Empujad las barcas.'),
                 ]),
                 ('turn 6', [
-                    ('narrator', 'Cada barca cargada tarda un turno entero en salir de la rompiente. Decide cuántas escoltas se quedan en tierra: las que acompañen esta noche no nadarán.'),
+                    ('narrator', 'Uss corta la rompiente para dejar las barcas cargadas a tiro, y cada barca tarda un turno entero en salir. Decide cuántas escoltas se quedan en tierra: las que acompañen esta noche no nadarán.'),
                     ('Primera Lanza Uss', 'No quiero vuestra gente: quiero el papel que dejó firmado quien construyó la máquina. Si me lo dais, me marcho contando a los vuestros uno por uno y sin tachar ninguno.'),
                     ('hero', 'El papel se queda donde está. Cuenta a los que se van, que hoy suman más.'),
                 ]),
@@ -640,7 +640,7 @@ CAMPAIGN = dict(
             events=[
                 ('turn 2', [
                     ('Guardián de la Sal', 'Detrás de estas compuertas no hay tesoros: hay nombres que nadie reclamó. Yo soy el último que los recuerda sin cuerda y sin nudos.'),
-                    ('narrator', 'La cueva se inunda por el túnel de entrada y las tres palancas están en salas distintas. Decide si mandas una unidad por palanca o abres camino con todo el grupo.'),
+                    ('narrator', 'La cueva se inunda por el túnel de entrada y las tres palancas están en salas distintas; los centinelas saldrán con la primera compuerta. Decide si mandas una unidad por palanca o abres camino con todo el grupo.'),
                 ]),
                 ('beacon lit 1', [
                     ('narrator', 'La primera compuerta cede. El agua sube un palmo y arrastra una lista escrita con sal.'),
@@ -696,7 +696,11 @@ CAMPAIGN = dict(
                 'cada casco ha mandado rascar el nombre y pintar encima una promesa: agua quieta, '
                 'marea obediente, ninguna pérdida que recordar. Sus capitanes aceptan porque están '
                 'cansados, no porque le crean, y la única bandera que aún dice algo en toda la flota '
-                'es la suya.'),
+                'es la suya. Su promesa pesa porque es '
+                'verdad: la máquina todavía regala mares sin funerales, y cada nombre que se '
+                'rasca de un casco se queda sin reclamar. Deshacer la flota cuesta el último '
+                'trato del puerto con los barcos sin pasado. El estrecho se cierra con la marea, '
+                'y la segunda línea ya acorta por el bajo.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: derrota a Serkos y deshaz su flota antes de que cruce el estrecho.'),
@@ -716,9 +720,18 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Serkos, sin bandera', 'Cada nombre que rascamos de un casco es un duelo que no volverá a hacer falta. Yo vendo barcos sin historial y mares sin funerales.'),
+                    ('narrator', 'La flota avanza en dos líneas y la delantera abre la rompiente para la otra. Decide si cortas la primera línea sobre el bajo o la dejas desviarse hacia los bajos del este.'),
+                ]),
                 ('turn 4', [
                     ('companion', 'En la campana del barco viejos han limado el nombre. La campana sigue sonando igual.'),
                     ('hero', 'Que la toquen ellos cuando quieran rendirse. Así la oímos todos.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Los barcos sin nombre navegan pegados a la estela del almirante, y los que aún recuerdan dudan en la segunda. Decide si divides tu flota en dos lances o embistes la línea de los que recuerdan.'),
+                    ('Serkos, sin bandera', 'A mis capitanes les prometí un mar donde no haya que despedir a nadie. Vosotros ofrecéis recuerdos, y recordar es justo lo que a ellos ya no les cabe.'),
+                    ('hero', 'Les ofrecemos nombres para sus barcos. Un duelo nombrado pesa menos que un duelo mudo.'),
                 ]),
                 ('turn 8', [
                     ('Serkos, sin bandera', 'Mis capitanes no luchan por mí. Luchan por no acordarse.'),
@@ -750,7 +763,11 @@ CAMPAIGN = dict(
                 'barcos. Serkos entregó su bandera sin discutir y pidió que se la devolvieran a la '
                 'sastra del puerto, que la había cosido veinte años atrás. Nerea la colgó en la sala '
                 'de cartas del puerto con el nombre del barco debajo, para que nadie tuviera que '
-                'preguntar de quién era. De aquella sala de cartas nació, al terminar las travesías, '
+                'preguntar de quién era. Pero el camino hasta la máquina seguía '
+                'pasando por un canal que los nagas habían tallado y custodiado desde antes de '
+                'los barcos, y aquella misma noche llegó una emisaria con una llave de conchas y '
+                'la vieja ley al hombro: quien cruza un paso prestado lo devuelve o lo paga. '
+                'De aquella sala de cartas nació, al terminar las travesías, '
                 'la escuela de navegación.'),
         ),
         dict(
@@ -764,7 +781,12 @@ CAMPAIGN = dict(
                 'cruzaran. En el fondo del canal hay escalones tallados por manos naga hace siglos, y '
                 'cada escalón tiene un nombre raspado y otro escrito encima. Issa habla por las '
                 'comunidades que ya aceptaron apagar la máquina; Eshka responde por las que aún '
-                'confían en ella.'),
+                'confían en ella. La llave de conchas abre '
+                'la puerta del núcleo con dos vueltas y catorce comunidades a la espalda. Cruzar '
+                'cuesta la vuelta, porque Eshka ha jurado hundir los escalones antes que verlos '
+                'pisados por manos extranjeras; no cruzar cuesta a Issa las pocas aldeas que aún '
+                'la escuchan. Al otro lado de los escalones espera la puerta del núcleo, y Eshka '
+                'corre para llegar a ella antes que la fila.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: escolta a Issa hasta la bandera del núcleo. Si cae, el paso queda cerrado.'),
@@ -786,6 +808,10 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Custodia Eshka', 'Quien nombra un paso lo posee, y este lo nombraron las mías cuando aún no había barcos. Vosotros lo cruzáis prestado, y lo prestado se devuelve o se paga.'),
+                    ('narrator', 'El canal tiene dos vías: los escalones tallados, abiertos y estrechos, y la zanja honda, oscura pero sin vigías. Eshka guarda la puerta final y no el camino: decide quién marca el ritmo, Issa por los escalones o Luar por la zanja.'),
+                ]),
                 ('turn 4', [
                     ('protected', 'En el escalón sexto hay un nombre raspado y otro escrito encima con una concha.'),
                     ('companion', 'Lo copio con un nudo. Si el agua sube, al menos queda la cuenta.'),
@@ -793,6 +819,11 @@ CAMPAIGN = dict(
                 ('half strength', [
                     ('protected', 'Me han dado en la aleta. Seguid, yo cierro la fila.'),
                     ('hero', 'Nadie cierra nada. Luar, cógela del brazo y sube con ella.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Con cada marea los escalones se cubren y aprietan la fila. Decide si subes a Issa a hombros, que gana un turno, o la dejas marcar el paso con su aleta.'),
+                    ('Custodia Eshka', 'Las aldeas que me siguen viven de la calma que la máquina todavía les paga. Si la apagáis, seré yo quien tenga que explicarles el hambre, y empezaré explicándoselo a la que la trajo.'),
+                    ('hero', 'Se lo explicarás a todos. A ella la cubro yo.'),
                 ]),
                 ('turn 8', [
                     ('Custodia Eshka', 'La puerta tiene dos lados. Al que la cruce primero lo llamarán traidor.'),
@@ -820,7 +851,9 @@ CAMPAIGN = dict(
                 'una comunidad que había aceptado apagar la máquina. Nerea la pesó en la mano y la '
                 'encontró ligera; Issa le explicó que las llaves naga no pesan por lo que abren, sino '
                 'por lo que prometen. Añadieron su concha al final, con el nombre de la aldea escrito '
-                'por dentro.'),
+                'por dentro. La cerradura dio dos vueltas y la puerta '
+                'del núcleo cedió hacia una sala de bronce. Dentro, algo repetía una orden grabada '
+                'y esperaba a que alguien la firmara de nuevo.'),
         ),
         dict(
             title='El último mar en calma',
@@ -833,7 +866,11 @@ CAMPAIGN = dict(
                 'ejecutaban. El que guarda la sala no tiene nombre ni ley: repite una orden grabada '
                 'en bronce. En la placa de los constructores el último renglón está raspado y vuelto '
                 'a raspar con una uña, y debajo se adivina una fecha: el año en que empezaron las '
-                'mareas quietas.'),
+                'mareas quietas. Mantener las válvulas '
+                'abiertas cuesta las tormentas que estas islas llevan veinte años sin saber '
+                'enterrar, y cerrarlas devuelve una calma que se cobra en nombres ajenos. Y en '
+                'medio queda la orden de bronce, que hará lo único que sabe hasta el último '
+                'turno.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('narrator', 'Objetivo: mantén a Nerea con vida hasta el comienzo del turno doce. Las válvulas deben seguir abiertas.'),
@@ -853,9 +890,18 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Centinela del Núcleo', 'Orden grabada: mantener el mar en calma. Quien empezó la excepción no la terminó de escribir, y lo que no está escrito no me obliga.'),
+                    ('narrator', 'Las válvulas están en tres salas y el núcleo ocupa el centro sin un solo parapeto, que es justo lo que los centinelas quieren. Decide si cubres las tres válvulas a la vez o defiendes el centro con todo el grupo.'),
+                ]),
                 ('turn 4', [
                     ('companion', 'En la placa de bronce hay cuatro nombres de constructores y un quinto raspado.'),
                     ('hero', 'Adivino cuál es. Sigue leyendo, que yo cubro la puerta.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'Los centinelas entran por los dos pasillos y empujan hacia las válvulas sin descanso. Decide cada cuánto relevas a los heridos en el pasillo de agua dulce: en dos turnos sin relevo no quedará nadie para girarlas.'),
+                    ('Centinela del Núcleo', 'Este núcleo dio de comer a estas islas durante veinte años, y mi orden lo recuerda aunque vosotros hayáis decidido olvidarlo. Mañana cerraré las válvulas y devolveré la calma.'),
+                    ('hero', 'Mañana habrá olas. Guárdame esa orden para cuando aprendas a romperla.'),
                 ]),
                 ('turn 8', [
                     ('Centinela del Núcleo', 'Vuestra madre raspó su nombre para que la máquina no la reclamara. Sigue reclamándola.'),
@@ -883,7 +929,10 @@ CAMPAIGN = dict(
                 'máquina. Nerea raspó la sal de la placa hasta encontrar el renglón borrado y '
                 'escribió encima el nombre de su madre, Aldara Vado, con la punta de un cuchillo. '
                 'Luar añadió la fecha. El centinela miró hacerlo y no dijo nada, porque ya no tenía '
-                'orden que recitar.'),
+                'orden que recitar. Luego bajó la '
+                'marea natural, la primera en veinte años, y se metió por las galerías sin pedir '
+                'permiso. Al final de la última galería esperaban las barcas, y entre Nerea y '
+                'ellas quedaba un custodio que ya no tenía nada que guardar.'),
         ),
         dict(
             title='Nombres sobre el agua',
@@ -895,7 +944,12 @@ CAMPAIGN = dict(
                 'retener a Nerea para reiniciar el mecanismo. Las barcas aguardaban más allá de los '
                 'muelles partidos. No viene a matar: viene a buscar la mano de quien conoce la firma, '
                 'porque cree que Nerea es la única que puede volver a darla. El agua sube a la altura '
-                'de la rodilla y el tablero de nombres del puerto aún cuelga de dos clavos.'),
+                'de la rodilla y el tablero de nombres del puerto aún cuelga de dos clavos. El custodio no '
+                'empuña una lanza siquiera: busca la mano que sabe la firma y cree que sin ella '
+                'el mar se quedará huérfano de calma. Salir cuesta dejar el puerto sin nadie que '
+                'sepa volver a arrancar la máquina; quedarse cuesta firmar por su madre una '
+                'segunda vez. Las barcas sueltan amarras con la marea, y los dos clavos del '
+                'tablero no durarán otra.'),
             # Beats played when the chapter opens: (speaker, line).
             intro=[
                 ('companion', (
@@ -917,9 +971,18 @@ CAMPAIGN = dict(
             ],
             # Scripted beats: (trigger, [(speaker, line), ...]).
             events=[
+                ('turn 2', [
+                    ('Último Custodio', 'Esa mano vale más escribiendo la firma que nadando hacia las barcas. La calma que vuestras islas van a echar de menos solo sale de ella.'),
+                    ('narrator', 'Las galerías se inundan por los dos extremos y el paso de los planos está vigilado arriba. Decide si aguantas la subida por los planos, donde te verán venir, o bajas por el desagüe, que se llena en dos rondas.'),
+                ]),
                 ('turn 4', [
                     ('narrator', 'El agua sube un escalón más. El tablero de nombres del puerto queda a la altura de los ojos.'),
                     ('companion', 'Las letras están rascadas. Alguien quitó su nombre con una piedra.'),
+                ]),
+                ('turn 6', [
+                    ('narrator', 'El custodio empuja el tablero para cortar el pasillo, y el tablero se desprende de un clavo a cada ronda. Decide si lo aguantas con una unidad o corres por debajo mientras aún cuelga.'),
+                    ('Último Custodio', 'He guardado veinte años este puerto vacío porque alguien tenía que quedarse cuando todos se marchaban. Ahora me quedo sin orden y sin nombre: dejadme al menos la copia del cuaderno.'),
+                    ('hero', 'La copia se queda donde cualquiera pueda leerla. Ni un paso más.'),
                 ]),
                 ('turn 8', [
                     ('Último Custodio', 'Vuestra madre me pidió que la detuviera si volvía. Estoy cumpliendo su palabra.'),
@@ -951,7 +1014,10 @@ CAMPAIGN = dict(
                 'Nerea salió a un mar difícil y libre. En el cuaderno escribió el nombre de cada '
                 'persona que había vuelto con ella, y después añadió los de quienes no volvieron y el '
                 'de su madre al final, con letra clara para que nadie tuviera que adivinar. El '
-                'cuaderno se mojó en la primera página, y esa fue la única tinta que se perdió.'),
+                'cuaderno se mojó en la primera página, y esa fue la única tinta que se perdió. Delante '
+                'de las barcas, las islas iban diciendo sus nombres en voz alta, unos por otros, '
+                'hasta que el mar los devolvió escritos. Nerea los apuntó todos en el margen: un '
+                'nombre nombrado a tiempo ya no lo borra ninguna marea.'),
         ),
     ],
 )

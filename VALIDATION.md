@@ -25,12 +25,13 @@ Two runs make the record: the harness pass
 (https://github.com/torinescudo/wesnothapk/actions/runs/35991136417, commit
 018c397) and the full gameplay check that carries the map, art and story work
 (https://github.com/torinescudo/wesnothapk/actions/runs/35991663042, commit
-58f45d6). Both green: `smoke-test.py` and `campaign-smoke-test.py` drove the
-launcher, the campaign picker, More > Objectives, the collapse/expand chevron
-and the End turn confirmation on a real Android 15 emulator, then opened all six
-campaigns and exercised all 52 objective transitions and campaign endings.
-The version-code bump of commit 885b6fa is a packaging change only and its own
-run was still in progress when this entry was written.
+58f45d6). The version-code bump of commit 885b6fa then passed the same full
+check on its own run (https://github.com/torinescudo/wesnothapk/actions/runs/
+35994284299), so the packaging change is verified too. All green:
+`smoke-test.py` and `campaign-smoke-test.py` drove the launcher, the campaign
+picker, More > Objectives, the collapse/expand chevron and the End turn
+confirmation on a real Android 15 emulator, then opened all six campaigns and
+exercised all 52 objective transitions and campaign endings.
 
 The way to that pass is what the harness now guards, and the record belongs
 here because each failure was a real defect:
