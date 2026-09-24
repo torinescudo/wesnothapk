@@ -248,7 +248,7 @@ def campaign_stats(campaign):
         })
     art = {'png': 0, 'bytes': 0, 'portraits': 0, 'units': 0, 'story': 0, 'icons': 0, 'maps': 0}
     for path in campaign.rglob('*'):
-        if path.is_file() and path.suffix.lower() in ('.png', '.jpg', '.webp'):
+        if path.is_file() and path.suffix.lower() in ('.png', '.jpg', '.jpeg', '.webp'):
             art['png'] += 1
             art['bytes'] += path.stat().st_size
             rel = '/'.join(p.lower() for p in path.relative_to(campaign).parts)

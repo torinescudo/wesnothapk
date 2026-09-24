@@ -12,6 +12,11 @@ inline constexpr std::array<std::string_view, 15> actions = {
 	"preferences", "quit", "moveaction"
 };
 
+// Returned to Java when the published snapshot is too old to trust. SDL can stop
+// publishing while a dialog holds focus, and "no news" is not "nothing is
+// available": the Java side keeps the last state and waits instead of refusing.
+inline constexpr int stale_mask = -2;
+
 constexpr bool valid_action(int action)
 {
 	return action >= 0 && static_cast<unsigned>(action) < actions.size();

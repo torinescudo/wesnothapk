@@ -47,8 +47,13 @@ extern "C" JNIEXPORT jint JNICALL
 Java_org_wesnoth_Wesnoth_WesnothActivity_nativeGetPhoneActions(JNIEnv*, jclass)
 {
 	const int mask = phone_actions_mask.load();
-	// Modal dialogs/AI may stop controller::process. Never leave stale buttons enabled.
-	return mask >= 0 && SDL_GetTicksNS() - phone_actions_updated.load() > 500000000ULL ? 0 : mask;
+	// A stale snapshot is not an empty one. SDL can stop publishing while a
+	// dialog holds focus (Android 6 and later), and the Java controls must keep
+	// their last state and wait rather than refuse the action the player picked.
+	if(mask >= 0 && SDL_GetTicksNS() - phone_actions_updated.load() > 500000000ULL) {
+		return static_cast<jint>(phone::stale_mask);
+	}
+	return mask;
 }
 
 extern "C" JNIEXPORT jboolean JNICALL

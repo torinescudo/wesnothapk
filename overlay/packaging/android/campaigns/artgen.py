@@ -42,12 +42,13 @@ SCENE_SIZE = (1024, 512)
 
 # Style clauses shared by every request, worded the way the existing, proven
 # entries in ART_PROMPTS.json are.
-PORTRAIT_STYLE = ('Original hand-painted high-fantasy game portrait. {subject} One single character '
-                  'full body head to boots, three-quarter pose facing slightly right. Clean dark '
-                  'contours, rich muted natural colours, readable silhouette compatible with '
-                  'traditional Battle for Wesnoth illustration. Entire figure and equipment inside '
-                  'frame with margin. Genuinely transparent PNG background, no scenery, no text, '
-                  'no border or logo.')
+PORTRAIT_STYLE = ('Original hand-painted high-fantasy game portrait. {subject} One single character, '
+                  'head to below the knees, standing calmly with hands relaxed at their sides, at most '
+                  'one simple prop and no weapon held up. Generous margin above the head so nothing is '
+                  'cropped, flat simple gradient background. Clean dark contours, rich muted natural '
+                  'colours, readable silhouette compatible with traditional Battle for Wesnoth '
+                  'illustration. Genuinely transparent PNG background, no scenery, no text, no border '
+                  'or logo.')
 SCENE_STYLE = ('Original hand-painted wide illustration for a Battle for Wesnoth story screen. '
                '{subject} No lettering of any kind. Muted natural colours, clean readable shapes, '
                'clear foreground, midground and background layers, consistent with the same '
@@ -143,17 +144,21 @@ def plan():
     existing = {}
     if PROMPTS.is_file():
         existing = json.loads(PROMPTS.read_text(encoding='utf-8'))
+    authored = existing.get('portraits', {})
     plan_data = {'mode': 'built-in image generation',
                  'note': 'Prompts for every image the campaigns reference. '
-                         'Install the results with artgen.py install.',
-                 'portraits': {}, 'chapter_scenes': {}, 'unit_sprites': {},
+                         'portraits and unit_sprites are authored and preserved; '
+                         'characters and chapter_scenes are derived from the stories '
+                         'and regenerated on every run. Install with artgen.py install.',
+                 'portraits': dict(authored), 'characters': {}, 'chapter_scenes': {},
+                 'unit_sprites': existing.get('unit_sprites', {}),
                  'hero_sprites': existing.get('hero_sprites', {})}
-    authored = existing.get('portraits', {})
     for campaign in stories.CAMPAIGNS:
         key = campaign['key']
-        plan_data['portraits'][key] = authored.get(key) or PORTRAIT_STYLE.format(subject=(
-            '%s, the protagonist of %s. %s' % (campaign['hero'], campaign['title'],
-                                               campaign['premise'])))
+        if key not in plan_data['portraits']:
+            plan_data['characters'][key] = PORTRAIT_STYLE.format(subject=(
+                '%s, the protagonist of %s. %s' % (campaign['hero'], campaign['title'],
+                                                   campaign['premise'])))
         for index, chapter in enumerate(campaign['chapters'], 1):
             for scene in range(1, SCENES_PER_CHAPTER + 1):
                 scene_key = '%s_%02d_%d' % (key, index, scene)
@@ -161,8 +166,9 @@ def plan():
                     subject=scene_subject(campaign, index, chapter, scene))
     for name in stories.characters():
         key = stories.portrait_key(name)
-        plan_data['portraits'][key] = authored.get(key) or PORTRAIT_STYLE.format(
-            subject=portrait_subject(name))
+        if key not in plan_data['portraits']:
+            plan_data['characters'][key] = PORTRAIT_STYLE.format(
+                subject=portrait_subject(name))
     plan_data['unit_sprites'] = existing.get('unit_sprites', {})
     PROMPTS.write_text(json.dumps(plan_data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print('wrote %d portrait prompts, %d chapter scenes, %d unit sprites into %s'
@@ -188,7 +194,8 @@ def required():
 def target(kind, key):
     if kind == 'portrait':
         return IMAGES / 'portraits' / ('%s.png' % key)
-    return IMAGES / 'story' / ('%s.png' % key)
+    # Scenes are wide backgrounds with no alpha: JPEG keeps the repository light.
+    return IMAGES / 'story' / ('%s.jpg' % key)
 
 
 def status():
@@ -219,8 +226,10 @@ CHECKPOINT = 'sd_xl_base_1.0.safetensors'
 PORTRAIT_LORA = 'daggerfall-000001.safetensors'
 PORTRAIT_SIZE_GEN = (832, 1216)
 SCENE_SIZE_GEN = (1344, 768)
-NEGATIVE = ('text, letters, signature, watermark, logo, border, frame, collage, '
-            'two figures, extra limbs, extra fingers, deformed hands, blurry, lowres')
+NEGATIVE = ('text, letters, signature, watermark, logo, border, frame, collage, scenery, '
+            'two figures, extra limbs, extra fingers, fused fingers, deformed hands, hands holding '
+            'an object, raised weapon, wispy hair, fuzzy edges, halo, tight crop, cropped hair, '
+            'busy straps, smudged detail, blurry, lowres')
 
 
 def workflow(prompt, key, size, lora, seed):
@@ -267,7 +276,8 @@ def generate(server, kinds, limit, staging):
     print('generating %d images with %s' % (len(pending), server))
     for number, (kind, key) in enumerate(pending, 1):
         section = 'chapter_scenes' if kind == 'scene' else 'portraits'
-        prompt = prompts.get(section, {}).get(key)
+        prompt = (prompts.get(section, {}).get(key)
+                  or prompts.get('characters', {}).get(key))
         if not prompt:
             print('  [%d/%d] %s: no prompt in ART_PROMPTS.json' % (number, len(pending), key))
             continue
@@ -302,10 +312,12 @@ def generate(server, kinds, limit, staging):
             raw.write_bytes(response.read())
         destination = target(kind, key)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        fit(Image.open(raw),
-            PORTRAIT_SIZE if kind == 'portrait' else SCENE_SIZE).save(destination, 'PNG', optimize=True)
+        frame = fit(Image.open(raw), PORTRAIT_SIZE if kind == 'portrait' else SCENE_SIZE)
         if kind == 'portrait':
+            frame.save(destination, 'PNG', optimize=True)
             cutout(destination)
+        else:
+            frame.convert('RGB').save(destination, 'JPEG', quality=90, optimize=True)
         print('  [%d/%d] %s -> %s' % (number, len(pending), key, destination.name))
     return len(pending)
 
@@ -321,7 +333,11 @@ def install(source_dir):
                 continue
             size = PORTRAIT_SIZE if kind == 'portrait' else SCENE_SIZE
             destination.parent.mkdir(parents=True, exist_ok=True)
-            fit(Image.open(candidate), size).save(destination, 'PNG', optimize=True)
+            frame = fit(Image.open(candidate), size)
+            if kind == 'portrait':
+                frame.save(destination, 'PNG', optimize=True)
+            else:
+                frame.convert('RGB').save(destination, 'JPEG', quality=90, optimize=True)
             installed += 1
             break
     print('installed %d images into %s' % (installed, IMAGES))

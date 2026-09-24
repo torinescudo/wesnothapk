@@ -198,9 +198,9 @@ def scene_art(key, index, scene):
     artgen.py); until then a chapter still runs with the art it has, instead of
     pointing the engine at a file nobody has drawn.
     """
-    scene_path = PACK / ('images/cbm/story/%s_%02d_%d.png' % (key, index, scene))
-    if scene_path.is_file():
-        return 'cbm/story/%s_%02d_%d.png' % (key, index, scene)
+    for suffix in ('.jpg', '.png'):
+        if (PACK / ('images/cbm/story/%s_%02d_%d%s' % (key, index, scene, suffix))).is_file():
+            return 'cbm/story/%s_%02d_%d%s' % (key, index, scene, suffix)
     return 'cbm/portraits/%s.png~SCALE(1024,512)' % key
 
 

@@ -79,6 +79,8 @@ final class PhoneControls {
 
     private static final int POLL_MS = 250;
     private static final int FOCUS_WAIT_MS = 4000;
+    /** phone::stale_mask in src/phone_actions.hpp: snapshot too old to trust. */
+    private static final int STALE_MASK = -2;
     private static final float CAPTION_SP = 12f;
     private static final float SHEET_CAPTION_SP = 16f;
 
@@ -89,6 +91,8 @@ final class PhoneControls {
     private final ImageButton toggle;
     private final Button more;
     private final Button[] buttons = new Button[ACTIONS.length];
+    /** More-sheet rows follow the same availability mask as the bar. */
+    private final Button[] sheetRows = new Button[SHEET_ACTIONS.length];
     private final SharedPreferences settings;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean expanded;
@@ -264,13 +268,23 @@ final class PhoneControls {
         @Override public void run() {
             if (!running) return;
             int mask = WesnothActivity.nativeGetPhoneActions();
-            if (mask != previousMask) {
+            if (mask == STALE_MASK) {
+                // No fresh news: keep the controls as the last snapshot left them.
+            } else if (mask != previousMask) {
                 previousMask = mask;
                 for (int i = 0; i < buttons.length; ++i) {
                     if (buttons[i] != null) {
                         boolean enabled = mask >= 0 && (mask & (1 << i)) != 0;
                         buttons[i].setEnabled(enabled);
                         buttons[i].setAlpha(enabled ? 1f : 0.4f);
+                    }
+                }
+                for (Button row : sheetRows) {
+                    if (row != null && row.getTag() instanceof Integer) {
+                        int action = (Integer) row.getTag();
+                        boolean enabled = mask >= 0 && (mask & (1 << action)) != 0;
+                        row.setEnabled(enabled);
+                        row.setAlpha(enabled ? 1f : 0.4f);
                     }
                 }
                 updateLayout(mask);
@@ -322,15 +336,14 @@ final class PhoneControls {
         handler.post(new Runnable() {
             @Override public void run() {
                 if (!running) return;
-                // The buttons already follow this mask, so refusing here matches
-                // what the player sees rather than waiting for a lost action.
                 int mask = WesnothActivity.nativeGetPhoneActions();
-                if (mask < 0 || (mask & (1 << action)) == 0) {
+                // A stale snapshot is not evidence that the action is gone: the
+                // player may be confirming a dialog while the game stops
+                // publishing. Only a fresh snapshot without the action refuses.
+                if (mask != STALE_MASK && (mask < 0 || (mask & (1 << action)) == 0)) {
                     unavailable();
                     return;
                 }
-                // Android 6 pauses SDL when a dialog takes focus. Wait for focus
-                // and a fresh game snapshot before giving up.
                 if (activity.hasWindowFocus()
                     && WesnothActivity.nativeQueuePhoneAction(action)) return;
                 if (SystemClock.uptimeMillis() < deadline) {
@@ -370,8 +383,8 @@ final class PhoneControls {
         list.setOrientation(LinearLayout.VERTICAL);
         list.setPadding(dp(10), dp(10), dp(10), dp(10));
         int mask = WesnothActivity.nativeGetPhoneActions();
-        for (int id : SHEET_ACTIONS) {
-            final int action = id;
+        for (int index = 0; index < SHEET_ACTIONS.length; ++index) {
+            final int action = SHEET_ACTIONS[index];
             Button entry = sheetButton(LABELS[action], VIEW_IDS[action], ICONS[action]);
             boolean enabled = mask >= 0 && (mask & (1 << action)) != 0;
             entry.setEnabled(enabled);
@@ -381,6 +394,8 @@ final class PhoneControls {
                 dismissDialog();
                 if (action == QUIT) confirm(action); else send(action);
             });
+            sheetRows[index] = entry;
+            entry.setTag(action);
             list.addView(entry);
         }
         Button help = sheetButton(R.string.phone_help, R.id.phone_action_help, R.drawable.phone_ic_help);

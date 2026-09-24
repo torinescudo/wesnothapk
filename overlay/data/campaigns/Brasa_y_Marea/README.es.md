@@ -43,8 +43,20 @@ incorporarse a la alianza durante la campaña de Darian.
 
 - 52 mapas y escenarios, con seis clases de objetivo y finales propios.
 - 22 tipos de unidad: 16 de las nuevas razas y seis protagonistas.
-- Retratos y sprites originales generados con la herramienta integrada de imágenes.
-  Las instrucciones de generación se conservan en `ART_PROMPTS.json`.
+- Retratos y sprites originales, generados con IA de imagen y recortados con
+  fondo transparente. Los prompts completos se conservan en `ART_PROMPTS.json`:
+  `portraits` y `unit_sprites` están escritos a mano y se preservan;
+  `characters` y `chapter_scenes` se derivan de estas historias. El flujo está en
+  `artgen.py`: `plan` escribe los prompts, `generate` los dibuja con el servidor
+  local de ComfyUI (SDXL más el LoRA `daggerfall`, y `pixel-art-xl` para
+  sprites), quita el fondo con `rembg` e instala cada imagen en el tamaño que usa
+  el WML, `status` dice lo que falta, e `install` coloca imágenes generadas por
+  otra vía. Las semillas se derivan del nombre del recurso, así que regenerar
+  reproduce las mismas imágenes.
+- Las escenas de capítulo se guardan en JPEG (sin alfa) y los retratos en PNG con
+  alfa. Cuando una escena o un retrato todavía no existe, el generador de
+  escenarios usa el retrato del protagonista como fondo, de modo que ninguna
+  partida apunta a un archivo que nadie haya dibujado.
 - Doce composiciones instrumentales originales, aproximadamente dieciséis minutos,
   creadas con síntesis aditiva. `music/cbm/score.json` conserva motivos y métricas.
 - Los terrenos, objetos de señalización y unidades clásicas proceden de Wesnoth
