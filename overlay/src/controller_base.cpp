@@ -42,84 +42,6 @@ namespace {
 std::atomic<int> phone_actions_mask{-1};
 std::atomic<Uint64> phone_actions_updated{0};
 
-// Pinch to zoom: two fingers on the map, tracked by id, with the distance
-// between them deciding the zoom. The gesture is recognised here so the map
-// never has to know about fingers beyond "do not pan while pinching".
-struct pinch_state {
-	// An unscoped enum, not static constexpr: a constexpr member used as an
-	// array bound inside its own class is a common C++11 build break.
-	enum { max_fingers = 2 };
-	Uint64 ids[max_fingers];
-	float x[max_fingers] = {0.f, 0.f};
-	float y[max_fingers] = {0.f, 0.f};
-	float last_distance_sq = 0.f;
-	bool pinching = false;
-
-	int slot_for(Uint64 id) const
-	{
-		for(int i = 0; i < max_fingers; ++i) {
-			if(ids[i] == id) return i;
-		}
-		return -1;
-	}
-
-	int free_slot() const
-	{
-		for(int i = 0; i < max_fingers; ++i) {
-			if(ids[i] == 0) return i;
-		}
-		return -1;
-	}
-
-	int fingers() const
-	{
-		int count = 0;
-		for(int i = 0; i < max_fingers; ++i) {
-			if(ids[i] != 0) ++count;
-		}
-		return count;
-	}
-
-	float distance_sq() const
-	{
-		const float dx = x[0] - x[1];
-		const float dy = y[0] - y[1];
-		return dx * dx + dy * dy;
-	}
-
-	void begin(Uint64 id, float px, float py)
-	{
-		const int slot = free_slot();
-		if(slot < 0) return;
-		ids[slot] = id;
-		x[slot] = px;
-		y[slot] = py;
-		if(fingers() == 2) {
-			pinching = true;
-			last_distance_sq = distance_sq();
-		}
-	}
-
-	void move(Uint64 id, float px, float py)
-	{
-		const int slot = slot_for(id);
-		if(slot < 0) return;
-		x[slot] = px;
-		y[slot] = py;
-	}
-
-	void end(Uint64 id)
-	{
-		const int slot = slot_for(id);
-		if(slot < 0) return;
-		ids[slot] = 0;
-		if(fingers() < 2) {
-			pinching = false;
-			last_distance_sq = 0.f;
-		}
-	}
-};
-pinch_state pinch;
 }
 
 extern "C" JNIEXPORT jint JNICALL
@@ -299,25 +221,6 @@ void controller_base::handle_event(const SDL_Event& event)
 		break;
 
 	case SDL_EVENT_FINGER_MOTION: {
-		pinch.move(event.tfinger.finger, event.tfinger.x, event.tfinger.y);
-		if(pinch.pinching) {
-			// Two fingers on the map are a zoom, not a pan: the distance
-			// between them drives the zoom and the map does not scroll.
-			const float current = pinch.distance_sq();
-			if(pinch.last_distance_sq > 0.f && current > 0.f) {
-				auto* executor = get_hotkey_command_executor();
-				if(executor != nullptr) {
-					if(current > pinch.last_distance_sq * 1.32f) {
-						executor->execute_action({std::string("zoomin")});
-						pinch.last_distance_sq = current;
-					} else if(current < pinch.last_distance_sq * 0.76f) {
-						executor->execute_action({std::string("zoomout")});
-						pinch.last_distance_sq = current;
-					}
-				}
-			}
-			break;
-		}
 		if(SDL_PeepEvents(&new_event, 1, SDL_GETEVENT, SDL_EVENT_FINGER_MOTION, SDL_EVENT_FINGER_MOTION) > 0) {
 			while(SDL_PeepEvents(&new_event, 1, SDL_GETEVENT, SDL_EVENT_FINGER_MOTION, SDL_EVENT_FINGER_MOTION) > 0) {
 			};
@@ -346,7 +249,6 @@ void controller_base::handle_event(const SDL_Event& event)
 	case SDL_EVENT_FINGER_DOWN:
 		// A second finger turns the gesture into a zoom; the mouse case below
 		// still sees the press the touch synthesizes.
-		pinch.begin(event.tfinger.finger, event.tfinger.x, event.tfinger.y);
 		break;
 
 	case SDL_EVENT_MOUSE_BUTTON_UP:
@@ -362,8 +264,7 @@ void controller_base::handle_event(const SDL_Event& event)
 		break;
 
 	case SDL_EVENT_FINGER_UP:
-		// Leaving one finger on the map ends the zoom and lets the pan resume.
-		pinch.end(event.tfinger.finger);
+		// Leaving one finger on the map lets the pan resume.
 		break;
 
 	case SDL_EVENT_MOUSE_WHEEL:
