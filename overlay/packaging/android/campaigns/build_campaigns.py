@@ -527,6 +527,26 @@ def scenario(c, index, chapter, manifest):
                         '    [/command]\n[/option]\n') % (label, var, choice, gold)
         body += ('[event]\n    name=turn %d\n    [message]\n        speaker=narrator\n'
                  '        message="%s"\n%s    [/message]\n[/event]\n') % (n + 1, question, options)
+    # The enemy answers what the player is actually doing: taking ground brings
+    # reinforcements down on you, and a quiet map makes them dig in instead.
+    midpoint = max(2, turns // 2)
+    reinforce = strategy['recruitment_pattern'].split(',')[0].strip()
+    body += ('[event]\n    name=turn %d\n    [if]\n'
+             '        [variable]\n            name="cbm_points"\n            greater_than_equal_to="3"\n        [/variable]\n'
+             '        [then]\n'
+             '            [message]\n                speaker="narrator"\n'
+             '                message="Tu avance les ha llegado: el enemigo manda refuerzos hacia donde estás."\n'
+             '            [/message]\n'
+             '            [unit]\n                side="2"\n                type="%s"\n'
+             '                x,y="%d,%d"\n                placement="map"\n            [/unit]\n'
+             '        [/then]\n'
+             '        [else]\n'
+             '            [message]\n                speaker="narrator"\n'
+             '                message="No has movido el tablero y el enemigo lo aprovecha: se cierra y espera tu error."\n'
+             '            [/message]\n'
+             '        [/else]\n'
+             '    [/if]\n[/event]\n') % (
+        midpoint, reinforce, enemy[0], enemy[1])
     if secondary['kind'] == 'deaths':
         # A nested [event] would swallow its siblings in the WML tree: this
         # counter belongs at the top level like every other handler.
