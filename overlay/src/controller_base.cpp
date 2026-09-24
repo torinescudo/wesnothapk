@@ -46,8 +46,10 @@ std::atomic<Uint64> phone_actions_updated{0};
 // between them deciding the zoom. The gesture is recognised here so the map
 // never has to know about fingers beyond "do not pan while pinching".
 struct pinch_state {
-	static constexpr int max_fingers = 2;
-	Uint64 ids[max_fingers] = {0, 0};
+	// An unscoped enum, not static constexpr: a constexpr member used as an
+	// array bound inside its own class is a common C++11 build break.
+	enum { max_fingers = 2 };
+	Uint64 ids[max_fingers];
 	float x[max_fingers] = {0.f, 0.f};
 	float y[max_fingers] = {0.f, 0.f};
 	float last_distance_sq = 0.f;
