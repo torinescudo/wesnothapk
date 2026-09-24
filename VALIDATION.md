@@ -1,13 +1,36 @@
 # Validation record
 
+## The build running on a phone — 2026-09-24
+
+`app-arm64-v8a-debug.apk` from the `58f45d6` artifact (747 MB) installed on a
+Xiaomi Redmi (arm64-v8a, Android 16 / API 36) and launched as
+`org.wesnoth.phone/.Wesnoth.InitActivity`, running as version
+`1.19.27+brasa-marea.2`.
+
+Installing over the previous local build needed `adb install -d`: that build
+shipped versionCode 1192706 and this one carried 1192702, which Android reports
+as `INSTALL_FAILED_VERSION_DOWNGRADE`. The version code and name now move to
+1192707 / 1.19.27+brasa-marea.3, so the next build installs as an update.
+
+MIUI blocked the first attempts with `INSTALL_FAILED_USER_RESTRICTED`, and two
+`SecurityException`s named the cause rather than leaving it a guess:
+`INJECT_EVENTS` and `WRITE_SECURE_SETTINGS` were both denied, which is MIUI's
+"USB debugging (Security settings)" switch being off. Enabling that switch
+allowed the install. The device had no saved games at any point, so nothing was
+at risk while this was sorted out.
+
 ## Phone interface and campaigns on the Android 15 emulator — 2026-09-24
 
-`Test latest emulator APK` passed
+Two runs make the record: the harness pass
 (https://github.com/torinescudo/wesnothapk/actions/runs/35991136417, commit
-018c397): the harness drove the launcher, the campaign picker, More >
-Objectives, the collapse/expand chevron and the End turn confirmation on a real
-Android 15 emulator, then opened all six campaigns and exercised all 52
-objective transitions and campaign endings.
+018c397) and the full gameplay check that carries the map, art and story work
+(https://github.com/torinescudo/wesnothapk/actions/runs/35991663042, commit
+58f45d6). Both green: `smoke-test.py` and `campaign-smoke-test.py` drove the
+launcher, the campaign picker, More > Objectives, the collapse/expand chevron
+and the End turn confirmation on a real Android 15 emulator, then opened all six
+campaigns and exercised all 52 objective transitions and campaign endings.
+The version-code bump of commit 885b6fa is a packaging change only and its own
+run was still in progress when this entry was written.
 
 The way to that pass is what the harness now guards, and the record belongs
 here because each failure was a real defect:
