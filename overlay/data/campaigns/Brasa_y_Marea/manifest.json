@@ -58,90 +58,94 @@
       "next": "CBM_alba_02",
       "map": "alba_01.map",
       "biome": "coast",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        16
+        13
       ],
       "enemy": [
-        36,
-        15
+        32,
+        13
       ],
       "destination": [
-        32,
+        14,
         6
       ],
       "prison": [
-        19,
-        23
+        12,
+        17
       ],
       "points": [],
       "villages": [
         [
-          6,
-          6
+          8,
+          5
+        ],
+        [
+          20,
+          18
         ],
         [
           3,
-          12
+          20
         ],
         [
-          10,
-          3
-        ],
-        [
-          4,
+          8,
           22
         ],
         [
           9,
-          22
-        ],
-        [
-          25,
-          17
-        ],
-        [
-          32,
-          15
-        ],
-        [
-          8,
-          14
-        ],
-        [
-          10,
-          9
-        ],
-        [
-          13,
           16
         ],
         [
-          13,
-          29
+          14,
+          11
         ],
         [
-          16,
-          20
+          15,
+          17
         ],
         [
-          17,
-          12
+          28,
+          10
+        ],
+        [
+          18,
+          3
+        ],
+        [
+          22,
+          7
+        ],
+        [
+          27,
+          5
+        ],
+        [
+          33,
+          7
+        ],
+        [
+          3,
+          6
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
+        "width": 35,
+        "height": 24,
+        "area": 840,
         "distinct_terrain": 54,
         "villages": 13,
-        "forest": 126,
-        "water": 299,
-        "mountain": 34,
-        "road": 90,
+        "forest": 66,
+        "water": 226,
+        "mountain": 20,
+        "road": 89,
         "bridge": 0,
-        "sand": 40,
-        "swamp": 8
+        "sand": 50,
+        "swamp": 13
       },
       "file": "scenarios/alba/01.cfg"
     },
@@ -153,103 +157,107 @@
       "next": "CBM_alba_03",
       "map": "alba_02.map",
       "biome": "coast",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        25
+        31
       ],
       "enemy": [
-        39,
+        49,
         4
       ],
       "destination": [
-        35,
-        15
+        24,
+        31
       ],
       "prison": [
-        27,
-        14
+        17,
+        13
       ],
       "points": [
         [
-          35,
-          15
+          24,
+          31
         ],
         [
-          27,
-          14
+          17,
+          13
         ],
         [
           24,
-          5
+          14
         ]
       ],
       "villages": [
         [
-          3,
+          4,
           14
         ],
         [
-          3,
-          6
+          6,
+          7
         ],
         [
-          8,
-          12
+          21,
+          9
         ],
         [
-          10,
+          9,
           3
         ],
         [
-          11,
-          8
+          15,
+          28
+        ],
+        [
+          18,
+          5
+        ],
+        [
+          10,
+          18
         ],
         [
           14,
-          25
+          14
+        ],
+        [
+          21,
+          27
         ],
         [
           23,
-          17
+          4
         ],
         [
-          30,
-          13
+          29,
+          21
+        ],
+        [
+          36,
+          20
         ],
         [
           6,
-          18
-        ],
-        [
-          8,
           25
-        ],
-        [
-          11,
-          18
-        ],
-        [
-          16,
-          15
-        ],
-        [
-          17,
-          6
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
-        "distinct_terrain": 55,
+        "width": 52,
+        "height": 34,
+        "area": 1768,
+        "distinct_terrain": 57,
         "villages": 13,
-        "forest": 128,
-        "water": 304,
-        "mountain": 31,
-        "road": 120,
+        "forest": 210,
+        "water": 428,
+        "mountain": 45,
+        "road": 147,
         "bridge": 0,
-        "sand": 46,
-        "swamp": 9
+        "sand": 54,
+        "swamp": 14
       },
       "file": "scenarios/alba/02.cfg"
     },
@@ -261,64 +269,56 @@
       "next": "null",
       "map": "alba_03.map",
       "biome": "harbor",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
-        21,
+        23,
         28
       ],
       "enemy": [
-        23,
+        25,
         4
       ],
       "destination": [
-        20,
-        18
+        38,
+        9
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
+          4,
+          7
+        ],
+        [
+          6,
+          22
+        ],
+        [
+          6,
+          30
+        ],
+        [
           7,
           3
         ],
         [
-          4,
-          9
-        ],
-        [
-          9,
+          11,
           28
         ],
         [
-          14,
-          27
+          13,
+          12
         ],
         [
-          15,
-          19
-        ],
-        [
-          20,
-          24
-        ],
-        [
-          30,
+          38,
           15
         ],
         [
-          35,
-          13
-        ],
-        [
-          4,
-          16
-        ],
-        [
-          4,
-          23
-        ],
-        [
           8,
-          13
+          11
         ],
         [
           11,
@@ -326,30 +326,42 @@
         ],
         [
           12,
-          4
+          3
         ],
         [
-          13,
-          10
+          15,
+          19
         ],
         [
           16,
-          14
+          27
+        ],
+        [
+          18,
+          13
+        ],
+        [
+          19,
+          7
+        ],
+        [
+          19,
+          23
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
+        "width": 48,
+        "height": 34,
+        "area": 1632,
         "distinct_terrain": 51,
         "villages": 15,
-        "forest": 134,
-        "water": 488,
-        "mountain": 17,
-        "road": 74,
-        "bridge": 1,
-        "sand": 65,
-        "swamp": 8
+        "forest": 139,
+        "water": 550,
+        "mountain": 11,
+        "road": 78,
+        "bridge": 0,
+        "sand": 115,
+        "swamp": 10
       },
       "file": "scenarios/alba/03.cfg"
     },
@@ -361,88 +373,92 @@
       "next": "CBM_sira_02",
       "map": "sira_01.map",
       "biome": "cave",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        16
+        13
       ],
       "enemy": [
-        36,
-        16
+        32,
+        13
       ],
       "destination": [
-        4,
-        25
+        28,
+        20
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          4,
-          10
-        ],
-        [
-          4,
-          28
+          3,
+          3
         ],
         [
           6,
-          5
+          8
         ],
         [
-          9,
-          9
-        ],
-        [
-          9,
-          22
-        ],
-        [
-          9,
-          29
-        ],
-        [
-          13,
-          13
-        ],
-        [
-          14,
+          10,
           4
         ],
         [
-          14,
-          20
+          11,
+          11
+        ],
+        [
+          11,
+          18
         ],
         [
           14,
-          26
+          7
         ],
         [
-          18,
-          17
-        ],
-        [
-          18,
-          23
-        ],
-        [
-          18,
-          29
+          16,
+          21
         ],
         [
           19,
           4
+        ],
+        [
+          20,
+          10
+        ],
+        [
+          21,
+          19
+        ],
+        [
+          24,
+          4
+        ],
+        [
+          24,
+          14
+        ],
+        [
+          27,
+          21
+        ],
+        [
+          30,
+          9
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
+        "width": 35,
+        "height": 24,
+        "area": 840,
         "distinct_terrain": 35,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 112,
+        "road": 80,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -457,75 +473,79 @@
       "next": "CBM_sira_03",
       "map": "sira_02.map",
       "biome": "quarry",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        25
+        27
       ],
       "enemy": [
-        39,
+        43,
         4
       ],
       "destination": [
-        16,
-        15
+        23,
+        28
       ],
       "prison": [
-        7,
-        4
+        21,
+        17
       ],
       "points": [],
       "villages": [
         [
-          9,
-          25
+          13,
+          20
         ],
         [
           14,
-          23
-        ],
-        [
-          18,
-          19
-        ],
-        [
-          19,
-          24
-        ],
-        [
-          20,
-          4
-        ],
-        [
-          26,
           3
         ],
         [
-          26,
-          12
+          16,
+          25
         ],
         [
-          28,
+          19,
+          21
+        ],
+        [
+          20,
+          6
+        ],
+        [
+          26,
+          5
+        ],
+        [
+          27,
+          28
+        ],
+        [
+          30,
           20
         ],
         [
           32,
-          14
+          15
         ],
         [
-          32,
-          23
+          40,
+          22
         ],
         [
-          13,
-          3
+          10,
+          27
         ],
         [
-          27,
+          44,
           26
         ],
         [
-          37,
-          24
+          8,
+          16
         ],
         [
           3,
@@ -533,17 +553,17 @@
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
+        "width": 46,
+        "height": 30,
+        "area": 1380,
         "distinct_terrain": 51,
         "villages": 14,
-        "forest": 147,
-        "water": 28,
-        "mountain": 142,
-        "road": 110,
+        "forest": 158,
+        "water": 33,
+        "mountain": 176,
+        "road": 122,
         "bridge": 0,
-        "sand": 16,
+        "sand": 19,
         "swamp": 0
       },
       "file": "scenarios/sira/02.cfg"
@@ -556,104 +576,108 @@
       "next": "CBM_sira_04",
       "map": "sira_03.map",
       "biome": "cave",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        23,
-        30
+        25,
+        31
       ],
       "enemy": [
-        23,
+        25,
         4
       ],
       "destination": [
-        18,
-        31
+        19,
+        20
       ],
       "prison": [
-        35,
-        15
+        8,
+        14
       ],
       "points": [
         [
-          18,
-          31
+          19,
+          20
         ],
         [
-          35,
-          15
+          8,
+          14
         ],
         [
-          6,
-          10
+          8,
+          26
         ]
       ],
       "villages": [
         [
           3,
-          12
+          9
         ],
         [
           3,
-          21
-        ],
-        [
-          3,
-          31
-        ],
-        [
-          4,
-          26
-        ],
-        [
-          7,
-          5
-        ],
-        [
-          7,
           17
         ],
         [
+          3,
+          25
+        ],
+        [
+          4,
+          32
+        ],
+        [
+          7,
+          12
+        ],
+        [
+          7,
+          20
+        ],
+        [
           8,
-          22
+          28
         ],
         [
           9,
-          31
+          4
         ],
         [
           11,
-          11
+          9
         ],
         [
           12,
-          3
-        ],
-        [
-          13,
-          16
+          19
         ],
         [
           14,
-          31
+          32
         ],
         [
-          18,
-          3
+          16,
+          5
         ],
         [
-          18,
-          24
+          16,
+          10
+        ],
+        [
+          16,
+          15
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
-        "distinct_terrain": 36,
+        "width": 48,
+        "height": 34,
+        "area": 1632,
+        "distinct_terrain": 35,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 150,
+        "road": 139,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -668,90 +692,94 @@
       "next": "CBM_sira_05",
       "map": "sira_04.map",
       "biome": "quarry",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
         4
       ],
       "enemy": [
-        34,
+        42,
         27
       ],
       "destination": [
-        10,
-        20
+        35,
+        28
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          9,
-          27
+          8,
+          22
         ],
         [
-          12,
+          14,
           20
         ],
         [
-          16,
-          26
-        ],
-        [
-          17,
-          21
-        ],
-        [
-          21,
-          3
-        ],
-        [
-          22,
-          21
-        ],
-        [
-          27,
+          23,
           19
         ],
         [
-          13,
-          14
+          24,
+          3
+        ],
+        [
+          33,
+          28
+        ],
+        [
+          7,
+          27
+        ],
+        [
+          11,
+          16
+        ],
+        [
+          15,
+          28
         ],
         [
           20,
-          8
+          7
         ],
         [
           30,
-          11
+          16
         ],
         [
-          35,
+          34,
+          19
+        ],
+        [
+          37,
+          12
+        ],
+        [
+          3,
           10
         ],
         [
-          35,
-          18
-        ],
-        [
           4,
-          8
-        ],
-        [
-          6,
-          22
+          15
         ]
       ],
       "terrain": {
-        "width": 37,
+        "width": 45,
         "height": 30,
-        "area": 1110,
-        "distinct_terrain": 48,
+        "area": 1350,
+        "distinct_terrain": 50,
         "villages": 14,
-        "forest": 120,
-        "water": 65,
-        "mountain": 132,
-        "road": 103,
+        "forest": 121,
+        "water": 76,
+        "mountain": 167,
+        "road": 99,
         "bridge": 0,
-        "sand": 37,
+        "sand": 50,
         "swamp": 0
       },
       "file": "scenarios/sira/04.cfg"
@@ -764,16 +792,20 @@
       "next": "null",
       "map": "sira_05.map",
       "biome": "cave",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        14
+        18
       ],
       "enemy": [
-        37,
-        14
+        44,
+        18
       ],
       "destination": [
-        32,
+        12,
         21
       ],
       "prison": null,
@@ -781,55 +813,55 @@
       "villages": [
         [
           3,
-          10
-        ],
-        [
-          3,
-          20
+          8
         ],
         [
           4,
+          25
+        ],
+        [
+          5,
           3
         ],
         [
-          8,
-          12
+          6,
+          30
+        ],
+        [
+          7,
+          14
         ],
         [
           8,
-          18
-        ],
-        [
-          8,
-          25
-        ],
-        [
-          9,
           7
         ],
         [
-          13,
-          25
-        ],
-        [
-          14,
-          4
-        ],
-        [
-          14,
-          13
-        ],
-        [
-          15,
+          8,
           19
         ],
         [
-          17,
-          9
+          9,
+          25
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          14,
+          14
+        ],
+        [
+          14,
+          21
+        ],
+        [
+          15,
+          27
         ],
         [
           19,
-          25
+          32
         ],
         [
           20,
@@ -837,15 +869,15 @@
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 27,
-        "area": 1080,
+        "width": 47,
+        "height": 34,
+        "area": 1598,
         "distinct_terrain": 36,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 95,
+        "road": 107,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -860,44 +892,68 @@
       "next": "CBM_iria_02",
       "map": "iria_01.map",
       "biome": "forest",
+      "size": "skirmish",
+      "turns": 12,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        16
+        13
       ],
       "enemy": [
-        36,
-        16
+        32,
+        13
       ],
       "destination": [
-        18,
-        7
+        7,
+        20
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          4,
-          22
-        ],
-        [
-          7,
-          26
-        ],
-        [
           11,
-          22
-        ],
-        [
-          15,
-          28
+          21
         ],
         [
           19,
-          14
+          13
+        ],
+        [
+          23,
+          10
+        ],
+        [
+          4,
+          20
+        ],
+        [
+          7,
+          16
         ],
         [
           24,
-          10
+          16
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          21,
+          20
+        ],
+        [
+          24,
+          4
         ],
         [
           28,
@@ -905,50 +961,30 @@
         ],
         [
           29,
-          29
+          18
         ],
         [
-          36,
-          27
-        ],
-        [
-          3,
-          11
+          31,
+          8
         ],
         [
           3,
-          29
-        ],
-        [
-          6,
-          5
-        ],
-        [
-          8,
-          14
-        ],
-        [
-          11,
-          7
-        ],
-        [
-          15,
-          17
+          9
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
-        "distinct_terrain": 59,
+        "width": 35,
+        "height": 24,
+        "area": 840,
+        "distinct_terrain": 61,
         "villages": 15,
-        "forest": 325,
-        "water": 71,
-        "mountain": 59,
-        "road": 109,
-        "bridge": 1,
-        "sand": 26,
-        "swamp": 8
+        "forest": 210,
+        "water": 27,
+        "mountain": 32,
+        "road": 90,
+        "bridge": 0,
+        "sand": 8,
+        "swamp": 7
       },
       "file": "scenarios/iria/01.cfg"
     },
@@ -960,34 +996,38 @@
       "next": "CBM_iria_03",
       "map": "iria_02.map",
       "biome": "plains",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        25
+        21
       ],
       "enemy": [
-        39,
-        4
+        35,
+        5
       ],
       "destination": [
-        40,
-        10
+        9,
+        21
       ],
       "prison": [
-        11,
-        10
+        22,
+        20
       ],
       "points": [
         [
-          40,
-          10
+          9,
+          21
         ],
         [
-          11,
-          10
+          22,
+          20
         ],
         [
-          16,
-          26
+          14,
+          13
         ]
       ],
       "villages": [
@@ -996,83 +1036,83 @@
           15
         ],
         [
-          19,
-          13
-        ],
-        [
-          37,
-          26
-        ],
-        [
-          5,
-          4
-        ],
-        [
-          20,
-          24
-        ],
-        [
-          32,
-          14
-        ],
-        [
-          32,
-          23
-        ],
-        [
           3,
-          9
-        ],
-        [
-          7,
-          12
-        ],
-        [
-          8,
-          21
-        ],
-        [
-          12,
           6
         ],
         [
+          32,
+          15
+        ],
+        [
+          8,
+          16
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          12,
+          5
+        ],
+        [
           14,
-          17
+          20
+        ],
+        [
+          16,
+          14
         ],
         [
           18,
-          8
+          7
         ],
         [
-          19,
-          3
+          22,
+          10
         ],
         [
-          23,
+          24,
           18
-        ],
-        [
-          27,
-          25
         ],
         [
           28,
           3
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          22,
+          3
+        ],
+        [
+          28,
+          9
+        ],
+        [
+          31,
+          22
+        ],
+        [
+          9,
+          22
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
-        "distinct_terrain": 51,
+        "width": 38,
+        "height": 24,
+        "area": 912,
+        "distinct_terrain": 50,
         "villages": 17,
-        "forest": 137,
-        "water": 108,
-        "mountain": 25,
-        "road": 116,
+        "forest": 95,
+        "water": 81,
+        "mountain": 17,
+        "road": 107,
         "bridge": 0,
-        "sand": 49,
-        "swamp": 7
+        "sand": 44,
+        "swamp": 2
       },
       "file": "scenarios/iria/02.cfg"
     },
@@ -1084,102 +1124,106 @@
       "next": "CBM_iria_04",
       "map": "iria_03.map",
       "biome": "ruins",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
-        23,
-        30
+        22,
+        28
       ],
       "enemy": [
-        23,
+        22,
         4
       ],
       "destination": [
-        15,
-        22
+        34,
+        16
       ],
       "prison": [
-        28,
-        30
+        6,
+        20
       ],
       "points": [],
       "villages": [
         [
-          4,
-          4
-        ],
-        [
-          4,
-          30
-        ],
-        [
-          5,
-          13
+          8,
+          19
         ],
         [
           11,
           14
         ],
         [
-          11,
-          26
+          4,
+          3
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          13,
+          20
+        ],
+        [
+          6,
+          13
+        ],
+        [
+          7,
+          28
+        ],
+        [
+          12,
+          27
         ],
         [
           16,
-          10
+          13
         ],
         [
-          19,
-          3
+          26,
+          21
+        ],
+        [
+          28,
+          28
         ],
         [
           40,
           3
         ],
         [
-          41,
-          29
+          5,
+          23
         ],
         [
-          25,
-          19
-        ],
-        [
-          29,
-          28
-        ],
-        [
-          10,
+          8,
           6
         ],
         [
-          10,
-          19
-        ],
-        [
-          10,
-          31
-        ],
-        [
-          16,
-          28
+          15,
+          4
         ],
         [
           21,
-          15
+          10
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
+        "width": 42,
+        "height": 30,
+        "area": 1260,
         "distinct_terrain": 70,
         "villages": 16,
-        "forest": 219,
-        "water": 156,
-        "mountain": 42,
-        "road": 107,
+        "forest": 172,
+        "water": 141,
+        "mountain": 38,
+        "road": 128,
         "bridge": 0,
-        "sand": 56,
-        "swamp": 10
+        "sand": 57,
+        "swamp": 7
       },
       "file": "scenarios/iria/03.cfg"
     },
@@ -1191,21 +1235,29 @@
       "next": "CBM_iria_05",
       "map": "iria_04.map",
       "biome": "mountain",
+      "size": "battle",
+      "turns": 22,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
         4
       ],
       "enemy": [
-        32,
-        28
+        42,
+        27
       ],
       "destination": [
-        6,
-        16
+        11,
+        8
       ],
       "prison": null,
       "points": [],
       "villages": [
+        [
+          19,
+          9
+        ],
         [
           4,
           16
@@ -1215,16 +1267,12 @@
           19
         ],
         [
-          12,
-          14
+          13,
+          6
         ],
         [
-          14,
-          8
-        ],
-        [
-          17,
-          16
+          13,
+          11
         ],
         [
           18,
@@ -1232,45 +1280,45 @@
         ],
         [
           19,
-          8
-        ],
-        [
-          21,
-          13
+          16
         ],
         [
           24,
-          8
+          10
         ],
         [
           24,
-          18
+          17
+        ],
+        [
+          27,
+          4
+        ],
+        [
+          30,
+          28
         ],
         [
           31,
-          12
+          9
         ],
         [
-          34,
-          8
-        ],
-        [
-          34,
-          17
+          38,
+          21
         ]
       ],
       "terrain": {
-        "width": 37,
+        "width": 45,
         "height": 30,
-        "area": 1110,
-        "distinct_terrain": 46,
+        "area": 1350,
+        "distinct_terrain": 48,
         "villages": 13,
-        "forest": 160,
-        "water": 63,
-        "mountain": 170,
-        "road": 90,
+        "forest": 179,
+        "water": 85,
+        "mountain": 215,
+        "road": 97,
         "bridge": 0,
-        "sand": 23,
+        "sand": 41,
         "swamp": 0
       },
       "file": "scenarios/iria/04.cfg"
@@ -1283,103 +1331,107 @@
       "next": "CBM_iria_06",
       "map": "iria_05.map",
       "biome": "plains",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        14
+        16
       ],
       "enemy": [
-        37,
-        14
+        38,
+        16
       ],
       "destination": [
-        36,
-        5
+        17,
+        24
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          20,
-          24
+          3,
+          3
         ],
         [
-          28,
-          23
+          20,
+          25
+        ],
+        [
+          24,
+          22
+        ],
+        [
+          25,
+          27
+        ],
+        [
+          39,
+          22
+        ],
+        [
+          9,
+          20
+        ],
+        [
+          12,
+          28
+        ],
+        [
+          20,
+          9
+        ],
+        [
+          29,
+          20
+        ],
+        [
+          4,
+          20
         ],
         [
           10,
-          21
+          12
         ],
         [
-          7,
-          5
-        ],
-        [
-          8,
-          16
-        ],
-        [
-          11,
-          11
-        ],
-        [
-          23,
-          11
-        ],
-        [
-          23,
-          17
-        ],
-        [
-          3,
-          19
-        ],
-        [
-          7,
-          25
-        ],
-        [
-          13,
-          25
+          15,
+          24
         ],
         [
           18,
           3
         ],
         [
-          18,
-          17
-        ],
-        [
-          23,
-          6
-        ],
-        [
-          29,
+          19,
           14
         ],
         [
-          30,
-          6
+          26,
+          5
+        ],
+        [
+          27,
+          15
         ],
         [
           31,
-          19
+          5
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 27,
-        "area": 1080,
-        "distinct_terrain": 51,
+        "width": 41,
+        "height": 30,
+        "area": 1230,
+        "distinct_terrain": 57,
         "villages": 17,
-        "forest": 139,
-        "water": 121,
-        "mountain": 21,
-        "road": 101,
+        "forest": 173,
+        "water": 154,
+        "mountain": 33,
+        "road": 114,
         "bridge": 1,
-        "sand": 51,
-        "swamp": 6
+        "sand": 53,
+        "swamp": 12
       },
       "file": "scenarios/iria/05.cfg"
     },
@@ -1391,99 +1443,103 @@
       "next": "CBM_iria_07",
       "map": "iria_06.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        29
+        31
       ],
       "enemy": [
-        40,
+        47,
         4
       ],
       "destination": [
-        4,
-        16
+        29,
+        5
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          4,
-          14
+          44,
+          16
         ],
         [
           12,
-          8
+          7
         ],
         [
-          14,
-          15
-        ],
-        [
-          37,
+          15,
           13
-        ],
-        [
-          17,
-          11
-        ],
-        [
-          31,
-          9
-        ],
-        [
-          19,
-          28
-        ],
-        [
-          20,
-          23
         ],
         [
           32,
           14
         ],
         [
-          37,
-          19
+          35,
+          10
+        ],
+        [
+          35,
+          3
         ],
         [
           39,
           29
         ],
         [
+          42,
+          21
+        ],
+        [
           3,
-          9
+          10
+        ],
+        [
+          4,
+          17
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          8,
+          11
         ],
         [
           9,
-          4
-        ],
-        [
-          11,
           25
         ],
         [
-          20,
-          16
+          10,
+          31
         ],
         [
-          24,
-          4
+          11,
+          17
+        ],
+        [
+          17,
+          8
         ]
       ],
       "terrain": {
-        "width": 43,
-        "height": 32,
-        "area": 1376,
-        "distinct_terrain": 70,
+        "width": 50,
+        "height": 34,
+        "area": 1700,
+        "distinct_terrain": 69,
         "villages": 16,
-        "forest": 217,
-        "water": 117,
-        "mountain": 47,
-        "road": 105,
+        "forest": 244,
+        "water": 135,
+        "mountain": 57,
+        "road": 117,
         "bridge": 0,
-        "sand": 46,
-        "swamp": 7
+        "sand": 52,
+        "swamp": 11
       },
       "file": "scenarios/iria/06.cfg"
     },
@@ -1495,111 +1551,115 @@
       "next": "null",
       "map": "iria_07.map",
       "biome": "harbor",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        21,
-        23
+        20,
+        28
       ],
       "enemy": [
         24,
         4
       ],
       "destination": [
-        7,
-        12
+        30,
+        11
       ],
       "prison": [
-        32,
-        4
+        21,
+        11
       ],
       "points": [
         [
-          7,
-          12
-        ],
-        [
-          32,
-          4
-        ],
-        [
           30,
-          13
+          11
+        ],
+        [
+          21,
+          11
+        ],
+        [
+          6,
+          10
         ]
       ],
       "villages": [
         [
-          4,
-          4
-        ],
-        [
-          13,
+          3,
           4
         ],
         [
           3,
-          9
-        ],
-        [
-          17,
           11
         ],
         [
-          9,
-          22
+          8,
+          3
         ],
         [
-          12,
-          18
+          15,
+          3
+        ],
+        [
+          15,
+          31
         ],
         [
           16,
-          23
-        ],
-        [
-          32,
-          12
-        ],
-        [
-          3,
-          17
-        ],
-        [
-          8,
-          7
-        ],
-        [
-          8,
-          27
-        ],
-        [
-          21,
-          7
+          22
         ],
         [
           34,
-          3
+          12
         ],
         [
-          37,
+          41,
+          15
+        ],
+        [
+          3,
+          31
+        ],
+        [
+          7,
           8
         ],
         [
-          40,
-          3
+          7,
+          23
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          10,
+          31
+        ],
+        [
+          16,
+          9
+        ],
+        [
+          20,
+          16
         ]
       ],
       "terrain": {
         "width": 46,
-        "height": 29,
-        "area": 1334,
-        "distinct_terrain": 53,
+        "height": 34,
+        "area": 1564,
+        "distinct_terrain": 51,
         "villages": 15,
-        "forest": 83,
-        "water": 448,
-        "mountain": 23,
+        "forest": 96,
+        "water": 513,
+        "mountain": 25,
         "road": 97,
-        "bridge": 0,
-        "sand": 89,
-        "swamp": 5
+        "bridge": 1,
+        "sand": 80,
+        "swamp": 3
       },
       "file": "scenarios/iria/07.cfg"
     },
@@ -1611,115 +1671,119 @@
       "next": "CBM_maura_02",
       "map": "maura_01.map",
       "biome": "ruins",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        16
+        13
       ],
       "enemy": [
-        36,
-        15
+        32,
+        13
       ],
       "destination": [
-        31,
-        26
+        16,
+        13
       ],
       "prison": [
-        23,
-        5
+        7,
+        4
       ],
       "points": [
         [
-          31,
-          26
+          16,
+          13
         ],
         [
-          23,
-          5
+          7,
+          4
         ],
         [
-          32,
-          5
+          13,
+          20
         ]
       ],
       "villages": [
         [
-          13,
-          4
+          22,
+          3
+        ],
+        [
+          9,
+          5
         ],
         [
           28,
           4
         ],
         [
-          29,
+          28,
           11
         ],
         [
-          35,
-          4
-        ],
-        [
-          8,
-          15
-        ],
-        [
-          20,
+          33,
           3
         ],
         [
-          6,
-          7
-        ],
-        [
-          8,
-          20
-        ],
-        [
-          13,
-          28
+          4,
+          21
         ],
         [
           15,
-          23
-        ],
-        [
-          30,
-          16
-        ],
-        [
-          13,
-          16
+          17
         ],
         [
           16,
-          9
+          22
+        ],
+        [
+          31,
+          20
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          15,
+          7
         ],
         [
           19,
-          27
+          14
         ],
         [
-          22,
-          23
+          24,
+          8
         ],
         [
           24,
           18
+        ],
+        [
+          32,
+          8
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
-        "distinct_terrain": 64,
+        "width": 35,
+        "height": 24,
+        "area": 840,
+        "distinct_terrain": 65,
         "villages": 16,
-        "forest": 147,
-        "water": 149,
-        "mountain": 37,
-        "road": 118,
+        "forest": 116,
+        "water": 94,
+        "mountain": 28,
+        "road": 101,
         "bridge": 0,
-        "sand": 68,
-        "swamp": 8
+        "sand": 45,
+        "swamp": 12
       },
       "file": "scenarios/maura/01.cfg"
     },
@@ -1731,103 +1795,107 @@
       "next": "CBM_maura_03",
       "map": "maura_02.map",
       "biome": "plains",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        25
+        21
       ],
       "enemy": [
-        39,
+        35,
         4
       ],
       "destination": [
-        18,
-        11
+        5,
+        4
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
           10,
-          15
-        ],
-        [
-          5,
-          6
+          14
         ],
         [
           11,
           9
         ],
         [
-          21,
-          18
-        ],
-        [
           22,
-          26
-        ],
-        [
-          26,
-          23
+          22
         ],
         [
           14,
           22
         ],
         [
+          36,
+          19
+        ],
+        [
           3,
-          12
+          6
         ],
         [
-          9,
-          24
-        ],
-        [
-          14,
+          12,
           3
         ],
         [
           15,
-          12
+          15
         ],
         [
           21,
-          6
+          7
         ],
         [
-          29,
+          23,
+          15
+        ],
+        [
+          27,
+          5
+        ],
+        [
+          28,
+          11
+        ],
+        [
+          30,
           18
         ],
         [
           33,
+          9
+        ],
+        [
+          33,
+          14
+        ],
+        [
+          5,
+          16
+        ],
+        [
+          6,
           10
-        ],
-        [
-          34,
-          5
-        ],
-        [
-          35,
-          18
-        ],
-        [
-          38,
-          11
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
+        "width": 38,
+        "height": 24,
+        "area": 912,
         "distinct_terrain": 50,
         "villages": 17,
-        "forest": 173,
-        "water": 129,
-        "mountain": 28,
-        "road": 104,
+        "forest": 147,
+        "water": 80,
+        "mountain": 11,
+        "road": 105,
         "bridge": 0,
-        "sand": 45,
-        "swamp": 5
+        "sand": 20,
+        "swamp": 0
       },
       "file": "scenarios/maura/02.cfg"
     },
@@ -1839,98 +1907,102 @@
       "next": "CBM_maura_04",
       "map": "maura_03.map",
       "biome": "forest",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
-        23,
-        30
+        18,
+        21
       ],
       "enemy": [
-        23,
+        18,
         4
       ],
       "destination": [
-        5,
-        5
+        29,
+        18
       ],
       "prison": [
-        15,
-        24
+        26,
+        10
       ],
       "points": [],
       "villages": [
         [
-          3,
-          25
-        ],
-        [
           5,
-          3
+          18
         ],
         [
           6,
-          9
-        ],
-        [
-          10,
           5
         ],
         [
-          16,
+          11,
           3
         ],
         [
-          21,
-          21
+          13,
+          9
         ],
         [
-          26,
-          21
+          22,
+          22
         ],
         [
-          31,
-          5
+          23,
+          12
         ],
         [
-          24,
-          26
+          30,
+          12
         ],
         [
-          36,
-          4
+          30,
+          22
         ],
         [
-          4,
-          14
+          6,
+          10
         ],
         [
           8,
-          27
+          22
         ],
         [
           9,
           15
         ],
         [
-          3,
-          20
+          13,
+          18
         ],
         [
-          9,
-          22
+          22,
+          3
+        ],
+        [
+          26,
+          7
+        ],
+        [
+          30,
+          4
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
-        "distinct_terrain": 62,
+        "width": 34,
+        "height": 24,
+        "area": 816,
+        "distinct_terrain": 61,
         "villages": 15,
-        "forest": 332,
-        "water": 81,
-        "mountain": 71,
-        "road": 122,
+        "forest": 164,
+        "water": 94,
+        "mountain": 37,
+        "road": 70,
         "bridge": 0,
-        "sand": 18,
-        "swamp": 14
+        "sand": 32,
+        "swamp": 3
       },
       "file": "scenarios/maura/03.cfg"
     },
@@ -1942,86 +2014,90 @@
       "next": "CBM_maura_05",
       "map": "maura_04.map",
       "biome": "mountain",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
         4
       ],
       "enemy": [
-        34,
+        42,
         27
       ],
       "destination": [
-        30,
-        13
+        35,
+        28
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          21,
+          17,
           21
         ],
         [
-          3,
+          39,
           8
         ],
         [
-          5,
-          19
+          40,
+          15
         ],
         [
-          10,
-          14
+          3,
+          10
         ],
         [
-          16,
-          14
-        ],
-        [
-          29,
+          4,
           16
         ],
         [
-          34,
-          18
+          8,
+          13
         ],
         [
-          16,
-          22
-        ],
-        [
-          30,
-          4
-        ],
-        [
-          35,
-          3
-        ],
-        [
-          19,
-          9
-        ],
-        [
-          23,
+          11,
           6
         ],
         [
+          13,
+          13
+        ],
+        [
+          16,
+          27
+        ],
+        [
           23,
-          14
+          21
+        ],
+        [
+          29,
+          4
+        ],
+        [
+          34,
+          17
+        ],
+        [
+          36,
+          4
         ]
       ],
       "terrain": {
-        "width": 37,
+        "width": 45,
         "height": 30,
-        "area": 1110,
+        "area": 1350,
         "distinct_terrain": 49,
         "villages": 13,
-        "forest": 141,
-        "water": 69,
-        "mountain": 150,
-        "road": 98,
-        "bridge": 1,
-        "sand": 22,
+        "forest": 170,
+        "water": 90,
+        "mountain": 204,
+        "road": 108,
+        "bridge": 0,
+        "sand": 40,
         "swamp": 0
       },
       "file": "scenarios/maura/04.cfg"
@@ -2034,99 +2110,103 @@
       "next": "CBM_maura_06",
       "map": "maura_05.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        14
+        18
       ],
       "enemy": [
-        37,
-        14
+        44,
+        18
       ],
       "destination": [
         24,
-        21
+        9
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          8,
-          12
-        ],
-        [
-          3,
-          19
-        ],
-        [
           4,
-          3
+          6
         ],
         [
-          10,
-          6
+          6,
+          14
+        ],
+        [
+          11,
+          7
         ],
         [
           30,
+          8
+        ],
+        [
+          33,
           13
         ],
         [
-          36,
+          37,
           9
         ],
         [
+          39,
+          14
+        ],
+        [
           3,
-          8
-        ],
-        [
-          9,
-          20
-        ],
-        [
-          15,
-          18
-        ],
-        [
-          26,
-          22
-        ],
-        [
-          31,
-          3
-        ],
-        [
-          13,
-          11
-        ],
-        [
-          18,
-          6
-        ],
-        [
-          18,
-          11
-        ],
-        [
-          22,
-          3
+          32
         ],
         [
           23,
+          31
+        ],
+        [
+          45,
+          32
+        ],
+        [
+          16,
+          32
+        ],
+        [
+          43,
           8
+        ],
+        [
+          3,
+          26
+        ],
+        [
+          10,
+          21
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          15,
+          10
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 27,
-        "area": 1080,
-        "distinct_terrain": 70,
+        "width": 47,
+        "height": 34,
+        "area": 1598,
+        "distinct_terrain": 71,
         "villages": 16,
-        "forest": 134,
-        "water": 109,
-        "mountain": 43,
-        "road": 102,
+        "forest": 250,
+        "water": 130,
+        "mountain": 53,
+        "road": 128,
         "bridge": 0,
-        "sand": 43,
-        "swamp": 14
+        "sand": 46,
+        "swamp": 8
       },
       "file": "scenarios/maura/05.cfg"
     },
@@ -2138,111 +2218,115 @@
       "next": "CBM_maura_07",
       "map": "maura_06.map",
       "biome": "harbor",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        4,
-        29
+        3,
+        31
       ],
       "enemy": [
-        40,
+        47,
         4
       ],
       "destination": [
-        10,
-        9
+        41,
+        12
       ],
       "prison": [
-        7,
-        13
+        21,
+        6
       ],
       "points": [
         [
-          10,
-          9
+          41,
+          12
         ],
         [
-          7,
-          13
+          21,
+          6
         ],
         [
-          22,
-          19
+          33,
+          10
         ]
       ],
       "villages": [
         [
-          8,
-          5
+          7,
+          3
         ],
         [
-          3,
-          12
-        ],
-        [
-          32,
-          8
-        ],
-        [
-          11,
-          29
-        ],
-        [
-          18,
-          26
-        ],
-        [
-          27,
-          14
-        ],
-        [
-          27,
-          22
-        ],
-        [
-          41,
+          5,
           9
         ],
         [
-          4,
-          18
+          3,
+          15
         ],
         [
-          7,
-          25
+          16,
+          31
         ],
         [
-          8,
-          11
+          19,
+          27
         ],
         [
-          13,
-          6
-        ],
-        [
-          13,
-          11
-        ],
-        [
-          14,
+          28,
           16
         ],
         [
-          18,
-          8
+          28,
+          23
+        ],
+        [
+          40,
+          14
+        ],
+        [
+          7,
+          32
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          10,
+          28
+        ],
+        [
+          12,
+          20
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          15,
+          16
         ]
       ],
       "terrain": {
-        "width": 43,
-        "height": 32,
-        "area": 1376,
+        "width": 50,
+        "height": 34,
+        "area": 1700,
         "distinct_terrain": 50,
         "villages": 15,
-        "forest": 116,
-        "water": 448,
-        "mountain": 24,
-        "road": 112,
+        "forest": 139,
+        "water": 549,
+        "mountain": 31,
+        "road": 114,
         "bridge": 0,
         "sand": 81,
-        "swamp": 3
+        "swamp": 6
       },
       "file": "scenarios/maura/06.cfg"
     },
@@ -2254,17 +2338,21 @@
       "next": "CBM_maura_08",
       "map": "maura_07.map",
       "biome": "forest",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        24,
-        26
+        25,
+        31
       ],
       "enemy": [
         24,
         4
       ],
       "destination": [
-        38,
-        6
+        44,
+        22
       ],
       "prison": null,
       "points": [],
@@ -2274,74 +2362,74 @@
           17
         ],
         [
-          3,
+          4,
           27
         ],
         [
-          9,
+          8,
           14
         ],
         [
           10,
+          9
+        ],
+        [
+          15,
           8
         ],
         [
-          14,
-          11
+          15,
+          15
         ],
         [
-          17,
-          16
+          15,
+          30
         ],
         [
           21,
-          9
+          10
         ],
         [
-          28,
-          7
-        ],
-        [
-          28,
-          16
-        ],
-        [
-          33,
+          29,
           6
         ],
         [
-          43,
+          30,
+          18
+        ],
+        [
+          33,
+          30
+        ],
+        [
+          40,
           9
         ],
         [
-          23,
-          19
+          44,
+          12
         ],
         [
-          42,
-          21
+          34,
+          6
         ],
         [
           5,
-          11
-        ],
-        [
-          6,
-          3
+          22
         ]
       ],
       "terrain": {
         "width": 46,
-        "height": 29,
-        "area": 1334,
+        "height": 34,
+        "area": 1564,
         "distinct_terrain": 60,
         "villages": 15,
-        "forest": 329,
-        "water": 43,
-        "mountain": 74,
-        "road": 97,
+        "forest": 353,
+        "water": 51,
+        "mountain": 89,
+        "road": 119,
         "bridge": 0,
-        "sand": 14,
+        "sand": 12,
         "swamp": 4
       },
       "file": "scenarios/maura/07.cfg"
@@ -2354,40 +2442,56 @@
       "next": "CBM_maura_09",
       "map": "maura_08.map",
       "biome": "cave",
+      "size": "battle",
+      "turns": 22,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
         4
       ],
       "enemy": [
-        35,
-        23
+        40,
+        27
       ],
       "destination": [
-        13,
-        6
+        23,
+        20
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
           3,
-          11
+          12
+        ],
+        [
+          3,
+          18
         ],
         [
           5,
-          22
-        ],
-        [
-          6,
-          15
-        ],
-        [
-          10,
-          19
-        ],
-        [
-          10,
           24
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          9,
+          18
+        ],
+        [
+          10,
+          23
+        ],
+        [
+          12,
+          28
         ],
         [
           14,
@@ -2399,43 +2503,31 @@
         ],
         [
           14,
-          15
-        ],
-        [
-          18,
-          22
-        ],
-        [
-          19,
-          11
-        ],
-        [
-          19,
           17
         ],
         [
+          18,
+          13
+        ],
+        [
+          18,
+          23
+        ],
+        [
           20,
-          3
-        ],
-        [
-          23,
-          14
-        ],
-        [
-          23,
-          20
+          4
         ]
       ],
       "terrain": {
-        "width": 38,
-        "height": 26,
-        "area": 988,
+        "width": 43,
+        "height": 30,
+        "area": 1290,
         "distinct_terrain": 36,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 92,
+        "road": 105,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -2450,99 +2542,103 @@
       "next": "null",
       "map": "maura_09.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        16
+        18
       ],
       "enemy": [
-        38,
-        16
+        49,
+        18
       ],
       "destination": [
-        35,
-        20
+        5,
+        26
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          4,
-          10
+          43,
+          15
         ],
         [
-          10,
-          29
+          3,
+          8
+        ],
+        [
+          6,
+          13
+        ],
+        [
+          9,
+          32
         ],
         [
           11,
           16
         ],
         [
-          12,
-          9
+          43,
+          8
         ],
         [
-          37,
-          23
-        ],
-        [
-          21,
-          10
-        ],
-        [
-          4,
-          23
+          8,
+          8
         ],
         [
           15,
-          23
-        ],
-        [
-          20,
-          28
+          13
         ],
         [
           4,
           3
         ],
         [
-          4,
-          28
+          15,
+          24
         ],
         [
-          8,
-          6
+          28,
+          22
         ],
         [
-          9,
-          23
+          30,
+          31
         ],
         [
-          16,
+          46,
+          26
+        ],
+        [
+          47,
           12
         ],
         [
-          22,
-          5
+          3,
+          29
         ],
         [
-          26,
-          8
+          7,
+          25
         ]
       ],
       "terrain": {
-        "width": 41,
-        "height": 31,
-        "area": 1271,
-        "distinct_terrain": 71,
+        "width": 52,
+        "height": 34,
+        "area": 1768,
+        "distinct_terrain": 70,
         "villages": 16,
-        "forest": 174,
-        "water": 143,
-        "mountain": 41,
-        "road": 92,
+        "forest": 236,
+        "water": 192,
+        "mountain": 64,
+        "road": 138,
         "bridge": 0,
-        "sand": 49,
-        "swamp": 8
+        "sand": 70,
+        "swamp": 16
       },
       "file": "scenarios/maura/09.cfg"
     },
@@ -2554,98 +2650,102 @@
       "next": "CBM_nerea_02",
       "map": "nerea_01.map",
       "biome": "harbor",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
-        4,
-        16
+        3,
+        13
       ],
       "enemy": [
-        36,
-        15
+        32,
+        12
       ],
       "destination": [
-        11,
-        8
+        28,
+        9
       ],
       "prison": [
         16,
-        19
+        11
       ],
       "points": [],
       "villages": [
         [
           3,
-          7
-        ],
-        [
-          11,
-          6
-        ],
-        [
-          13,
-          16
-        ],
-        [
-          22,
-          21
-        ],
-        [
-          27,
           17
         ],
         [
+          27,
+          11
+        ],
+        [
           3,
-          21
-        ],
-        [
-          4,
-          27
-        ],
-        [
-          15,
-          9
-        ],
-        [
-          16,
-          4
-        ],
-        [
-          21,
           8
         ],
         [
           21,
-          16
+          11
         ],
         [
-          22,
+          6,
           3
         ],
         [
-          25,
-          12
+          8,
+          18
         ],
         [
-          27,
-          3
+          9,
+          7
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          14,
+          18
+        ],
+        [
+          23,
+          5
         ],
         [
           28,
-          8
+          3
+        ],
+        [
+          33,
+          4
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          4,
+          22
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
-        "distinct_terrain": 50,
+        "width": 35,
+        "height": 24,
+        "area": 840,
+        "distinct_terrain": 54,
         "villages": 15,
-        "forest": 102,
-        "water": 426,
+        "forest": 68,
+        "water": 288,
         "mountain": 10,
-        "road": 92,
-        "bridge": 0,
-        "sand": 83,
-        "swamp": 5
+        "road": 79,
+        "bridge": 1,
+        "sand": 48,
+        "swamp": 7
       },
       "file": "scenarios/nerea/01.cfg"
     },
@@ -2657,87 +2757,91 @@
       "next": "CBM_nerea_03",
       "map": "nerea_02.map",
       "biome": "coast",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        25
+        21
       ],
       "enemy": [
-        39,
+        35,
         4
       ],
       "destination": [
-        10,
-        5
+        17,
+        7
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          8,
-          5
+          3,
+          6
         ],
         [
-          16,
+          9,
           4
         ],
         [
-          4,
-          8
-        ],
-        [
-          8,
-          11
-        ],
-        [
-          21,
+          19,
           3
         ],
         [
-          25,
-          19
-        ],
-        [
-          14,
+          31,
           12
         ],
         [
-          16,
-          19
+          35,
+          8
         ],
         [
-          30,
-          16
-        ],
-        [
-          3,
-          14
-        ],
-        [
-          4,
-          19
-        ],
-        [
-          8,
-          25
+          13,
+          21
         ],
         [
           14,
-          25
+          9
+        ],
+        [
+          17,
+          17
+        ],
+        [
+          4,
+          17
+        ],
+        [
+          8,
+          20
+        ],
+        [
+          19,
+          9
+        ],
+        [
+          23,
+          6
+        ],
+        [
+          26,
+          11
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
-        "distinct_terrain": 58,
+        "width": 38,
+        "height": 24,
+        "area": 912,
+        "distinct_terrain": 55,
         "villages": 13,
-        "forest": 145,
-        "water": 289,
-        "mountain": 32,
-        "road": 101,
+        "forest": 108,
+        "water": 216,
+        "mountain": 25,
+        "road": 92,
         "bridge": 0,
-        "sand": 33,
-        "swamp": 8
+        "sand": 31,
+        "swamp": 5
       },
       "file": "scenarios/nerea/02.cfg"
     },
@@ -2749,107 +2853,107 @@
       "next": "CBM_nerea_04",
       "map": "nerea_03.map",
       "biome": "islands",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
-        22,
-        30
+        18,
+        21
       ],
       "enemy": [
-        23,
+        18,
         4
       ],
       "destination": [
-        11,
-        6
+        8,
+        4
       ],
       "prison": [
-        34,
-        10
+        29,
+        21
       ],
       "points": [
         [
-          11,
-          6
+          8,
+          4
         ],
         [
-          34,
-          10
+          29,
+          21
         ],
         [
-          37,
-          16
+          4,
+          12
         ]
       ],
       "villages": [
         [
-          11,
-          10
+          21,
+          9
         ],
         [
-          15,
-          24
+          23,
+          4
         ],
         [
-          26,
-          8
+          25,
+          17
         ],
         [
-          34,
-          25
-        ],
-        [
-          37,
-          20
-        ],
-        [
-          6,
-          16
-        ],
-        [
-          8,
+          5,
           6
         ],
         [
-          8,
-          26
+          9,
+          17
         ],
         [
-          10,
-          21
-        ],
-        [
-          31,
-          29
-        ],
-        [
-          32,
-          14
-        ],
-        [
-          42,
-          27
-        ],
-        [
-          3,
-          8
+          29,
+          7
         ],
         [
           11,
-          16
+          22
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          30,
+          17
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          16,
+          17
+        ],
+        [
+          27,
+          22
+        ],
+        [
+          8,
+          10
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
-        "distinct_terrain": 42,
-        "villages": 14,
-        "forest": 125,
-        "water": 639,
-        "mountain": 14,
-        "road": 122,
-        "bridge": 1,
-        "sand": 133,
-        "swamp": 4
+        "width": 34,
+        "height": 24,
+        "area": 816,
+        "distinct_terrain": 41,
+        "villages": 13,
+        "forest": 57,
+        "water": 372,
+        "mountain": 9,
+        "road": 93,
+        "bridge": 0,
+        "sand": 89,
+        "swamp": 2
       },
       "file": "scenarios/nerea/03.cfg"
     },
@@ -2861,98 +2965,102 @@
       "next": "CBM_nerea_05",
       "map": "nerea_04.map",
       "biome": "ruins",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
         4
       ],
       "enemy": [
         34,
-        27
+        21
       ],
       "destination": [
-        28,
-        27
+        12,
+        11
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          10,
-          14
-        ],
-        [
-          16,
-          8
-        ],
-        [
-          21,
-          13
-        ],
-        [
-          32,
-          12
+          12,
+          3
         ],
         [
           14,
-          17
+          8
+        ],
+        [
+          23,
+          13
+        ],
+        [
+          28,
+          9
+        ],
+        [
+          33,
+          11
+        ],
+        [
+          9,
+          13
         ],
         [
           17,
           3
         ],
         [
-          25,
-          10
-        ],
-        [
-          8,
-          24
-        ],
-        [
-          20,
-          24
+          17,
+          16
         ],
         [
           3,
-          24
+          22
+        ],
+        [
+          5,
+          8
         ],
         [
           8,
-          9
+          20
         ],
         [
-          10,
-          4
-        ],
-        [
-          14,
-          24
+          12,
+          17
         ],
         [
           20,
-          19
+          7
         ],
         [
-          24,
+          22,
+          18
+        ],
+        [
+          27,
           4
         ],
         [
-          29,
-          6
+          31,
+          16
         ]
       ],
       "terrain": {
         "width": 37,
-        "height": 30,
-        "area": 1110,
-        "distinct_terrain": 69,
+        "height": 24,
+        "area": 888,
+        "distinct_terrain": 68,
         "villages": 16,
-        "forest": 165,
-        "water": 123,
-        "mountain": 35,
-        "road": 104,
+        "forest": 129,
+        "water": 89,
+        "mountain": 23,
+        "road": 82,
         "bridge": 0,
-        "sand": 48,
+        "sand": 35,
         "swamp": 7
       },
       "file": "scenarios/nerea/04.cfg"
@@ -2965,95 +3073,99 @@
       "next": "CBM_nerea_06",
       "map": "nerea_05.map",
       "biome": "forest",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        14
+        16
       ],
       "enemy": [
-        37,
-        14
+        38,
+        16
       ],
       "destination": [
-        32,
-        9
+        23,
+        24
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          5,
+          7,
+          28
+        ],
+        [
+          3,
           7
         ],
         [
-          14,
-          3
+          8,
+          12
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          15,
+          28
         ],
         [
           30,
           7
         ],
         [
-          37,
-          4
+          35,
+          7
         ],
         [
-          38,
-          21
-        ],
-        [
-          24,
+          4,
           20
         ],
         [
-          16,
-          22
-        ],
-        [
-          19,
-          18
-        ],
-        [
-          3,
-          18
-        ],
-        [
-          6,
-          22
-        ],
-        [
-          8,
-          15
-        ],
-        [
-          12,
-          25
-        ],
-        [
-          17,
-          8
-        ],
-        [
-          21,
-          24
+          15,
+          21
         ],
         [
           22,
-          5
+          26
+        ],
+        [
+          38,
+          3
+        ],
+        [
+          8,
+          23
+        ],
+        [
+          16,
+          3
+        ],
+        [
+          16,
+          9
+        ],
+        [
+          20,
+          13
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 27,
-        "area": 1080,
+        "width": 41,
+        "height": 30,
+        "area": 1230,
         "distinct_terrain": 60,
         "villages": 15,
-        "forest": 208,
-        "water": 63,
-        "mountain": 56,
-        "road": 96,
+        "forest": 243,
+        "water": 76,
+        "mountain": 59,
+        "road": 114,
         "bridge": 0,
-        "sand": 28,
-        "swamp": 10
+        "sand": 19,
+        "swamp": 9
       },
       "file": "scenarios/nerea/05.cfg"
     },
@@ -3065,17 +3177,21 @@
       "next": "CBM_nerea_07",
       "map": "nerea_06.map",
       "biome": "islands",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
-        7,
-        19
+        8,
+        21
       ],
       "enemy": [
-        38,
-        5
+        44,
+        6
       ],
       "destination": [
-        17,
-        5
+        15,
+        10
       ],
       "prison": null,
       "points": [],
@@ -3085,71 +3201,71 @@
           11
         ],
         [
-          13,
-          12
-        ],
-        [
-          23,
-          8
-        ],
-        [
-          34,
+          36,
           24
         ],
         [
-          3,
-          6
+          42,
+          25
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          30,
+          8
         ],
         [
           3,
           17
         ],
         [
-          15,
-          5
+          16,
+          20
         ],
         [
-          20,
-          3
-        ],
-        [
-          24,
-          15
-        ],
-        [
-          25,
-          21
+          29,
+          22
         ],
         [
           39,
-          15
+          20
         ],
         [
           41,
-          27
+          14
         ],
         [
-          8,
-          6
+          44,
+          31
         ],
         [
-          26,
-          3
+          46,
+          18
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          15,
+          5
         ]
       ],
       "terrain": {
-        "width": 43,
-        "height": 32,
-        "area": 1376,
-        "distinct_terrain": 38,
+        "width": 50,
+        "height": 34,
+        "area": 1700,
+        "distinct_terrain": 42,
         "villages": 14,
-        "forest": 120,
-        "water": 603,
-        "mountain": 16,
-        "road": 89,
+        "forest": 158,
+        "water": 727,
+        "mountain": 23,
+        "road": 85,
         "bridge": 0,
-        "sand": 89,
-        "swamp": 2
+        "sand": 119,
+        "swamp": 0
       },
       "file": "scenarios/nerea/06.cfg"
     },
@@ -3161,42 +3277,38 @@
       "next": "CBM_nerea_08",
       "map": "nerea_07.map",
       "biome": "harbor",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
-        20,
+        18,
         22
       ],
       "enemy": [
-        24,
+        21,
         4
       ],
       "destination": [
-        10,
-        19
+        6,
+        25
       ],
       "prison": [
-        17,
-        12
+        10,
+        5
       ],
       "points": [],
       "villages": [
         [
-          4,
-          5
+          3,
+          10
         ],
         [
-          9,
+          5,
           3
         ],
         [
-          8,
-          8
-        ],
-        [
-          13,
-          24
-        ],
-        [
-          42,
+          35,
           10
         ],
         [
@@ -3204,55 +3316,63 @@
           18
         ],
         [
+          6,
+          27
+        ],
+        [
           8,
-          25
-        ],
-        [
-          13,
-          11
-        ],
-        [
-          14,
-          5
-        ],
-        [
-          21,
-          16
-        ],
-        [
-          24,
-          9
-        ],
-        [
-          26,
-          17
-        ],
-        [
-          35,
-          4
-        ],
-        [
-          35,
           10
         ],
         [
-          42,
-          4
+          8,
+          18
+        ],
+        [
+          11,
+          24
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          14,
+          19
+        ],
+        [
+          22,
+          10
+        ],
+        [
+          25,
+          15
+        ],
+        [
+          26,
+          5
+        ],
+        [
+          29,
+          9
         ]
       ],
       "terrain": {
-        "width": 46,
-        "height": 29,
-        "area": 1334,
-        "distinct_terrain": 52,
+        "width": 40,
+        "height": 30,
+        "area": 1200,
+        "distinct_terrain": 53,
         "villages": 15,
-        "forest": 115,
-        "water": 436,
-        "mountain": 20,
-        "road": 75,
+        "forest": 100,
+        "water": 412,
+        "mountain": 19,
+        "road": 92,
         "bridge": 0,
-        "sand": 54,
-        "swamp": 2
+        "sand": 46,
+        "swamp": 4
       },
       "file": "scenarios/nerea/07.cfg"
     },
@@ -3264,104 +3384,108 @@
       "next": "CBM_nerea_09",
       "map": "nerea_08.map",
       "biome": "cave",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        4,
-        4
+        5,
+        5
       ],
       "enemy": [
-        35,
-        23
+        46,
+        31
       ],
       "destination": [
-        19,
-        10
+        5,
+        12
       ],
       "prison": [
-        6,
-        18
+        45,
+        25
       ],
       "points": [
         [
-          19,
-          10
+          5,
+          12
         ],
         [
-          6,
-          18
+          45,
+          25
         ],
         [
-          33,
-          3
+          46,
+          20
         ]
       ],
       "villages": [
         [
           3,
-          9
-        ],
-        [
-          4,
-          16
-        ],
-        [
-          5,
-          24
-        ],
-        [
-          8,
-          11
-        ],
-        [
-          8,
-          19
-        ],
-        [
-          13,
           14
         ],
         [
-          14,
-          5
-        ],
-        [
-          14,
+          3,
           22
         ],
         [
-          17,
-          9
+          4,
+          28
         ],
         [
-          18,
-          18
+          8,
+          17
         ],
         [
-          19,
+          9,
+          27
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          13,
+          24
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
           4
         ],
         [
+          16,
+          10
+        ],
+        [
+          18,
+          30
+        ],
+        [
+          19,
+          15
+        ],
+        [
           20,
-          13
-        ],
-        [
-          24,
           7
-        ],
-        [
-          24,
-          24
         ]
       ],
       "terrain": {
-        "width": 38,
-        "height": 26,
-        "area": 988,
+        "width": 49,
+        "height": 34,
+        "area": 1666,
         "distinct_terrain": 36,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 132,
+        "road": 114,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -3376,86 +3500,90 @@
       "next": "CBM_nerea_10",
       "map": "nerea_09.map",
       "biome": "coast",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        15
+        18
       ],
       "enemy": [
-        38,
-        15
+        47,
+        19
       ],
       "destination": [
-        18,
-        23
+        3,
+        28
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          15,
-          4
-        ],
-        [
-          5,
-          4
-        ],
-        [
-          7,
-          9
+          6,
+          5
         ],
         [
           10,
+          11
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          18,
           3
         ],
         [
-          24,
+          15,
+          8
+        ],
+        [
+          41,
           23
         ],
         [
-          10,
-          25
+          3,
+          10
         ],
         [
           17,
           28
         ],
         [
-          34,
-          16
+          25,
+          26
         ],
         [
-          3,
-          27
+          45,
+          10
         ],
         [
           4,
-          22
+          30
         ],
         [
-          12,
-          9
+          7,
+          21
         ],
         [
-          12,
-          17
-        ],
-        [
-          16,
-          13
+          8,
+          26
         ]
       ],
       "terrain": {
-        "width": 41,
-        "height": 31,
-        "area": 1271,
-        "distinct_terrain": 55,
+        "width": 52,
+        "height": 34,
+        "area": 1768,
+        "distinct_terrain": 58,
         "villages": 13,
-        "forest": 141,
-        "water": 324,
-        "mountain": 34,
-        "road": 88,
+        "forest": 230,
+        "water": 441,
+        "mountain": 50,
+        "road": 116,
         "bridge": 0,
-        "sand": 50,
+        "sand": 63,
         "swamp": 9
       },
       "file": "scenarios/nerea/09.cfg"
@@ -3468,48 +3596,48 @@
       "next": "CBM_nerea_11",
       "map": "nerea_10.map",
       "biome": "islands",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
-        6,
+        5,
         17
       ],
       "enemy": [
-        39,
+        38,
         5
       ],
       "destination": [
-        32,
-        24
+        8,
+        6
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          39,
+          7,
+          13
+        ],
+        [
+          29,
+          6
+        ],
+        [
+          31,
+          21
+        ],
+        [
+          35,
           18
         ],
         [
-          26,
-          7
-        ],
-        [
-          33,
-          18
-        ],
-        [
-          10,
-          12
-        ],
-        [
-          4,
-          5
-        ],
-        [
-          14,
+          8,
           4
         ],
         [
           25,
-          12
+          23
         ],
         [
           27,
@@ -3520,39 +3648,43 @@
           26
         ],
         [
-          34,
-          6
-        ],
-        [
-          40,
-          25
-        ],
-        [
-          3,
+          36,
           10
         ],
         [
-          16,
+          38,
+          26
+        ],
+        [
+          3,
           9
         ],
         [
-          17,
-          15
+          12,
+          10
+        ],
+        [
+          20,
+          4
+        ],
+        [
+          24,
+          13
         ]
       ],
       "terrain": {
-        "width": 44,
-        "height": 28,
-        "area": 1232,
-        "distinct_terrain": 39,
+        "width": 42,
+        "height": 30,
+        "area": 1260,
+        "distinct_terrain": 43,
         "villages": 14,
-        "forest": 101,
-        "water": 551,
-        "mountain": 20,
-        "road": 91,
-        "bridge": 0,
-        "sand": 96,
-        "swamp": 2
+        "forest": 108,
+        "water": 578,
+        "mountain": 19,
+        "road": 88,
+        "bridge": 2,
+        "sand": 93,
+        "swamp": 1
       },
       "file": "scenarios/nerea/10.cfg"
     },
@@ -3564,99 +3696,103 @@
       "next": "CBM_nerea_12",
       "map": "nerea_11.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
-        19,
-        30
+        26,
+        31
       ],
       "enemy": [
-        19,
+        26,
         4
       ],
       "destination": [
-        8,
+        14,
         30
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          5,
-          4
-        ],
-        [
-          10,
-          4
-        ],
-        [
-          30,
-          25
-        ],
-        [
-          30,
-          31
-        ],
-        [
-          32,
-          3
+          48,
+          12
         ],
         [
           3,
-          19
+          20
         ],
         [
           3,
           30
         ],
         [
-          4,
-          24
-        ],
-        [
-          34,
-          22
-        ],
-        [
-          3,
-          10
-        ],
-        [
-          8,
-          19
-        ],
-        [
-          10,
-          12
-        ],
-        [
-          15,
+          9,
           3
         ],
         [
-          17,
-          18
-        ],
-        [
-          18,
-          11
-        ],
-        [
-          24,
+          32,
           4
+        ],
+        [
+          32,
+          26
+        ],
+        [
+          36,
+          30
+        ],
+        [
+          41,
+          13
+        ],
+        [
+          44,
+          9
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          14,
+          28
+        ],
+        [
+          38,
+          8
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          16,
+          4
+        ],
+        [
+          20,
+          13
+        ],
+        [
+          20,
+          19
         ]
       ],
       "terrain": {
-        "width": 36,
-        "height": 33,
-        "area": 1188,
-        "distinct_terrain": 71,
+        "width": 51,
+        "height": 34,
+        "area": 1734,
+        "distinct_terrain": 69,
         "villages": 16,
-        "forest": 156,
-        "water": 149,
-        "mountain": 36,
-        "road": 115,
+        "forest": 241,
+        "water": 214,
+        "mountain": 57,
+        "road": 124,
         "bridge": 0,
-        "sand": 73,
-        "swamp": 11
+        "sand": 84,
+        "swamp": 15
       },
       "file": "scenarios/nerea/11.cfg"
     },
@@ -3668,35 +3804,35 @@
       "next": "null",
       "map": "nerea_12.map",
       "biome": "harbor",
+      "size": "battle",
+      "turns": 22,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        3
+        4
       ],
       "enemy": [
-        26,
+        27,
         17
       ],
       "destination": [
-        33,
-        7
+        21,
+        16
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
+          11,
+          5
+        ],
+        [
+          5,
+          17
+        ],
+        [
           8,
-          3
-        ],
-        [
-          19,
-          21
-        ],
-        [
-          4,
-          18
-        ],
-        [
-          12,
           27
         ],
         [
@@ -3704,24 +3840,12 @@
           13
         ],
         [
-          36,
-          7
-        ],
-        [
-          3,
-          7
-        ],
-        [
           4,
-          25
+          8
         ],
         [
-          7,
+          8,
           12
-        ],
-        [
-          12,
-          6
         ],
         [
           12,
@@ -3729,33 +3853,49 @@
         ],
         [
           13,
-          12
+          10
+        ],
+        [
+          15,
+          22
         ],
         [
           17,
           3
         ],
         [
-          18,
-          11
+          19,
+          14
         ],
         [
-          21,
+          19,
+          19
+        ],
+        [
+          22,
+          3
+        ],
+        [
+          26,
           7
+        ],
+        [
+          32,
+          5
         ]
       ],
       "terrain": {
-        "width": 39,
+        "width": 41,
         "height": 30,
-        "area": 1170,
+        "area": 1230,
         "distinct_terrain": 49,
         "villages": 15,
-        "forest": 106,
-        "water": 386,
-        "mountain": 14,
-        "road": 94,
+        "forest": 120,
+        "water": 401,
+        "mountain": 13,
+        "road": 73,
         "bridge": 0,
-        "sand": 54,
+        "sand": 56,
         "swamp": 2
       },
       "file": "scenarios/nerea/12.cfg"
@@ -3768,95 +3908,99 @@
       "next": "CBM_darian_02",
       "map": "darian_01.map",
       "biome": "forest",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        16
+        13
       ],
       "enemy": [
-        36,
-        16
+        32,
+        13
       ],
       "destination": [
-        35,
-        5
+        27,
+        21
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          15,
+          14,
           20
         ],
         [
-          16,
-          28
+          5,
+          17
         ],
         [
-          19,
-          23
+          24,
+          19
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          20,
+          13
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          14,
+          5
         ],
         [
           22,
           4
         ],
         [
-          24,
-          24
+          26,
+          8
         ],
         [
-          9,
-          23
+          29,
+          22
         ],
         [
-          24,
-          14
-        ],
-        [
-          31,
-          12
-        ],
-        [
-          31,
-          28
-        ],
-        [
-          33,
-          7
-        ],
-        [
-          36,
-          3
-        ],
-        [
-          36,
-          21
-        ],
-        [
-          3,
+          30,
           5
         ],
         [
-          3,
-          24
+          31,
+          17
         ],
         [
-          6,
-          9
+          19,
+          19
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 31,
-        "area": 1209,
-        "distinct_terrain": 63,
+        "width": 35,
+        "height": 24,
+        "area": 840,
+        "distinct_terrain": 58,
         "villages": 15,
-        "forest": 290,
-        "water": 98,
-        "mountain": 62,
-        "road": 101,
-        "bridge": 1,
-        "sand": 34,
-        "swamp": 8
+        "forest": 193,
+        "water": 75,
+        "mountain": 39,
+        "road": 96,
+        "bridge": 0,
+        "sand": 27,
+        "swamp": 9
       },
       "file": "scenarios/darian/01.cfg"
     },
@@ -3868,17 +4012,21 @@
       "next": "CBM_darian_03",
       "map": "darian_02.map",
       "biome": "harbor",
+      "size": "skirmish",
+      "turns": 12,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        25
+        21
       ],
       "enemy": [
-        39,
+        35,
         4
       ],
       "destination": [
-        26,
-        11
+        25,
+        9
       ],
       "prison": null,
       "points": [],
@@ -3892,71 +4040,71 @@
           9
         ],
         [
-          15,
-          22
-        ],
-        [
           9,
-          7
-        ],
-        [
-          16,
-          13
-        ],
-        [
-          28,
-          13
-        ],
-        [
-          31,
-          17
-        ],
-        [
-          40,
-          13
+          4
         ],
         [
           10,
-          26
+          16
         ],
         [
           12,
-          3
+          9
+        ],
+        [
+          12,
+          21
         ],
         [
           16,
-          8
+          15
         ],
         [
-          20,
-          3
-        ],
-        [
-          23,
-          7
+          26,
+          11
         ],
         [
           33,
           12
         ],
         [
-          35,
+          17,
+          6
+        ],
+        [
+          21,
           3
+        ],
+        [
+          29,
+          4
+        ],
+        [
+          3,
+          17
+        ],
+        [
+          22,
+          8
+        ],
+        [
+          36,
+          8
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 28,
-        "area": 1176,
-        "distinct_terrain": 50,
+        "width": 38,
+        "height": 24,
+        "area": 912,
+        "distinct_terrain": 51,
         "villages": 15,
-        "forest": 91,
-        "water": 382,
-        "mountain": 14,
-        "road": 102,
+        "forest": 54,
+        "water": 300,
+        "mountain": 6,
+        "road": 96,
         "bridge": 0,
-        "sand": 55,
-        "swamp": 4
+        "sand": 30,
+        "swamp": 7
       },
       "file": "scenarios/darian/02.cfg"
     },
@@ -3968,102 +4116,106 @@
       "next": "CBM_darian_04",
       "map": "darian_03.map",
       "biome": "mountain",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
-        23,
-        30
+        18,
+        21
       ],
       "enemy": [
-        23,
+        18,
         4
       ],
       "destination": [
-        42,
-        31
+        14,
+        9
       ],
       "prison": [
         26,
-        9
+        13
       ],
       "points": [
         [
-          42,
-          31
-        ],
-        [
-          26,
+          14,
           9
         ],
         [
-          31,
+          26,
           13
+        ],
+        [
+          29,
+          21
         ]
       ],
       "villages": [
         [
           3,
-          30
-        ],
-        [
-          4,
           20
         ],
         [
           5,
-          10
-        ],
-        [
-          8,
-          31
-        ],
-        [
-          15,
-          23
+          11
         ],
         [
           18,
           9
         ],
         [
-          18,
-          19
-        ],
-        [
-          22,
-          16
-        ],
-        [
-          27,
-          3
-        ],
-        [
-          32,
+          20,
           17
         ],
         [
-          36,
+          30,
+          19
+        ],
+        [
+          31,
+          7
+        ],
+        [
+          6,
+          16
+        ],
+        [
+          8,
+          21
+        ],
+        [
+          23,
+          9
+        ],
+        [
+          26,
+          3
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          15,
+          18
+        ],
+        [
+          3,
           6
-        ],
-        [
-          37,
-          24
-        ],
-        [
-          38,
-          15
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 33,
-        "area": 1485,
-        "distinct_terrain": 47,
+        "width": 34,
+        "height": 24,
+        "area": 816,
+        "distinct_terrain": 49,
         "villages": 13,
-        "forest": 173,
-        "water": 103,
-        "mountain": 220,
-        "road": 104,
+        "forest": 92,
+        "water": 71,
+        "mountain": 115,
+        "road": 92,
         "bridge": 0,
-        "sand": 32,
+        "sand": 14,
         "swamp": 0
       },
       "file": "scenarios/darian/03.cfg"
@@ -4076,51 +4228,51 @@
       "next": "CBM_darian_05",
       "map": "darian_04.map",
       "biome": "plains",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
         4
       ],
       "enemy": [
         34,
-        26
+        20
       ],
       "destination": [
-        17,
-        6
+        10,
+        4
       ],
       "prison": [
-        6,
-        10
+        28,
+        21
       ],
       "points": [],
       "villages": [
         [
-          30,
-          13
-        ],
-        [
-          34,
-          16
-        ],
-        [
-          31,
-          8
-        ],
-        [
-          4,
+          32,
           15
         ],
         [
-          26,
+          32,
+          10
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          6,
+          17
+        ],
+        [
+          3,
           22
         ],
         [
-          4,
+          5,
           8
-        ],
-        [
-          4,
-          23
         ],
         [
           8,
@@ -4128,31 +4280,23 @@
         ],
         [
           9,
-          17
+          12
         ],
         [
-          9,
-          28
-        ],
-        [
-          11,
-          22
+          10,
+          20
         ],
         [
           13,
-          5
+          3
         ],
         [
-          14,
+          13,
           16
         ],
         [
-          15,
-          26
-        ],
-        [
-          17,
-          21
+          16,
+          22
         ],
         [
           20,
@@ -4161,21 +4305,33 @@
         [
           21,
           15
+        ],
+        [
+          23,
+          3
+        ],
+        [
+          25,
+          12
+        ],
+        [
+          26,
+          7
         ]
       ],
       "terrain": {
         "width": 37,
-        "height": 30,
-        "area": 1110,
-        "distinct_terrain": 51,
+        "height": 24,
+        "area": 888,
+        "distinct_terrain": 50,
         "villages": 17,
-        "forest": 202,
-        "water": 92,
-        "mountain": 28,
-        "road": 93,
+        "forest": 147,
+        "water": 63,
+        "mountain": 21,
+        "road": 95,
         "bridge": 0,
-        "sand": 31,
-        "swamp": 4
+        "sand": 29,
+        "swamp": 1
       },
       "file": "scenarios/darian/04.cfg"
     },
@@ -4187,95 +4343,99 @@
       "next": "CBM_darian_06",
       "map": "darian_05.map",
       "biome": "forest",
+      "size": "skirmish",
+      "turns": 22,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        14
+        13
       ],
       "enemy": [
-        37,
-        14
+        30,
+        13
       ],
       "destination": [
-        31,
+        24,
         16
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          3,
-          25
-        ],
-        [
-          5,
-          20
+          4,
+          22
         ],
         [
           9,
-          3
+          4
         ],
         [
-          10,
+          13,
           22
         ],
         [
-          15,
-          21
+          4,
+          4
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          9,
+          19
         ],
         [
           16,
-          3
-        ],
-        [
-          32,
-          14
-        ],
-        [
-          34,
-          22
-        ],
-        [
-          18,
-          25
-        ],
-        [
-          38,
-          18
-        ],
-        [
-          18,
-          13
-        ],
-        [
-          24,
-          22
-        ],
-        [
-          30,
-          25
-        ],
-        [
-          7,
           9
         ],
         [
-          11,
-          12
+          16,
+          14
+        ],
+        [
+          22,
+          21
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          21,
+          3
+        ],
+        [
+          25,
+          17
+        ],
+        [
+          28,
+          5
+        ],
+        [
+          30,
+          17
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 27,
-        "area": 1080,
-        "distinct_terrain": 62,
+        "width": 33,
+        "height": 24,
+        "area": 792,
+        "distinct_terrain": 58,
         "villages": 15,
-        "forest": 258,
-        "water": 55,
-        "mountain": 55,
-        "road": 99,
+        "forest": 177,
+        "water": 70,
+        "mountain": 49,
+        "road": 75,
         "bridge": 0,
-        "sand": 18,
-        "swamp": 3
+        "sand": 21,
+        "swamp": 7
       },
       "file": "scenarios/darian/05.cfg"
     },
@@ -4287,87 +4447,91 @@
       "next": "CBM_darian_07",
       "map": "darian_06.map",
       "biome": "coast",
+      "size": "battle",
+      "turns": 32,
+      "fog": false,
+      "shroud": false,
       "start": [
         4,
-        29
+        27
       ],
       "enemy": [
-        40,
+        41,
         4
       ],
       "destination": [
-        31,
-        11
+        28,
+        5
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
           3,
-          6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          14,
-          3
-        ],
-        [
-          3,
           12
         ],
         [
-          8,
-          4
+          5,
+          5
         ],
         [
-          15,
-          26
+          8,
+          9
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          17,
+          3
+        ],
+        [
+          11,
+          15
+        ],
+        [
+          12,
+          28
+        ],
+        [
+          17,
+          24
+        ],
+        [
+          24,
+          22
         ],
         [
           31,
-          16
-        ],
-        [
-          38,
-          18
-        ],
-        [
-          3,
-          19
-        ],
-        [
-          7,
-          25
-        ],
-        [
-          8,
           17
         ],
         [
-          14,
-          18
+          40,
+          16
         ],
         [
-          16,
-          13
+          42,
+          11
+        ],
+        [
+          7,
+          18
         ]
       ],
       "terrain": {
-        "width": 43,
-        "height": 32,
-        "area": 1376,
-        "distinct_terrain": 55,
+        "width": 44,
+        "height": 30,
+        "area": 1320,
+        "distinct_terrain": 56,
         "villages": 13,
-        "forest": 191,
-        "water": 311,
-        "mountain": 42,
-        "road": 100,
+        "forest": 164,
+        "water": 326,
+        "mountain": 41,
+        "road": 107,
         "bridge": 0,
-        "sand": 22,
-        "swamp": 3
+        "sand": 42,
+        "swamp": 4
       },
       "file": "scenarios/darian/06.cfg"
     },
@@ -4379,90 +4543,94 @@
       "next": "CBM_darian_08",
       "map": "darian_07.map",
       "biome": "quarry",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
         24,
-        26
+        31
       ],
       "enemy": [
         24,
         4
       ],
       "destination": [
-        15,
-        27
+        18,
+        4
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          3,
-          15
+          5,
+          8
         ],
         [
-          4,
-          10
-        ],
-        [
-          18,
-          12
-        ],
-        [
-          19,
+          8,
           3
         ],
         [
-          30,
-          4
-        ],
-        [
-          34,
+          15,
           7
         ],
         [
-          37,
-          16
+          20,
+          14
         ],
         [
-          40,
-          23
+          25,
+          22
         ],
         [
-          21,
-          16
+          28,
+          3
         ],
         [
-          44,
-          26
-        ],
-        [
-          14,
-          24
-        ],
-        [
-          33,
+          32,
           19
         ],
         [
-          44,
-          20
+          33,
+          5
         ],
         [
-          3,
-          20
+          38,
+          16
+        ],
+        [
+          41,
+          22
+        ],
+        [
+          43,
+          27
+        ],
+        [
+          20,
+          5
+        ],
+        [
+          26,
+          11
+        ],
+        [
+          27,
+          16
         ]
       ],
       "terrain": {
         "width": 46,
-        "height": 29,
-        "area": 1334,
-        "distinct_terrain": 50,
+        "height": 34,
+        "area": 1564,
+        "distinct_terrain": 47,
         "villages": 14,
-        "forest": 189,
-        "water": 32,
-        "mountain": 150,
-        "road": 101,
+        "forest": 226,
+        "water": 38,
+        "mountain": 180,
+        "road": 110,
         "bridge": 0,
-        "sand": 12,
+        "sand": 22,
         "swamp": 0
       },
       "file": "scenarios/darian/07.cfg"
@@ -4475,102 +4643,106 @@
       "next": "CBM_darian_09",
       "map": "darian_08.map",
       "biome": "ruins",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         3,
         4
       ],
       "enemy": [
-        35,
-        23
+        39,
+        27
       ],
       "destination": [
-        18,
-        19
+        29,
+        3
       ],
       "prison": [
-        3,
-        16
+        40,
+        22
       ],
       "points": [],
       "villages": [
         [
-          10,
-          9
-        ],
-        [
-          11,
-          4
-        ],
-        [
-          14,
-          12
-        ],
-        [
-          16,
-          4
-        ],
-        [
-          21,
-          13
-        ],
-        [
           27,
-          9
-        ],
-        [
-          19,
-          20
-        ],
-        [
-          21,
-          8
-        ],
-        [
-          24,
-          19
-        ],
-        [
-          7,
-          19
+          11
         ],
         [
           9,
-          24
+          5
         ],
         [
-          25,
-          4
+          14,
+          11
         ],
         [
-          28,
+          19,
+          9
+        ],
+        [
+          30,
           15
         ],
         [
-          31,
+          5,
+          16
+        ],
+        [
+          10,
           22
         ],
         [
-          32,
-          4
+          23,
+          15
         ],
         [
-          33,
-          9
+          35,
+          21
+        ],
+        [
+          3,
+          24
+        ],
+        [
+          14,
+          25
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          19,
+          24
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          29,
+          27
+        ],
+        [
+          30,
+          6
         ]
       ],
       "terrain": {
-        "width": 38,
-        "height": 26,
-        "area": 988,
-        "distinct_terrain": 68,
+        "width": 43,
+        "height": 30,
+        "area": 1290,
+        "distinct_terrain": 69,
         "villages": 16,
-        "forest": 140,
-        "water": 126,
-        "mountain": 31,
-        "road": 103,
+        "forest": 173,
+        "water": 181,
+        "mountain": 38,
+        "road": 137,
         "bridge": 1,
-        "sand": 43,
-        "swamp": 9
+        "sand": 63,
+        "swamp": 12
       },
       "file": "scenarios/darian/08.cfg"
     },
@@ -4582,107 +4754,111 @@
       "next": "CBM_darian_10",
       "map": "darian_09.map",
       "biome": "islands",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        4,
-        15
+        5,
+        17
       ],
       "enemy": [
-        37,
-        16
+        49,
+        19
       ],
       "destination": [
-        13,
-        9
+        38,
+        20
       ],
       "prison": [
-        28,
-        24
+        25,
+        23
       ],
       "points": [
         [
-          13,
-          9
+          38,
+          20
         ],
         [
-          28,
-          24
+          25,
+          23
         ],
         [
-          32,
-          19
+          36,
+          5
         ]
       ],
       "villages": [
         [
-          8,
-          9
+          10,
+          11
         ],
         [
-          12,
-          24
-        ],
-        [
-          18,
-          22
-        ],
-        [
-          32,
-          21
-        ],
-        [
-          28,
-          6
-        ],
-        [
-          15,
-          7
+          17,
+          23
         ],
         [
           20,
-          27
+          28
         ],
         [
-          22,
-          4
+          35,
+          7
         ],
         [
-          26,
+          41,
           25
         ],
         [
-          30,
+          32,
           11
         ],
         [
-          3,
-          11
+          40,
+          13
+        ],
+        [
+          45,
+          21
+        ],
+        [
+          8,
+          6
         ],
         [
           9,
+          27
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          21,
           14
         ],
         [
-          10,
-          19
-        ],
-        [
-          30,
-          28
+          27,
+          26
         ]
       ],
       "terrain": {
-        "width": 41,
-        "height": 31,
-        "area": 1271,
+        "width": 52,
+        "height": 34,
+        "area": 1768,
         "distinct_terrain": 43,
         "villages": 14,
-        "forest": 109,
-        "water": 548,
-        "mountain": 20,
-        "road": 98,
-        "bridge": 1,
-        "sand": 116,
-        "swamp": 2
+        "forest": 165,
+        "water": 751,
+        "mountain": 26,
+        "road": 120,
+        "bridge": 0,
+        "sand": 154,
+        "swamp": 5
       },
       "file": "scenarios/darian/09.cfg"
     },
@@ -4694,88 +4870,92 @@
       "next": "CBM_darian_11",
       "map": "darian_10.map",
       "biome": "cave",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        25
+        27
       ],
       "enemy": [
-        41,
+        38,
         4
       ],
       "destination": [
-        12,
-        22
+        21,
+        13
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
           3,
-          6
+          3
         ],
         [
           3,
-          18
+          8
         ],
         [
-          8,
-          4
+          7,
+          16
         ],
         [
-          8,
-          18
+          9,
+          5
         ],
         [
-          8,
-          25
-        ],
-        [
-          10,
+          9,
           10
         ],
         [
-          12,
-          15
+          9,
+          23
         ],
         [
-          13,
-          24
+          11,
+          28
+        ],
+        [
+          14,
+          11
+        ],
+        [
+          14,
+          17
         ],
         [
           15,
-          10
+          22
         ],
         [
           16,
           4
         ],
         [
-          17,
-          19
+          19,
+          17
         ],
         [
           20,
-          7
+          8
         ],
         [
-          20,
+          21,
           24
-        ],
-        [
-          24,
-          4
         ]
       ],
       "terrain": {
-        "width": 44,
-        "height": 28,
-        "area": 1232,
+        "width": 42,
+        "height": 30,
+        "area": 1260,
         "distinct_terrain": 36,
         "villages": 14,
         "forest": 0,
         "water": 0,
         "mountain": 0,
-        "road": 97,
+        "road": 96,
         "bridge": 0,
         "sand": 0,
         "swamp": 0
@@ -4790,52 +4970,80 @@
       "next": "CBM_darian_12",
       "map": "darian_11.map",
       "biome": "plains",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        19,
-        30
+        26,
+        31
       ],
       "enemy": [
-        19,
+        26,
         4
       ],
       "destination": [
-        14,
-        19
+        6,
+        31
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          32,
-          11
-        ],
-        [
-          34,
-          20
-        ],
-        [
           10,
           4
         ],
         [
-          14,
+          12,
+          12
+        ],
+        [
+          17,
+          4
+        ],
+        [
+          32,
+          12
+        ],
+        [
+          33,
+          17
+        ],
+        [
+          37,
+          10
+        ],
+        [
+          38,
           15
         ],
         [
+          38,
+          21
+        ],
+        [
+          11,
+          17
+        ],
+        [
           22,
-          18
+          16
         ],
         [
-          25,
-          29
+          34,
+          24
         ],
         [
-          27,
-          18
+          39,
+          32
         ],
         [
-          30,
-          26
+          42,
+          10
+        ],
+        [
+          49,
+          5
         ],
         [
           3,
@@ -4843,50 +5051,26 @@
         ],
         [
           3,
-          21
-        ],
-        [
-          4,
-          11
-        ],
-        [
-          4,
-          29
-        ],
-        [
-          7,
-          15
-        ],
-        [
-          8,
-          25
-        ],
-        [
-          9,
           10
         ],
         [
-          9,
-          31
-        ],
-        [
-          13,
-          23
+          4,
+          22
         ]
       ],
       "terrain": {
-        "width": 36,
-        "height": 33,
-        "area": 1188,
+        "width": 51,
+        "height": 34,
+        "area": 1734,
         "distinct_terrain": 52,
         "villages": 17,
-        "forest": 191,
-        "water": 114,
-        "mountain": 21,
-        "road": 114,
+        "forest": 295,
+        "water": 143,
+        "mountain": 33,
+        "road": 134,
         "bridge": 0,
-        "sand": 39,
-        "swamp": 2
+        "sand": 61,
+        "swamp": 7
       },
       "file": "scenarios/darian/11.cfg"
     },
@@ -4898,94 +5082,98 @@
       "next": "CBM_darian_13",
       "map": "darian_12.map",
       "biome": "forest",
+      "size": "siege",
+      "turns": 12,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
         4
       ],
       "enemy": [
-        36,
-        27
+        44,
+        31
       ],
       "destination": [
-        29,
-        14
+        41,
+        27
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          12,
+          10,
           4
         ],
         [
-          17,
-          22
-        ],
-        [
-          22,
-          15
-        ],
-        [
-          22,
-          21
-        ],
-        [
-          29,
-          25
-        ],
-        [
-          27,
-          13
-        ],
-        [
-          27,
-          19
-        ],
-        [
-          9,
-          28
-        ],
-        [
-          12,
-          12
+          16,
+          3
         ],
         [
           16,
+          23
+        ],
+        [
+          25,
+          10
+        ],
+        [
+          27,
+          23
+        ],
+        [
+          29,
+          18
+        ],
+        [
+          41,
+          22
+        ],
+        [
+          42,
+          8
+        ],
+        [
+          19,
           15
         ],
         [
-          32,
-          19
+          21,
+          21
+        ],
+        [
+          21,
+          6
+        ],
+        [
+          22,
+          32
         ],
         [
           37,
           14
         ],
         [
+          43,
+          14
+        ],
+        [
           3,
-          16
-        ],
-        [
-          4,
-          9
-        ],
-        [
-          10,
-          22
+          13
         ]
       ],
       "terrain": {
-        "width": 39,
-        "height": 30,
-        "area": 1170,
+        "width": 47,
+        "height": 34,
+        "area": 1598,
         "distinct_terrain": 59,
         "villages": 15,
-        "forest": 271,
-        "water": 48,
-        "mountain": 52,
-        "road": 96,
+        "forest": 420,
+        "water": 39,
+        "mountain": 84,
+        "road": 105,
         "bridge": 0,
-        "sand": 24,
+        "sand": 14,
         "swamp": 5
       },
       "file": "scenarios/darian/12.cfg"
@@ -4998,115 +5186,119 @@
       "next": "CBM_darian_14",
       "map": "darian_13.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
         4,
-        14
+        17
       ],
       "enemy": [
-        39,
-        14
+        47,
+        18
       ],
       "destination": [
-        11,
+        33,
         16
       ],
       "prison": [
-        19,
-        15
+        26,
+        14
       ],
       "points": [
         [
-          11,
+          33,
           16
         ],
         [
-          19,
-          15
+          26,
+          14
         ],
         [
-          5,
-          24
+          33,
+          22
         ]
       ],
       "villages": [
         [
-          19,
-          4
+          46,
+          13
         ],
         [
-          31,
+          47,
+          7
+        ],
+        [
+          19,
           6
         ],
         [
-          32,
-          16
+          31,
+          30
         ],
         [
-          35,
-          9
+          33,
+          14
+        ],
+        [
+          34,
+          6
+        ],
+        [
+          36,
+          32
         ],
         [
           39,
-          5
-        ],
-        [
-          27,
-          9
-        ],
-        [
-          40,
-          10
-        ],
-        [
-          3,
-          20
-        ],
-        [
-          7,
-          24
-        ],
-        [
-          9,
-          12
-        ],
-        [
-          12,
-          24
-        ],
-        [
-          27,
-          18
+          6
         ],
         [
           10,
           7
         ],
         [
-          10,
-          19
+          13,
+          22
         ],
         [
-          15,
-          19
+          25,
+          8
         ],
         [
-          19,
-          13
+          4,
+          12
+        ],
+        [
+          4,
+          30
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          18,
+          31
         ]
       ],
       "terrain": {
-        "width": 42,
-        "height": 27,
-        "area": 1134,
+        "width": 50,
+        "height": 34,
+        "area": 1700,
         "distinct_terrain": 69,
         "villages": 16,
-        "forest": 149,
-        "water": 134,
-        "mountain": 35,
-        "road": 99,
+        "forest": 230,
+        "water": 196,
+        "mountain": 58,
+        "road": 136,
         "bridge": 0,
-        "sand": 64,
-        "swamp": 11
+        "sand": 79,
+        "swamp": 14
       },
       "file": "scenarios/darian/13.cfg"
     },
@@ -5118,97 +5310,101 @@
       "next": "CBM_darian_15",
       "map": "darian_14.map",
       "biome": "harbor",
+      "size": "battle",
+      "turns": 30,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
-        29
+        27
       ],
       "enemy": [
-        42,
+        37,
         4
       ],
       "destination": [
-        39,
-        10
+        6,
+        19
       ],
       "prison": [
-        15,
-        7
+        33,
+        10
       ],
       "points": [],
       "villages": [
         [
-          5,
-          8
+          7,
+          7
         ],
         [
-          5,
-          3
+          21,
+          24
         ],
         [
-          10,
-          25
-        ],
-        [
-          28,
-          20
-        ],
-        [
-          33,
-          17
-        ],
-        [
-          6,
-          18
-        ],
-        [
-          10,
-          3
-        ],
-        [
-          10,
+          3,
           10
         ],
         [
-          16,
-          20
+          3,
+          19
         ],
         [
-          16,
-          27
+          4,
+          3
         ],
         [
-          17,
+          10,
+          3
+        ],
+        [
+          10,
           11
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          15,
+          9
         ],
         [
           18,
           3
         ],
         [
-          21,
-          7
+          19,
+          14
         ],
         [
-          21,
-          17
+          20,
+          9
         ],
         [
-          21,
+          24,
+          16
+        ],
+        [
+          26,
           22
+        ],
+        [
+          28,
+          5
         ]
       ],
       "terrain": {
-        "width": 45,
-        "height": 32,
-        "area": 1440,
-        "distinct_terrain": 52,
+        "width": 40,
+        "height": 30,
+        "area": 1200,
+        "distinct_terrain": 47,
         "villages": 15,
-        "forest": 123,
-        "water": 460,
-        "mountain": 19,
-        "road": 119,
+        "forest": 104,
+        "water": 385,
+        "mountain": 18,
+        "road": 115,
         "bridge": 0,
-        "sand": 58,
+        "sand": 55,
         "swamp": 4
       },
       "file": "scenarios/darian/14.cfg"
@@ -5221,99 +5417,103 @@
       "next": "CBM_darian_16",
       "map": "darian_15.map",
       "biome": "ruins",
+      "size": "siege",
+      "turns": 38,
+      "fog": true,
+      "shroud": false,
       "start": [
-        19,
-        26
+        25,
+        31
       ],
       "enemy": [
-        19,
+        25,
         4
       ],
       "destination": [
-        14,
-        25
+        17,
+        20
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
           5,
-          11
-        ],
-        [
-          24,
-          10
-        ],
-        [
-          29,
-          10
-        ],
-        [
-          6,
-          6
-        ],
-        [
-          20,
-          13
-        ],
-        [
-          31,
-          16
-        ],
-        [
-          21,
-          22
-        ],
-        [
-          28,
-          3
-        ],
-        [
-          34,
           12
         ],
         [
-          4,
-          22
-        ],
-        [
-          9,
+          22,
           23
         ],
         [
-          3,
-          16
+          24,
+          13
         ],
         [
-          8,
-          18
+          32,
+          31
         ],
         [
-          11,
-          4
+          33,
+          15
         ],
         [
-          12,
-          9
+          45,
+          32
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          39,
+          32
+        ],
+        [
+          9,
+          29
         ],
         [
           13,
-          14
+          25
+        ],
+        [
+          16,
+          31
+        ],
+        [
+          3,
+          17
+        ],
+        [
+          7,
+          20
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          12,
+          19
         ]
       ],
       "terrain": {
-        "width": 37,
-        "height": 29,
-        "area": 1073,
-        "distinct_terrain": 70,
+        "width": 49,
+        "height": 34,
+        "area": 1666,
+        "distinct_terrain": 67,
         "villages": 16,
-        "forest": 161,
-        "water": 112,
-        "mountain": 42,
-        "road": 96,
+        "forest": 268,
+        "water": 163,
+        "mountain": 48,
+        "road": 107,
         "bridge": 0,
-        "sand": 40,
-        "swamp": 13
+        "sand": 32,
+        "swamp": 7
       },
       "file": "scenarios/darian/15.cfg"
     },
@@ -5325,86 +5525,90 @@
       "next": "null",
       "map": "darian_16.map",
       "biome": "mountain",
+      "size": "battle",
+      "turns": 22,
+      "fog": true,
+      "shroud": true,
       "start": [
         4,
         4
       ],
       "enemy": [
-        37,
-        23
+        43,
+        27
       ],
       "destination": [
-        33,
-        8
+        9,
+        15
       ],
       "prison": null,
       "points": [],
       "villages": [
         [
-          8,
+          15,
+          11
+        ],
+        [
+          19,
+          26
+        ],
+        [
+          22,
           16
         ],
         [
-          13,
-          11
+          31,
+          3
         ],
         [
-          20,
-          23
-        ],
-        [
-          21,
-          15
-        ],
-        [
-          35,
-          5
-        ],
-        [
-          16,
-          15
-        ],
-        [
-          30,
-          22
-        ],
-        [
-          4,
+          32,
           21
         ],
         [
-          7,
-          11
+          34,
+          28
+        ],
+        [
+          38,
+          24
+        ],
+        [
+          41,
+          6
         ],
         [
           12,
+          16
+        ],
+        [
+          44,
+          11
+        ],
+        [
+          4,
           20
         ],
         [
           13,
-          5
+          6
         ],
         [
           25,
           24
-        ],
-        [
-          3,
-          8
         ]
       ],
       "terrain": {
-        "width": 40,
-        "height": 26,
-        "area": 1040,
-        "distinct_terrain": 50,
+        "width": 46,
+        "height": 30,
+        "area": 1380,
+        "distinct_terrain": 48,
         "villages": 13,
-        "forest": 79,
-        "water": 59,
-        "mountain": 138,
-        "road": 107,
+        "forest": 115,
+        "water": 86,
+        "mountain": 197,
+        "road": 131,
         "bridge": 0,
-        "sand": 17,
+        "sand": 39,
         "swamp": 0
       },
       "file": "scenarios/darian/16.cfg"
@@ -5428,10 +5632,16 @@
     "CBM Velario Cantor",
     "CBM Velario Aurora",
     "CBM Hero alba",
+    "CBM Hero alba 2",
     "CBM Hero sira",
+    "CBM Hero sira 2",
     "CBM Hero iria",
+    "CBM Hero iria 2",
     "CBM Hero maura",
+    "CBM Hero maura 2",
     "CBM Hero nerea",
-    "CBM Hero darian"
+    "CBM Hero nerea 2",
+    "CBM Hero darian",
+    "CBM Hero darian 2"
   ]
 }

@@ -158,13 +158,16 @@ class Noise:
 
 
 class MapBuilder:
-    def __init__(self, key, index, biome, goal, seed):
+    def __init__(self, key, index, biome, goal, seed, size='battle'):
         self.key, self.index, self.biome, self.goal = key, index, biome, goal
         self.rng = random.Random(seed)
         self.noise = Noise(seed)
         self.spec = BIOMES[biome]
-        self.width = 36 + (index * 3) % 11
-        self.height = 26 + (index * 5) % 8
+        # A skirmish is read at a glance, a siege needs room to manoeuvre.
+        base_width, base_height = {'skirmish': (32, 24), 'battle': (40, 30),
+                                   'siege': (46, 34)}.get(size, (40, 30))
+        self.width = base_width + (index * 3) % 7
+        self.height = base_height + (index * 5) % 5
         self.terrain = [['Gg'] * self.width for _ in range(self.height)]
         self.land = [[True] * self.width for _ in range(self.height)]
         self.roads = set()
@@ -808,12 +811,12 @@ class MapBuilder:
         }
 
 
-def generate(key, index, biome, goal, seed=None, attempts=12):
+def generate(key, index, biome, goal, seed=None, attempts=12, size='battle'):
     """Build one map, retrying with new seeds until its structure verifies."""
     reason = 'no attempt was made'
     for attempt in range(attempts):
         attempt_seed = '%s:%s:%s:%s:%s' % (seed or 'brasa-marea', key, index, biome, attempt)
-        builder = MapBuilder(key, index, biome, goal, attempt_seed)
+        builder = MapBuilder(key, index, biome, goal, attempt_seed, size)
         builder.shape_land()
         builder.roughen_edges()
         builder.paint_relief()

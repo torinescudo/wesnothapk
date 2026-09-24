@@ -21,9 +21,12 @@ import mapgen
 from wesnoth.wmlparser3 import Parser
 
 # Quality gates the generated campaigns have to clear, all measured against
-# mainline campaigns by compare_with_mainline.py.
-GATES = {'min_terrain_codes': 30, 'min_villages': 12, 'min_area': 900,
+# mainline campaigns by compare_with_mainline.py. The area gate follows the
+# class of the map: a skirmish is meant to be read at a glance, and a siege is
+# meant to leave room to manoeuvre.
+GATES = {'min_terrain_codes': 30, 'min_villages': 12,
          'min_scenario_messages': 20}
+AREA_GATES = {'skirmish': 700, 'battle': 1100, 'siege': 1400}
 
 
 def parse(path):
@@ -143,7 +146,8 @@ def validate(allow_missing_art=False):
             chapter['id'], 'too few distinct terrain codes', len(set(codes)))
         villages = sum(1 for code in codes if '^V' in code)
         assert villages >= GATES['min_villages'], (chapter['id'], 'too few villages', villages)
-        assert len(codes) >= GATES['min_area'], (chapter['id'], 'map too small', len(codes))
+        assert len(codes) >= AREA_GATES.get(chapter.get('size', 'battle'), 700), (
+            chapter['id'], 'map too small for its class', chapter.get('size'), len(codes))
         messages = sum(1 for node in walk(scenario) if node.name == b'message')
         assert messages >= GATES['min_scenario_messages'], (
             chapter['id'], 'too little dialogue', messages)
@@ -152,7 +156,8 @@ def validate(allow_missing_art=False):
             stats.get('villages'), villages)
         objective_counts[chapter['goal']] += 1
     units = parse(PACK/'units/units.cfg').get_all(tag='unit_type')
-    assert len(units) == 22
+    # 16 race units, 6 heroes and the 6 veteran heroes they advance into.
+    assert len(units) == 28
     for unit in units:
         assert unit.get_text_val('advances_to') in known | {'null'}
         assert len(unit.get_all(tag='attack')) >= 2 or unit.get_text_val('usage') in ('fighter','scout')

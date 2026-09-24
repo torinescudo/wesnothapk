@@ -167,9 +167,24 @@ def unit_types():
             'image': f'cbm/units/hero-{key}.png~SCALE(72,72)', 'profile': f'cbm/portraits/{key}.png~SCALE(400,600)',
             'gender': 'male' if key == 'darian' else 'female',
             'hitpoints': 58 if key == 'sira' else 48, 'movement': 6, 'movement_type': move,
-            'level': 2, 'alignment': alignment, 'experience': 70, 'advances_to': 'null',
+            'level': 2, 'alignment': alignment, 'experience': 70,
+            'advances_to': f'CBM Hero {key} 2',
             'cost': 40, 'usage': 'fighter', 'description': campaign['premise']}, body)
         manifest.append('CBM Hero ' + key)
+        # A protagonist grows through the campaign: the same character, at the
+        # height the story reaches, with the strength the later maps demand.
+        veteran = '{AMLA_DEFAULT}\n' + tag('abilities', body='{ABILITY_LEADERSHIP}')
+        veteran += attack('Bastón' if key in ('sira', 'maura') else 'Arma de mano', melee, md + 3, mn + 1)
+        veteran += attack('Luz de la linterna' if key == 'alba' else 'Ataque a distancia', ranged, rd + 3, rn + 1, True,
+                          '{WEAPON_SPECIAL_MAGICAL}' if key in ('sira', 'maura') else '')
+        content += tag('unit_type', {'id': f'CBM Hero {key} 2', 'name': f"{campaign['hero']}, {HERO_TITLES[key]}",
+            'race': campaign['race'],
+            'image': f'cbm/units/hero-{key}.png~SCALE(72,72)', 'profile': f'cbm/portraits/{key}.png~SCALE(400,600)',
+            'gender': 'male' if key == 'darian' else 'female',
+            'hitpoints': (58 if key == 'sira' else 48) + 16, 'movement': 6, 'movement_type': move,
+            'level': 3, 'alignment': alignment, 'experience': 150, 'advances_to': 'null',
+            'cost': 60, 'usage': 'fighter', 'description': campaign['ending']}, veteran)
+        manifest.append(f'CBM Hero {key} 2')
     write('units/units.cfg', content)
     return manifest
 
@@ -177,6 +192,49 @@ def unit_types():
 BIOME_LABEL = {'forest': 'bosque', 'coast': 'costa', 'harbor': 'puerto', 'cave': 'caverna',
                'quarry': 'cantera', 'plains': 'llanura', 'mountain': 'montaña',
                'ruins': 'ruinas', 'islands': 'archipiélago'}
+from stories import world as WORLD
+
+# Map size follows what the chapter is: a skirmish does not need a battlefield.
+MAP_SIZES = {'skirmish': (32, 24), 'battle': (40, 30), 'siege': (46, 34)}
+
+
+def mechanics_for(chapter, index, total):
+    """Match the mechanics to the strategic difficulty the chapter is meant to have.
+
+    Early chapters are skirmishes you can read at a glance, the middle is battle
+    with a real deadline, and the end of a campaign is a siege or a voyage: fog
+    or shroud arrives when the player can be expected to plan around it, not
+    before. A goal also leaves its mark: escaping and escorting raise the
+    reading load (you are moving through unknown ground), holding ground raises
+    the pressure (the deadline is the weapon).
+    """
+    third = max(1, total // 3)
+    if index <= third:
+        name = 'skirmish'
+    elif chapter['goal'] in ('escape', 'escort', 'rescue'):
+        name = 'voyage'
+    elif chapter['goal'] in ('survive', 'beacons'):
+        name = 'siege'
+    elif index <= 2 * third:
+        name = 'battle'
+    else:
+        name = 'siege'
+    mechanics = dict(WORLD.MECHANICS[name])
+    if chapter['goal'] == 'survive':
+        mechanics['turns'] = 12
+    elif chapter['goal'] == 'escape':
+        mechanics['turns'] = 22
+    return mechanics
+
+
+HERO_TITLES = {
+    'alba': 'guardiana del faro',
+    'sira': 'voz de las siete vetas',
+    'iria': 'cartógrafa del cielo',
+    'maura': 'archivera de ceniza',
+    'nerea': 'capitana del olvido',
+    'darian': 'correo de las brasas',
+}
 
 GOALS = {
     'conquer': 'Derrota al líder enemigo.',
@@ -268,7 +326,9 @@ def scenario(c, index, chapter, manifest):
     sid = '%s_%02d' % (cid, index)
     following = '%s_%02d' % (cid, index + 1) if index < len(c['chapters']) else 'null'
     turns = 12 if chapter['goal'] == 'survive' else 32
-    layout = generate_map(key, index, chapter['biome'], chapter['goal'])
+    mechanics = mechanics_for(chapter, index, len(c['chapters']))
+    turns = mechanics['turns']
+    layout = generate_map(key, index, chapter['biome'], chapter['goal'], size=mechanics['size'])
     write('maps/%s_%02d.map' % (key, index), layout['rows'])
     start, enemy = layout['start'], layout['enemy']
     destination, prison, points = layout['destination'], layout['prison'], layout['points']
@@ -310,7 +370,9 @@ def scenario(c, index, chapter, manifest):
               'id': ids['hero'], 'name': c['hero'], 'type': 'CBM Hero ' + key,
               'canrecruit': 'yes', 'unrenamable': 'yes', 'recruit': recruit,
               'gold': 150 + min(index * 8, 100), 'income': 3,
-              'village_gold': 2, 'fog': 'no', 'shroud': 'no', 'save_id': cid + '_army'}
+              'village_gold': 2,
+              'fog': 'yes' if mechanics['fog'] else 'no',
+              'shroud': 'yes' if mechanics['shroud'] else 'no', 'save_id': cid + '_army'}
     body += tag('side', player)
     body += tag('side', {'side': 2, 'controller': 'ai', 'team_name': 'oposicion',
                         'user_team_name': chapter['antagonist'], 'type': leader,
@@ -456,7 +518,9 @@ def scenario(c, index, chapter, manifest):
     write('scenarios/%s/%02d.cfg' % (key, index), text)
     manifest.append({'id': sid, 'campaign': cid, 'title': title, 'goal': chapter['goal'],
                      'next': following, 'map': '%s_%02d.map' % (key, index),
-                     'biome': chapter['biome'], 'start': start, 'enemy': enemy,
+                     'biome': chapter['biome'], 'size': mechanics['size'],
+                     'turns': turns, 'fog': mechanics['fog'], 'shroud': mechanics['shroud'],
+                     'start': start, 'enemy': enemy,
                      'destination': destination, 'prison': prison, 'points': points,
                      'villages': layout['villages'], 'terrain': layout['stats'],
                      'file': 'scenarios/%s/%02d.cfg' % (key, index)})
