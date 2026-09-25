@@ -229,11 +229,11 @@ void controller_base::handle_event(const SDL_Event& event)
 		static float pinch_last = 0.f;
 		int slot = -1;
 		for(int i = 0; i < 2; ++i) {
-			if(pinch_ids[i] == (Uint64)event.tfinger.finger) { slot = i; }
+			if(pinch_ids[i] == (Uint64)event.tfinger.fingerID) { slot = i; }
 		}
 		if(slot < 0) {
 			for(int i = 0; i < 2; ++i) {
-				if(pinch_ids[i] == 0) { slot = i; pinch_ids[i] = (Uint64)event.tfinger.finger; }
+				if(pinch_ids[i] == 0) { slot = i; pinch_ids[i] = (Uint64)event.tfinger.fingerID; }
 			}
 		}
 		if(slot >= 0) {
