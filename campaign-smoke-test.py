@@ -110,10 +110,16 @@ local ok, failure = pcall(function()
     end
     wesnoth.wml_actions.message = function() end
     wesnoth.wml_actions.move_unit_fake = function() end
-    -- Secondary objectives can require holding ground. Take three villages so
-    -- that forcing the main objective does not trip the "keep the villages"
-    -- condition on the way to victory.
+    -- Secondary objectives can require holding ground and keeping people alive.
+    -- Take three villages and keep the named characters standing so that
+    -- forcing the main objective does not trip those conditions.
     do
+        for _, id in ipairs({{hero_id, companion_id, protected_id}}) do
+            local u = wesnoth.units.get(id)
+            if u then
+                u.hitpoints = u.max_hitpoints
+            end
+        end
         local held = 0
         local find = (wesnoth.map and wesnoth.map.find) or wesnoth.get_locations
         for _, loc in ipairs(find {{ terrain = "*^V*" }}) do
