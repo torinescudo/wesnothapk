@@ -185,7 +185,7 @@ class MapBuilder:
         islands = self.biome == 'islands'
         for y in range(h):
             for x in range(w):
-                noise = self.noise.fbm(x, y, 11.0, 4, 'height')
+                noise = self.noise.fbm(x, y, 1.8, 4, 'height')
                 if coastal:
                     tx, ty = x / (w - 1), y / (h - 1)
                     landness = 1.15 - 0.95 * (0.55 * tx + 0.55 * ty) + (noise - 0.5) * 0.5
@@ -230,7 +230,7 @@ class MapBuilder:
         spec = self.spec
         land = [(y, x) for y in range(self.height) for x in range(self.width) if self.land[y][x]]
         levels = [self.level[y][x] for y, x in land]
-        forests = [self.noise.fbm(x, y, 6.5, 3, 'forest') for y, x in land]
+        forests = [self.noise.fbm(x, y, 1.5, 3, 'forest') for y, x in land]
         peak_cut = quantile(levels, 1.0 - spec['mountain'])
         hill_cut = quantile(levels, max(0.0, 1.0 - spec['mountain'] - spec['hill']))
         forest_cut = quantile(forests, spec['forest'])
@@ -243,7 +243,7 @@ class MapBuilder:
                 if self.biome == 'cave':
                     self.terrain[y][x] = self._cave_code(x, y)
                     continue
-                forest = self.noise.fbm(x, y, 6.5, 3, 'forest')
+                forest = self.noise.fbm(x, y, 1.5, 3, 'forest')
                 if level > peak_cut:
                     self.terrain[y][x] = self._mountain_code(y, x)
                 elif level > hill_cut:
@@ -281,7 +281,8 @@ class MapBuilder:
             return self.rng.choice(('Ms', 'Mv'))
         if self.biome in ('quarry', 'ruins'):
             return self.rng.choice(('Mm', 'Md'))
-        return self.rng.choice(MOUNTAINS)
+        # Mostly passable rock: an impassable ridge is a wall, not a feature.
+        return self.rng.choice(('Mm', 'Mm', 'Mm', 'Ms', 'Mv', 'Md'))
 
     def _hill_code(self, y, x):
         if self.biome == 'quarry':
@@ -363,7 +364,7 @@ class MapBuilder:
         for y in range(self.height):
             for x in range(self.width):
                 code = self._plain(self.terrain[y][x])
-                if self.noise.fbm(x, y, 1.9, 2, 'detail') < 0.55:
+                if self.noise.fbm(x, y, 1.9, 2, 'detail') < 0.82:
                     continue
                 family = self._family(code, self._families())
                 if family == 'castle':
@@ -544,6 +545,10 @@ class MapBuilder:
         self.rng.shuffle(candidates)
         picked = []
         minimum = 5 if self.goal == 'beacons' else 7
+        # The objective the player must reach is the far end of the map from the
+        # enemy: the fight is the approach, not a guard standing on the goal.
+        if self.goal in ('rescue', 'escape', 'escort', 'conquer'):
+            candidates.sort(key=lambda xy: -self._distance(xy[0], xy[1], *self.enemy))
         for x, y in candidates:
             if all(self._distance(x, y, px, py) >= minimum for px, py in picked):
                 picked.append((x, y))

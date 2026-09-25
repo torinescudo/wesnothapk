@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-2.0-or-later -->
+<!-- Launcher: single column, thumb-sized. -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/phone_background">
+
+    <ImageButton
+        android:id="@+id/settings_btn"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/phone_icon_button"
+        android:contentDescription="@string/phone_settings"
+        android:padding="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/settings" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,20 +31,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:padding="32dp">
+            android:padding="28dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:src="@drawable/wesnoth_icon"
                 android:importantForAccessibility="no" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/app_name"
-                android:textColor="#FFE2D8"
+                android:textColor="@color/phone_text"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 android:gravity="center" />
@@ -36,90 +52,95 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/phone_welcome"
-                android:textColor="#C9B9A8"
+                android:textColor="@color/phone_text_secondary"
                 android:textSize="20sp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/phone_text_muted"
+                android:textSize="16sp"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/tap_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:minHeight="88dp"
+                android:background="@drawable/phone_button_primary"
+                android:text="@string/phone_play"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textColor="@color/phone_ink" />
+
+            <Button
+                android:id="@+id/phone_campaigns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:minHeight="88dp"
+                android:background="@drawable/phone_button"
+                android:text="@string/phone_campaigns"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                android:textColor="@color/phone_text" />
+
+            <Button
+                android:id="@+id/phone_tutorial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:minHeight="88dp"
+                android:background="@drawable/phone_button"
+                android:text="@string/phone_tutorial"
+                android:textAllCaps="false"
+                android:textSize="24sp"
+                android:textColor="@color/phone_text" />
+
+            <TextView
+                android:id="@+id/download_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/phone_text"
+                android:textSize="18sp"
                 android:gravity="center" />
 
             <ProgressBar
                 android:id="@+id/download_progress"
-                style="@android:style/Widget.ProgressBar.Horizontal"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:progressTint="#E0C800" />
+                android:layout_marginTop="10dp"
+                android:max="100"
+                android:progressTint="@color/phone_gold"
+                android:progressBackgroundTint="#33FFFFFF" />
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/phone_first_launch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="#C9B9A8"
-                android:textSize="18sp"
+                android:layout_marginTop="14dp"
+                android:text="@string/phone_first_launch"
+                android:textColor="@color/phone_text_muted"
+                android:textSize="16sp"
                 android:gravity="center" />
 
-            <Button
-                android:id="@+id/play_btn"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/phone_play"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:background="@drawable/phone_primary_button" />
-
-            <Button
-                android:id="@+id/campaigns_btn"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/phone_campaigns"
-                android:textSize="24sp"
-                android:background="@drawable/phone_primary_button" />
-
-            <Button
-                android:id="@+id/tutorial_btn"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/phone_tutorial"
-                android:textSize="24sp"
-                android:background="@drawable/phone_primary_button" />
-
-            <Button
-                android:id="@+id/help_btn"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/phone_help"
-                android:textSize="24sp"
-                android:background="@drawable/phone_primary_button" />
-
-            <Button
-                android:id="@+id/settings_btn"
-                android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/phone_settings"
-                android:textSize="24sp"
-                android:background="@drawable/phone_primary_button" />
-
+            <View android:id="@+id/phone_campaign_title" android:layout_width="0dp" android:layout_height="0dp" />
+            <View android:id="@+id/phone_campaign_meta" android:layout_width="0dp" android:layout_height="0dp" />
+            <View android:id="@+id/phone_campaign_hook" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
     </ScrollView>
 
-    <!-- Ids the Java side binds by name: the phone bar and its actions live
-         here even when a screen does not show them. -->
-    <LinearLayout
-        android:id="@+id/phone_bar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/phone_bar_actions"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
+    <LinearLayout android:id="@+id/phone_bar" android:layout_width="0dp" android:layout_height="0dp" android:orientation="vertical">
+        <LinearLayout android:id="@+id/phone_bar_actions" android:layout_width="0dp" android:layout_height="0dp" android:orientation="horizontal">
             <View android:id="@+id/phone_bar_toggle" android:layout_width="0dp" android:layout_height="0dp" />
             <View android:id="@+id/phone_action_cycle" android:layout_width="0dp" android:layout_height="0dp" />
             <View android:id="@+id/phone_action_recruit" android:layout_width="0dp" android:layout_height="0dp" />
@@ -140,10 +161,4 @@
             <View android:id="@+id/phone_action_help" android:layout_width="0dp" android:layout_height="0dp" />
         </LinearLayout>
     </LinearLayout>
-
-    <View android:id="@+id/phone_campaigns" android:layout_width="0dp" android:layout_height="0dp" />
-    <View android:id="@+id/phone_campaign_title" android:layout_width="0dp" android:layout_height="0dp" />
-    <View android:id="@+id/phone_campaign_meta" android:layout_width="0dp" android:layout_height="0dp" />
-    <View android:id="@+id/phone_campaign_hook" android:layout_width="0dp" android:layout_height="0dp" />
-    <View android:id="@+id/phone_tutorial" android:layout_width="0dp" android:layout_height="0dp" />
 </RelativeLayout>
