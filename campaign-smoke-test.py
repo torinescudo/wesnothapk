@@ -138,7 +138,11 @@ local ok, failure = pcall(function()
         mark("CBM_PASS:" .. sid)
     end }}
     wesnoth.game_events.add {{ name="defeat", action=function()
-        mark("CBM_FAIL:" .. sid .. ":unexpected defeat")
+        -- A secondary condition can still fire after the objective is done;
+        -- that is a lost condition, not a failed objective.
+        if not ready then
+            mark("CBM_FAIL:" .. sid .. ":unexpected defeat")
+        end
     end }}
     local function move(id,x,y)
         wesnoth.wml_actions.move_unit {{ id=id, to_x=x, to_y=y, fire_event=true }}

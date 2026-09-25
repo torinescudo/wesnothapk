@@ -130,15 +130,15 @@ final class PhoneControls {
         toggle.setBackgroundResource(R.drawable.phone_icon_button);
         toggle.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         toggle.setPadding(dp(12), dp(12), dp(12), dp(12));
-        toggle.setMinimumWidth(dp(48));
-        toggle.setMinimumHeight(dp(48));
+        toggle.setMinimumWidth(dp(64));
+        toggle.setMinimumHeight(dp(64));
         toggle.setOnClickListener(view -> {
             haptic(view);
             expanded = !expanded;
             settings.edit().putBoolean("expanded", expanded).apply();
             updateLayout(previousMask);
         });
-        bar.addView(toggle, new LinearLayout.LayoutParams(dp(48), dp(48)));
+        bar.addView(toggle, new LinearLayout.LayoutParams(dp(64), dp(64)));
 
         HorizontalScrollView scroll = new HorizontalScrollView(activity);
         scroll.setFillViewport(true);
@@ -228,9 +228,9 @@ final class PhoneControls {
         view.setIncludeFontPadding(false);
         view.setGravity(Gravity.CENTER);
         view.setTextColor(activity.getColor(textColor));
-        view.setMinHeight(dp(48));
-        view.setMinimumHeight(dp(48));
-        view.setMinWidth(dp(48));
+        view.setMinHeight(dp(64));
+        view.setMinimumHeight(dp(64));
+        view.setMinWidth(dp(64));
         view.setPaddingRelative(dp(10), dp(2), dp(10), dp(2));
         view.setStateListAnimator(null);
         view.setBackgroundResource(background);
@@ -256,8 +256,8 @@ final class PhoneControls {
         view.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
         view.setTextColor(activity.getColor(R.color.phone_text));
         setIcon(view, icon, R.color.phone_text);
-        view.setMinHeight(dp(56));
-        view.setMinimumHeight(dp(56));
+        view.setMinHeight(dp(72));
+        view.setMinimumHeight(dp(72));
         view.setPaddingRelative(dp(16), dp(8), dp(16), dp(8));
         view.setStateListAnimator(null);
         view.setBackgroundResource(R.drawable.phone_sheet_item);

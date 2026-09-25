@@ -221,6 +221,48 @@ void controller_base::handle_event(const SDL_Event& event)
 		break;
 
 	case SDL_EVENT_FINGER_MOTION: {
+		// Two fingers on the map are a zoom: the distance between them drives
+		// zoomin/zoomout and the map does not pan while both are down.
+		static Uint64 pinch_ids[2] = {0, 0};
+		static float pinch_x[2] = {0.f, 0.f};
+		static float pinch_y[2] = {0.f, 0.f};
+		static float pinch_last = 0.f;
+		int slot = -1;
+		for(int i = 0; i < 2; ++i) {
+			if(pinch_ids[i] == (Uint64)event.tfinger.finger) { slot = i; }
+		}
+		if(slot < 0) {
+			for(int i = 0; i < 2; ++i) {
+				if(pinch_ids[i] == 0) { slot = i; pinch_ids[i] = (Uint64)event.tfinger.finger; }
+			}
+		}
+		if(slot >= 0) {
+			pinch_x[slot] = event.tfinger.x;
+			pinch_y[slot] = event.tfinger.y;
+		}
+		int down = 0;
+		for(int i = 0; i < 2; ++i) { if(pinch_ids[i] != 0) { ++down; } }
+		if(down == 2) {
+			float dx = pinch_x[0] - pinch_x[1];
+			float dy = pinch_y[0] - pinch_y[1];
+			float now = dx * dx + dy * dy;
+			if(pinch_last > 0.f && now > 0.f) {
+				auto* executor = get_hotkey_command_executor();
+				if(executor != nullptr) {
+					if(now > pinch_last * 1.32f) {
+						executor->execute_action({std::string("zoomin")});
+						pinch_last = now;
+					} else if(now < pinch_last * 0.76f) {
+						executor->execute_action({std::string("zoomout")});
+						pinch_last = now;
+					}
+				}
+			} else {
+				pinch_last = now;
+			}
+		} else {
+			pinch_last = 0.f;
+		}
 		if(SDL_PeepEvents(&new_event, 1, SDL_GETEVENT, SDL_EVENT_FINGER_MOTION, SDL_EVENT_FINGER_MOTION) > 0) {
 			while(SDL_PeepEvents(&new_event, 1, SDL_GETEVENT, SDL_EVENT_FINGER_MOTION, SDL_EVENT_FINGER_MOTION) > 0) {
 			};
