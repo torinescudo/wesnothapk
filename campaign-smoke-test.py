@@ -126,6 +126,9 @@ local ok, failure = pcall(function()
             if held >= 3 then break end
             local x, y = loc[1] or loc.x, loc[2] or loc.y
             wesnoth.wml_actions.capture_village {{ x = x, y = y, side = 1 }}
+            if wesnoth.map and wesnoth.map.set_owner then
+                wesnoth.map.set_owner(x, y, 1)
+            end
             held = held + 1
         end
     end
