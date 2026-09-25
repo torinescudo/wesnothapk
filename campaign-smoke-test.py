@@ -115,9 +115,11 @@ local ok, failure = pcall(function()
     -- condition on the way to victory.
     do
         local held = 0
-        for _, loc in ipairs(wesnoth.map.find {{ terrain = "*^V*" }}) do
+        local find = (wesnoth.map and wesnoth.map.find) or wesnoth.get_locations
+        for _, loc in ipairs(find {{ terrain = "*^V*" }}) do
             if held >= 3 then break end
-            wesnoth.wml_actions.capture_village {{ x = loc[1], y = loc[2], side = 1 }}
+            local x, y = loc[1] or loc.x, loc[2] or loc.y
+            wesnoth.wml_actions.capture_village {{ x = x, y = y, side = 1 }}
             held = held + 1
         end
     end
